@@ -30,8 +30,8 @@ const order = db.define('order', {
 	feedBack: { type: Sequelize.STRING, required: false }
 });
 
-order.hasMany(engineer);
-order.hasMany(worker);
+engineer.belongsToMany(worker, { through: order });
+worker.belongsToMany(engineer, { through: order });
 
 module.exports.engineer = engineer;
 module.exports.worker = worker;
