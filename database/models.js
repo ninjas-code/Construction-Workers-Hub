@@ -6,7 +6,7 @@ const engineer = db.define('engineer', {
 	userName: { type: Sequelize.STRING, required: true, unique: true },
 	password: { type: Sequelize.STRING, required: true },
 	siteLocation: { type: Sequelize.STRING, required: true },
-	phoneNumber: { type: Sequelize.INTEGER }
+	phoneNumber: { type: Sequelize.INTEGER, required: true }
 });
 
 const worker = db.define('worker', {

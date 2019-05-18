@@ -1,4 +1,7 @@
-class Main extends React.Component {
+import { BrowserRouter, Route } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+class App extends React.Component {
 	render() {
 		return (
 			<div>
@@ -9,4 +12,4 @@ class Main extends React.Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById('construction'));
+ReactDOM.render(<App />, document.getElementById('construction'));
