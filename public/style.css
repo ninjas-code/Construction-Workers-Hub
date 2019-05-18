@@ -1,0 +1,27 @@
+body {
+	background-image: url("./project\ background3.png");
+}
+.logo {
+	position: relative;
+	top: 0;
+	left: 1200px;
+	width: 300px;
+	height: 150px;
+}
+/* .engineerSignUpButton .workerSignUpButton {
+	display: block;
+} */
+
+.engineerSignUpButton {
+	background-image: url("./business\ man\ button2.png");
+	width: 150px;
+	height: 292px;
+	margin-left: 150px;
+	margin-right: 200px;
+}
+
+.workerSignUpButton {
+	background-image: url("./construction\ worker\ button2.png");
+	width: 150px;
+	height: 292px;
+}
