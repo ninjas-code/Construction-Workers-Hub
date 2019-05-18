@@ -20,12 +20,12 @@ app.use(bodyParser.json());
 
 //Create new user in the database
 app.post('/signupEngineer', function(req, res) {
-	const fullname = req.body.fullname;
-	const username = req.body.username;
-	const password = req.body.password;
-	const location = req.body.sitelocation;
-	const phonenumber = req.body.phonenumber;
-	const hashedPassword = bcrypt.hashSync(password, 10);
+	let fullname = req.body.fullname;
+	let username = req.body.username;
+	let password = req.body.password;
+	let location = req.body.sitelocation;
+	let phonenumber = req.body.phonenumber;
+	let hashedPassword = bcrypt.hashSync(password, 10);
 	engineer
 		.create({
 			fullName: fullname,
