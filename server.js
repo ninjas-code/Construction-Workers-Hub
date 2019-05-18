@@ -1,8 +1,8 @@
 const express = require('express');
 let app = express();
-const dataBase = require('./dataBase');
+const dataBase = require('./database/db');
 var bodyParser = require('body-parser');
-
+const { engineer, worker, order } = require('./database/models');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
