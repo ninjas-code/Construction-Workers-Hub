@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
 import EngineerSignUp from './components/EngineerSignUp.jsx';
 import workerSignUp from './components/WorkerSignUp.jsx';
+import WorkerSignIn from './components/WorkerSignIn.jsx';
 
 class App extends React.Component {
 	render() {
@@ -34,6 +35,7 @@ class App extends React.Component {
 						)}
 					/>
 					<Route path="/home" component={Home} />
+					<Route path="/signinWorker" component={WorkerSignIn} />
 					<Route path="/engineerSignUp" component={EngineerSignUp} />
 					<Route path="/workerSignUp" component={workerSignUp} />
 				</div>

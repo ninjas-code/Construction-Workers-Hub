@@ -71,6 +71,7 @@ app.post('/signinEngineer', function(req, res) {
 //worker
 
 app.post('/signupWorker', function(req, res) {
+	console.log(req.body.username);
 	const fullName = req.body.fullname;
 	const username = req.body.username;
 	const password = req.body.password;
