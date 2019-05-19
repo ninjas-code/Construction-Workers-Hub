@@ -24,3 +24,10 @@ body {
 	width: 150px;
 	height: 292px;
 }
+#signUpWorker{
+	margin-right: 15px;
+}
+#alreadySignUp{
+	display: block;
+	margin-top: 15px;
+}
