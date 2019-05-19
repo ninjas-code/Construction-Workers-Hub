@@ -4,7 +4,10 @@ body {
 .logo {
 	position: relative;
 	top: 0;
+<<<<<<< HEAD
+=======
 	left: 80%;
+>>>>>>> d2770d7c3ff495c06d4e8d75f2359c3e08e28390
 	width: 300px;
 	height: 150px;
 }
@@ -24,4 +27,11 @@ body {
 	background-image: url("./image/construction\ worker\ button2.png");
 	width: 150px;
 	height: 292px;
+}
+#signUpWorker{
+	margin-right: 15px;
+}
+#alreadySignUp{
+	display: block;
+	margin-top: 15px;
 }
