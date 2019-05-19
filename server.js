@@ -60,10 +60,7 @@ app.post('/signinEngineer', function(req, res) {
     
 });
 
-
-
 //worker
-
 
 app.post('/signupWorker', function(req, res) {
 	const fullName =  req.body.fullname;
@@ -183,6 +180,72 @@ const authenticateWorker = function(req, res, next){
 		return res.status(500).send(err);
 	})
  });
+
+
+//get workers data via role button
+
+ app.get('/smith', function(req, res) {
+	const Role = 'smith';
+	worker
+		.findAll({ where: { role : Role } })
+		.then(function(smithData) {
+            if(carpenterData.length === 0){
+                return res.send("we don't have smiths yet");   
+            }
+			return res.send(smithData);
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+
+
+app.get('/carpenter', function(req, res) {
+	const Role = 'carpenter';
+	worker
+		.findAll({ where: { role : Role } })
+		.then(function(carpenterData) {
+            if(carpenterData.length === 0){
+                return res.send("we don't have carpenters yet");   
+            }
+			return res.send(carpenterData);
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+
+
+app.get('/painter', function(req, res) {
+	const Role = 'painter';
+	worker
+		.findAll({ where: { role : Role } })
+		.then(function(user) {
+            if(carpenterData.length === 0){
+                return res.send("we don't have painter yet");   
+            }
+				return res.send(user);
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+
+
+app.get('/painter', function(req, res) {
+	const Role = 'painter';
+	worker
+		.findAll({ where: { role : Role } })
+		.then(function(user) {
+			return res.send({user});
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+}); 
 
 app.listen(port, function() {
     console.log(`app listening on port ${port}!`)
