@@ -11,12 +11,12 @@ const port = process.env.PORT || 5000;
 
 //Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
-    res.send('Hello World!');
-});
+// app.get('/', function(req, res) {
+//     res.send('Hello World!');
+// });
 
 //Create new user in the database
 app.post('/signupEngineer', function(req, res) {
