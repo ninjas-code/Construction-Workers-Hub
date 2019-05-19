@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 
 import Home from './components/Home.jsx';
 import EngineerSignUp from './components/EngineerSignUp.jsx';
@@ -17,21 +17,19 @@ class App extends React.Component {
 				<br />
 				<br />
 				<br />
-				<br />
-				<br />
 				<div>
 					<Route
 						exact
 						path="/"
 						render={() => (
 							<div>
-								<Link to="/signupEngineer">
+								<NavLink to="/signupEngineer" activeStyle={{ color: 'purple' }}>
 									<button className="engineerSignUpButton" value="sign up as an engineer" />
-								</Link>
+								</NavLink>
 
-								<Link to="/workerSignUp">
+								<NavLink to="/workerSignUp" activeStyle={{ color: 'purple' }}>
 									<button className="workerSignUpButton" value="sign up as a construction Worker" />
-								</Link>
+								</NavLink>
 							</div>
 						)}
 					/>

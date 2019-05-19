@@ -18,15 +18,18 @@ class EngineerSignIn extends React.Component {
 	engineerSignIn() {
 		var that = this;
 		console.log(this.state);
-		$.ajax({
-			type: 'POST',
-			url: '/signinEngineer',
-			data: that.state,
-			dataType: 'json',
-			success: function success(data) {
-				console.log(data);
+		fetch('/signinEngineer', {
+			method: 'POST',
+			body: JSON.stringify(that.state),
+			headers: {
+				'Content-Type': 'application/json'
 			}
-		});
+		})
+			.then((res) => res.json())
+			.then((response) => {
+				console.log('Success:', response.result);
+			})
+			.catch((error) => console.error('Error:', error.err));
 	}
 
 	render() {
