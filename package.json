@@ -4,11 +4,7 @@
 	"description": "Green Field Project",
 	"main": "backEnd/server.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon server.js",
-		"web": "webpack",
-		"build": "webpack -d --watch",
-		"babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline -w"
+		"start": "nodemon server.js"
 	},
 	"repository": {
 		"type": "git",
