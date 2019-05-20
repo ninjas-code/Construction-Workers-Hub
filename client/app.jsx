@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 
-import Home from './components/Home.jsx';
 import EngineerSignUp from './components/EngineerSignUp.jsx';
 import EngineerSignIn from './components/EngineerSignIn.jsx';
 import workerSignUp from './components/WorkerSignUp.jsx';

@@ -255,17 +255,10 @@ app.get('/smith', function(req, res) {
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
-			});
-			return res.send({ workerArr });
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no smiths available' });
+			}
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
