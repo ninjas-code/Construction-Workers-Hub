@@ -9,11 +9,16 @@ const { engineer, worker } = require('./database/models');
 const app = express();
 const port = process.env.PORT || 5000;
 
+//things to install
+//npm i bcrypt
+//npm i cors --save
+//npm install body-parser --save
+// npm install --save bluebird
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-//engineer sign up
 app.post('/signupEngineer', function(req, res) {
 	let fullname = req.body.fullname;
 	let username = req.body.username;
@@ -30,11 +35,11 @@ app.post('/signupEngineer', function(req, res) {
 			password: hashedPassword
 		})
 		.then(function() {
-			return res.status(201).send({ result: 'Sign up as engineer successful' });
+			return res.status(201).send('Sign up as engineer successful');
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send({ err: 'This username is already taken' });
+				return res.status(400).send('This username is already taken');
 			}
 			return res.status(500).send('Server Error');
 		});
@@ -45,30 +50,25 @@ app.post('/signinEngineer', function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
 	//Check if user exists in the database
-	engineer
-		.findOne({ where: { userName: username } })
-		.then(function(user) {
-			if (!user) {
-				return res.status(401).send({ error: 'Please sign up' });
+	engineer.findOne({ where: { username: username } }).then(function(user) {
+		if (!user) {
+			return res.status(401).send({ error: 'Please sign up' });
+		}
+		//Compare with stored password
+		const existingHashedPassword = user.password;
+		bcrypt.compare(password, existingHashedPassword).then(function(isMatching) {
+			if (isMatching) {
+				//Create a token and send to client
+				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
+				return res.send({ token: token });
+			} else {
+				return res.status(401).send({ error: 'Wrong password' });
 			}
-			//Compare with stored password
-			const existingHashedPassword = user.password;
-			bcrypt.compare(password, existingHashedPassword).then(function(isMatching) {
-				if (isMatching) {
-					//Create a token and send to client
-					const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
-					return res.send({ token: token });
-				} else {
-					return res.status(401).send({ error: 'Wrong password' });
-				}
-			});
-		})
-		.then(function() {
-			return res.status(201).send({ result: 'Signed in successfully' });
 		});
+	});
 });
 
-//worker sign up
+//worker
 
 app.post('/signupWorker', function(req, res) {
 	const fullName = req.body.fullname;
@@ -115,7 +115,7 @@ app.post('/signinWorker', function(req, res) {
 		bcrypt.compare(password, workerPassword).then(function(isMatching) {
 			if (isMatching) {
 				// console.log(user)
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -124,7 +124,7 @@ app.post('/signinWorker', function(req, res) {
 	});
 });
 
-const authenticateWorker = function(req, res, next) {
+const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
 	if (!token) {
 		return res.status(401).send('Please sign in');
@@ -136,56 +136,43 @@ const authenticateWorker = function(req, res, next) {
 		}
 		//Check if user exists in the database
 		const username = data.username;
-		//console.log(username)
-		worker
-			.findOne({ where: { userName: username } })
-			.then((user) => {
-				//console.log(user)
-				if (!user) {
-					return res.status(401).send('Please sign up');
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
-	});
-};
 
-const authenticateEngineer = function(req, res, next) {
-	const token = req.headers['x-access-token']; //Username encoded in token
-	if (!token) {
-		return res.status(401).send('Please sign in');
-	}
-	jwt.verify(token, SECRET_KEY, (err, data) => {
-		//console.log(data)
-		if (err) {
-			return res.status(401).send('Please sign in');
+		if (data.role) {
+			//console.log(username)
+			worker
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
+		} else {
+			engineer
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
 		}
-		//Check if user exists in the database
-		const username = data.username;
-		//console.log(username)
-		engineer
-			.findOne({ where: { userName: username } })
-			.then((user) => {
-				//console.log(user)
-				if (!user) {
-					return res.status(401).send('Please sign up');
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
 	});
 };
 
-//gets the workers data for his profile
-app.get('/workerPage', authenticateWorker, function(req, res) {
+app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	//console.log(user)
 	worker
@@ -206,8 +193,7 @@ app.get('/workerPage', authenticateWorker, function(req, res) {
 		});
 });
 
-//gets the engineers data for his profile
-app.get('/engineerPage', authenticateEngineer, function(req, res) {
+app.get('/engineerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	engineer
 		.findOne({ where: { id: user.id } })
@@ -219,11 +205,13 @@ app.get('/engineerPage', authenticateEngineer, function(req, res) {
 		});
 });
 
-//will filter out  from database by role
+// will filter out  from database by server
 
-// app.get('/role', function(req, res) {
-// const workerArr =[];
+// app.get('/role' ,  authenticate , function(req, res) {
+//     const workerArr =[];
+
 // 	const Role = req.body.role;
+
 // 	worker
 // 		.findAll({ where: { role : Role } })
 // 		.then(function(users) {
@@ -244,20 +232,15 @@ app.get('/engineerPage', authenticateEngineer, function(req, res) {
 // 		});
 // });
 
-// app.listen(port, function() {
-// 	console.log(`app listening on port ${port}!`);
-// });
-
-//will filter out the smiths and send to client
-app.get('/smith', function(req, res) {
+app.get('/smith', authenticate, function(req, res) {
 	const Role = 'smith';
-	const workerArr = [];
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
 			if (!users) {
 				return res.send({ error: 'Sorry, There are no smiths available' });
 			}
+
 			return res.send(users);
 		})
 		.catch(function(err) {
@@ -265,99 +248,70 @@ app.get('/smith', function(req, res) {
 		});
 });
 
-//will filter out the carpenters and send to client
-app.get('/carpenter', function(req, res) {
+app.get('/carpenter', authenticate, function(req, res) {
 	const Role = 'carpenter';
-	const workerArr = [];
 
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
-			});
-			return res.send({ workerArr });
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no carpenters available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
-//will filter out the stoneBuilders and send to client
-app.get('/stoneBuilder', function(req, res) {
+app.get('/stoneBuilder', authenticate, function(req, res) {
 	const Role = 'stoneBuilder';
-	const workerArr = [];
 
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
-			});
-			return res.send({ workerArr });
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no stone Builders available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
-//will filter out the painters and send to client
-app.get('/painter', function(req, res) {
+app.get('/painter', authenticate, function(req, res) {
 	const Role = 'painter';
-	const workerArr = [];
 
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
-			});
-			return res.send({ workerArr });
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no painters available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
-app.get('/engineerworker', function(req, res) {
-	const Role = req.body.username;
-	const workerArr = [];
-
+app.get('/engineerworker', authenticate, function(req, res) {
+	const username = req.body.username;
 	worker
-		.findAll({ where: { userName: username } })
-		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
+		.findOne({ where: { userName: username } })
+		.then(function(user) {
+			return res.send({
+				fullName: user.fullName,
+				experienceLevel: user.experienceLevel,
+				expectedSalary: user.expectedSalary,
+				phoneNumber: user.phoneNumber,
+				status: user.status,
+				role: user.role
 			});
-			return res.send({ workerArr });
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
@@ -367,3 +321,6 @@ app.get('/engineerworker', function(req, res) {
 app.listen(port, function() {
 	console.log(`app listening on port ${port}!`);
 });
+//npm i bcrypt
+//npm i cors --save
+//npm install body-parser --save
