@@ -7,17 +7,22 @@ import EngineerSignUp from './components/EngineerSignUp.jsx';
 import EngineerSignIn from './components/EngineerSignIn.jsx';
 import workerSignUp from './components/WorkerSignUp.jsx';
 import WorkerSignIn from './components/WorkerSignIn.jsx';
+import EngineerMainPage from './components/EngineerMainPage.jsx';
+import Smiths from './components/Smiths.jsx';
+import Carpenters from './components/Carpenters.jsx';
+import StoneBuilders from './components/StoneBuilders.jsx';
+import Painters from './components/Painters.jsx';
 
 class App extends React.Component {
 	render() {
 		return (
 			<BrowserRouter>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
 				<div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 					<Route
 						exact
 						path="/"
@@ -33,12 +38,16 @@ class App extends React.Component {
 							</div>
 						)}
 					/>
-					<Route path="/home" component={Home} />
 					<Route path="/signupEngineer" component={EngineerSignUp} />
 					<Route path="/signinEngineer" component={EngineerSignIn} />
 					<Route path="/signinWorker" component={WorkerSignIn} />
 					<Route path="/engineerSignUp" component={EngineerSignUp} />
 					<Route path="/workerSignUp" component={workerSignUp} />
+					<Route path="/engineerPage" component={EngineerMainPage} />
+					<Route path="/smith" component={Smiths} />
+					<Route path="/carpenter" component={Carpenters} />
+					<Route path="/stoneBuilder" component={StoneBuilders} />
+					<Route path="/painter" component={Painters} />
 				</div>
 			</BrowserRouter>
 		);

@@ -46,7 +46,7 @@ app.post('/signinEngineer', function(req, res) {
 	const password = req.body.password;
 	//Check if user exists in the database
 	engineer
-		.findOne({ where: { username: username } })
+		.findOne({ where: { userName: username } })
 		.then(function(user) {
 			if (!user) {
 				return res.status(401).send({ error: 'Please sign up' });
@@ -219,7 +219,7 @@ app.get('/engineerPage', authenticateEngineer, function(req, res) {
 		});
 });
 
-//will filter out  from database by server
+//will filter out  from database by role
 
 // app.get('/role', function(req, res) {
 // const workerArr =[];
