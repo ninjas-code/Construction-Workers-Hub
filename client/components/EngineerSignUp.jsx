@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
 
 class EngineerSignUp extends React.Component {
 	constructor(props) {
@@ -21,22 +21,30 @@ class EngineerSignUp extends React.Component {
 	engineerSignUp() {
 		console.log(this.state);
 		var that = this;
-		$.ajax({
-			type: 'POST',
-			url: '/signupEngineer',
-			data: that.state,
-			dataType: 'json'
-		});
-		<NavLink to="/signupEngineer"> </NavLink>;
+		fetch('/signupEngineer', {
+			method: 'POST',
+			body: JSON.stringify(that.state),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => res.json())
+			.then((response) => {
+				console.log('Success:', response.result);
+				return <Redirect to="/signinEngineer" />;
+			})
+			.catch((error) => console.error('Error:', error.err));
 	}
 
 	render() {
 		return (
 			<div>
-				<Link to="/">
+				<NavLink to="/" activeStyle={{ color: 'purple' }}>
 					<button value="Go Back home">Go Back home</button>
-				</Link>{' '}
-				<br /> <br />
+				</NavLink>{' '}
+				<br />
+				<br />
+				<h1>Sign Up for Engineers</h1>
 				<input type="text" name="fullname" placeholder="fullName" onChange={this.changed.bind(this)} /> <br />
 				<br />
 				<input type="text" name="username" placeholder="userName" onChange={this.changed.bind(this)} />
@@ -55,9 +63,9 @@ class EngineerSignUp extends React.Component {
 				<button onClick={this.engineerSignUp}>Sign Up</button>
 				<br />
 				<br />
-				<Link to="/signinEngineer">
+				<NavLink to="/signinEngineer" activeStyle={{ color: 'purple' }}>
 					<button value="Already Signed up? Sign In">Already Signed up? Sign In</button>
-				</Link>
+				</NavLink>
 			</div>
 		);
 	}

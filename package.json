@@ -6,9 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "nodemon server.js",
-		"web": "webpack",
-		"build": "webpack -d --watch",
-		"babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline -w"
+		"build": "webpack -d --watch"
 	},
 	"repository": {
 		"type": "git",
