@@ -47,6 +47,11 @@ class EngineerSignIn extends React.Component {
 				<br />
 				<br />
 				<button onClick={this.engineerSignIn}>Sign In</button>
+				<br />
+				<br />
+				<Link to="/engineerPage">
+					<button value="Go to profile">Go to profile</button>
+				</Link>
 			</div>
 		);
 	}
