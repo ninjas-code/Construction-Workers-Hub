@@ -70,7 +70,6 @@ app.post('/signinEngineer', function(req, res) {
 
 //worker sign up
 
-
 app.post('/signupWorker', function(req, res) {
 	const fullName =  req.body.fullname;
 	const username = req.body.username;
@@ -287,17 +286,10 @@ app.get('/smith', function(req, res) {
 	worker
 		.findAll({ where: { role: Role } })
 		.then(function(users) {
-			users.forEach(function(user) {
-				workerArr.push({
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role
-				});
-			});
-			return res.send({ workerArr });
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no smiths available' });
+			}
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
@@ -404,5 +396,5 @@ app.get('/engineerworker', function(req, res) {
 });
 
 app.listen(port, function() {
-    console.log(`app listening on port ${port}!`)
+	console.log(`app listening on port ${port}!`);
 });

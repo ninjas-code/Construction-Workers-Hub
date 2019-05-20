@@ -6,6 +6,9 @@ class Smiths extends React.Component {
 		return (
 			<div>
 				<h1>Hi We are the Smiths</h1>
+				<ul style={{ display: 'block' }}>
+					<li />
+				</ul>
 			</div>
 		);
 	}
