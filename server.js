@@ -14,10 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-// app.get('/', function(req, res) {
-// 	res.send('Hello World!');
-// });
-
 //Create new user in the database
 app.post('/signupEngineer', function(req, res) {
 	let fullname = req.body.fullname;
@@ -122,7 +118,9 @@ app.post('/signinWorker', function(req, res) {
 	});
 });
 
-const authenticateWorker = function(req, res, next) {
+
+
+const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
 	if (!token) {
 		return res.status(401).send('Please sign in');
@@ -134,6 +132,8 @@ const authenticateWorker = function(req, res, next) {
 		}
 		//Check if user exists in the database
 		const username = data.username;
+
+		if (data.role){
 		//console.log(username)
 		worker
 			.findOne({ where: { userName: username } })
@@ -149,40 +149,24 @@ const authenticateWorker = function(req, res, next) {
 			.catch(function(err) {
 				return res.status(500).send(err);
 			});
-	});
-};
-
-const authenticateEngineer = function(req, res, next) {
-	const token = req.headers['x-access-token']; //Username encoded in token
-	if (!token) {
-		return res.status(401).send('Please sign in');
-	}
-	jwt.verify(token, SECRET_KEY, (err, data) => {
-		//console.log(data)
-		if (err) {
-			return res.status(401).send('Please sign in');
+		}else {
+			engineer.findOne({where: {userName: username}}).then( (user) => {
+            //console.log(user)
+			if(!user){
+				return res.status(401).send('Please sign up');
+			}
+			req.body.user = user; // put user in req.body
+			//console.log(user)
+			return next();
+		}).catch(function(err){
+			return res.status(500).send(err);
+		})
 		}
-		//Check if user exists in the database
-		const username = data.username;
-		//console.log(username)
-		engineer
-			.findOne({ where: { userName: username } })
-			.then((user) => {
-				//console.log(user)
-				if (!user) {
-					return res.status(401).send('Please sign up');
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
 	});
 };
 
-app.get('/workerPage', authenticateWorker, function(req, res) {
+
+app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	//console.log(user)
 	worker
@@ -202,7 +186,7 @@ app.get('/workerPage', authenticateWorker, function(req, res) {
 		});
 });
 
-app.get('/engineerPage', authenticateEngineer, function(req, res) {
+app.get('/engineerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	engineer
 		.findOne({ where: { id: user.id } })
@@ -222,8 +206,8 @@ app.get('/engineerPage', authenticateEngineer, function(req, res) {
 	worker
 		.findAll({ where: { role : Role } })
 		.then(function(smithData) {
-            if(smithData.length === 0){
-                return res.send("we don't have smiths yet");   
+            if(!smithData){
+                return res.send({error :"we don't have smiths yet"});   
             }
 			return res.send(smithData);
 		})
@@ -239,7 +223,7 @@ app.get('/carpenter', function(req, res) {
 	worker
 		.findAll({ where: { role : Role } })
 		.then(function(carpenterData) {
-            if(carpenterData.length === 0){
+            if(!carpenterData.length){
                 return res.send("we don't have carpenters yet");   
             }
 			return res.send(carpenterData);
@@ -256,7 +240,7 @@ app.get('/painter', function(req, res) {
 	worker
 		.findAll({ where: { role : Role } })
 		.then(function(painterData) {
-            if(painterData.length === 0){
+            if(!painterData.length){
                 return res.send("we don't have painter yet");   
             }
 				return res.send(painterData);
@@ -266,25 +250,31 @@ app.get('/painter', function(req, res) {
 		});
 });
 
-
-
-app.get('/painter', function(req, res) {
-	const Role = 'painter';
+app.get('/engineerworker', authenticate , function(req, res) {
+	const username = req.body.username;
+	console.log(username)
 	worker
-		.findAll({ where: { role : Role } })
+		.findOne({ where: { userName : username } })
 		.then(function(user) {
-			return res.send({user});
-		})
+      return res.send({fullName: user.fullName,
+				experienceLevel: user.experienceLevel,
+				expectedSalary: user.expectedSalary,
+				phoneNumber: user.phoneNumber,
+				status : user.status,
+				role: user.role});
+      		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
-}); 
+});
+
 
 app.listen(port, function() {
 	console.log(`app listening on port ${port}!`);
 });
 
+
 //npm i bcrypt
 //npm i cors --save
 //npm install body-parser --save
-// npm install --save bluebird
+//npm install --save bluebird
