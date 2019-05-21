@@ -35,10 +35,10 @@ class WorkerSignIn extends React.Component {
 					<button value="Go Back home">Go Back home</button>
 				</Link>{' '}
 				<h1>Hello</h1>
-				<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
+				<input type="text" name="username"  placeholder="userName" onChange={this.onChange.bind(this)} />
 				<br />
 				<br />
-				<input type="text" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
+				<input type="password" name="password"  placeholder="password" onChange={this.onChange.bind(this)} />
 				<button onClick={this.clicked.bind(this)}>Sign In</button>
 			</div>
 		);
