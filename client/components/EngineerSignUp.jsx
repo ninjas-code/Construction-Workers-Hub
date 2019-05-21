@@ -36,7 +36,7 @@ class EngineerSignUp extends React.Component {
 				return response.json();
 			})
 			.then((response) => {
-				console.log(response);
+				console.log(response.success);
 				if (response.success === 'Sign up as engineer successful') {
 					that.setState({
 						username: '',
@@ -45,9 +45,15 @@ class EngineerSignUp extends React.Component {
 						toggleSignUp: false
 					});
 				} else {
-					console.log('err');
+					console.log(response.error);
 				}
 			});
+
+		if (that.state.phonenumber === '') {
+			that.setState({
+				WrongPhoneNumber: true
+			});
+		}
 	}
 
 	render() {
@@ -107,7 +113,8 @@ class EngineerSignUp extends React.Component {
 				) : (
 					<EngineerSignIn />
 				)}
-				{/* {this.state.toggleSignIn ? <EngineerSignIn /> : null} */}
+				{this.state.WrongPhoneNumber ? <W /> : null}
+				{this.state.toggleNotOkay ? <NotOkay /> : null}
 			</div>
 		);
 	}

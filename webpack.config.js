@@ -22,24 +22,4 @@ module.exports = {
 	}
 };
 
-////
-// var path = require('path');
-// var webpack = require('webpack');
-// module.exports = {
-// 	entry: './client/app.jsx',
-// 	output: {
-// 		path: path.resolve(__dirname, 'public'),
-// 		filename: 'aa.bundle.js'
-// 	},
-// 	module: {
-// 		rules: [
-// 			{
-// 				test: /\.jsx$/,
-// 				loader: 'babel-loader',
-// 				query: {
-// 					presets: [ 'react', 'es2015' ]
-// 				}
-// 			}
-// 		]
-// 	}
-// };
+
