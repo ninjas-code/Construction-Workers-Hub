@@ -12,7 +12,7 @@ class WorkerSignUp extends React.Component {
 			experiencelevel: '',
 			expectedsalary: '',
 			role: '',
-			status:''
+			status:'',
 		};
 	}
 	onChange(e) {
@@ -23,19 +23,6 @@ class WorkerSignUp extends React.Component {
 	clicked() {
 		var {fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status} = this.state;
 		var info = {fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status};
-		// console.log(typeof (this.state.experiencelevel));
-		console.log(info);
-		// var that = this;
-		//workerSignUp
-		// $.ajax({
-		// 	type: 'POST',
-		// 	url: '/signupWorker',
-		// 	data: {info},
-		// 	dataType: 'json',
-		// 	success: (data) => {
-		// 		console.log(data);
-		// 	}
-		// });
 		fetch('/signupWorker', {
 			method: 'POST',
 			body: JSON.stringify({info}),
@@ -43,8 +30,9 @@ class WorkerSignUp extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then((res) => res.json())
+			.then((res) => { return res.json()})
 			.then((res) => {
+				if(res.error)	return console.log('error:', res.error);
 				console.log('Success:', res.result);
 				// return <Redirect to="/signinEngineer" />;
 			})

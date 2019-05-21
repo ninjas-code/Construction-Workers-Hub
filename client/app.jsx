@@ -27,11 +27,11 @@ class App extends React.Component {
 						path="/"
 						render={() => (
 							<div>
-								<NavLink to="/signupEngineer" activeStyle={{ color: 'purple' }}>
+								<NavLink to="/signupEngineer" activeStyle={{ color: 'red' }}>
 									<button className="engineerSignUpButton" value="sign up as an engineer" />
 								</NavLink>
 
-								<NavLink to="/workerSignUp" activeStyle={{ color: 'purple' }}>
+								<NavLink to="/workerSignUp" activeStyle={{ color: 'blue' }}>
 									<button className="workerSignUpButton" value="sign up as a construction Worker" />
 								</NavLink>
 							</div>
