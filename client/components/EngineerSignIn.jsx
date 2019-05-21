@@ -26,8 +26,8 @@ class EngineerSignIn extends React.Component {
 			}
 		})
 			.then((res) => res.json())
-			.then((response) => {
-				console.log('Success:', response.result);
+			.then((res) => {
+				console.log('Success:', res.token);
 			})
 			.catch((error) => console.error('Error:', error.err));
 	}
