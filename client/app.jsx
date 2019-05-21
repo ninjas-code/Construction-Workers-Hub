@@ -38,7 +38,7 @@ class App extends React.Component {
 							</div>
 						)}
 					/>
-					<Route path="/signupEngineer" component={EngineerSignUp} />
+					<Route path="/signupEngineer" component={EngineerSignUp } />
 					<Route path="/signinEngineer" component={EngineerSignIn} />
 					<Route path="/signinWorker" component={WorkerSignIn} />
 					<Route path="/engineerSignUp" component={EngineerSignUp} />

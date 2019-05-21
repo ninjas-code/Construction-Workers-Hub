@@ -28,6 +28,7 @@ class WorkerSignUp extends React.Component {
 	clicked() {
 		var { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status } = this.state;
 		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status };
+		let that = this; 
 		fetch('/signupWorker', {
 			method: 'POST',
 			body: JSON.stringify({ info }),

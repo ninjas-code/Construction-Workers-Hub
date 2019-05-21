@@ -96,6 +96,7 @@ app.post('/signupWorker', function(req, res) {
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as worker successful' });
+
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
@@ -156,8 +157,6 @@ const authenticateWorker = function(req, res, next){
 		})
 	});
  };
-
-
 
 const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
