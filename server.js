@@ -35,11 +35,11 @@ app.post('/signupEngineer', function(req, res) {
 			password: hashedPassword
 		})
 		.then(function() {
-			return res.status(201).send('Sign up as engineer successful');
+			return res.status(201).send({ success: 'Sign up as engineer successful' });
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send('This username is already taken');
+				return res.status(400).send({ error: 'This username is already taken' });
 			}
 			return res.status(500).send('Server Error');
 		});
@@ -70,16 +70,16 @@ app.post('/signinEngineer', function(req, res) {
 
 //worker
 
-
 app.post('/signupWorker', function(req, res) {
-	const fullName =  req.body.fullname;
-	const username = req.body.username;
-	const password = req.body.password;
-	const experienceLevel = req.body.experiencelevel;
-	const expectedSalary = req.body.expectedsalary;
-	const phoneNumber = req.body.phonenumber;
-	const role = req.body.role;
-	const status = req.body.status;
+	const fullName =  req.body.info.fullname;
+	const username = req.body.info.username;
+	const password = req.body.info.password;
+	const experienceLevel = req.body.info.experiencelevel;
+	const expectedSalary = req.body.info.expectedsalary;
+	const phoneNumber = req.body.info.phonenumber;
+	const role = req.body.info.role;
+	const status = req.body.info.status;
+	// console.log(req.body.info)
 	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
@@ -94,13 +94,13 @@ app.post('/signupWorker', function(req, res) {
 			role: role
 		})
 		.then(function() {
-			return res.status(201).send('Sign up as worker successful');
+			return res.status(201).send({result:'Sign up as worker successful'});
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(401).send('This username is already taken');
+				return res.status(401).send({ error: 'This username is already taken' });
 			}
-			return res.status(500).send('Server Error');
+			return res.status(500).send({ error:'Server Error'});
 		});
 });
 
@@ -351,7 +351,7 @@ app.get('/engineerworker', authenticate, function(req, res) {
 });
 
 app.listen(port, function() {
-    console.log(`app listening on port ${port}!`)
+	console.log(`app listening on port ${port}!`);
 });
 //npm i bcrypt
 //npm i cors --save

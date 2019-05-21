@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
+import EngineerSignIn from './EngineerSignIn.jsx';
 
 class EngineerSignUp extends React.Component {
 	constructor(props) {
@@ -9,9 +10,10 @@ class EngineerSignUp extends React.Component {
 			username: '',
 			password: '',
 			sitelocation: '',
-			phonenumber: ''
+			phonenumber: '',
+			toggleSignUp: true,
+			toggleSignIn: false
 		};
-		this.engineerSignUp = this.engineerSignUp.bind(this);
 	}
 
 	changed(e) {
@@ -19,53 +21,93 @@ class EngineerSignUp extends React.Component {
 	}
 
 	engineerSignUp() {
-		console.log(this.state);
+		var { fullname, username, password, sitelocation, phonenumber } = this.state;
+		var engineer = { fullname, username, password, sitelocation, phonenumber };
+		console.log(engineer);
 		var that = this;
 		fetch('/signupEngineer', {
 			method: 'POST',
-			body: JSON.stringify(that.state),
+			body: JSON.stringify(engineer),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
-			.then((res) => res.json())
 			.then((response) => {
-				console.log('Success:', response.result);
-				return <Redirect to="/signinEngineer" />;
+				return response.json();
 			})
-			.catch((error) => console.error('Error:', error.err));
+			.then((response) => {
+				console.log(response);
+				if (response.success === 'Sign up as engineer successful') {
+					that.setState({
+						username: '',
+						password: '',
+						toggleSignIn: true,
+						toggleSignUp: false
+					});
+				} else {
+					console.log('err');
+				}
+			});
 	}
 
 	render() {
 		return (
 			<div>
-				<NavLink to="/" activeStyle={{ color: 'purple' }}>
-					<button value="Go Back home">Go Back home</button>
-				</NavLink>{' '}
-				<br />
-				<br />
-				<h1>Sign Up for Engineers</h1>
-				<input type="text" name="fullname" placeholder="fullName" onChange={this.changed.bind(this)} /> <br />
-				<br />
-				<input type="text" name="username" placeholder="userName" onChange={this.changed.bind(this)} />
-				<br />
-				<br />
-				<input type="password" name="password" placeholder="password" onChange={this.changed.bind(this)} />
-				<br />
-				<br />
-				<input type="text" name="sitelocation" placeholder="Site Location" onChange={this.changed.bind(this)} />
-				<br />
-				<br />
-				<input type="number" name="phonenumber" placeholder="Phone Number" onChange={this.changed.bind(this)} />
-				<br />
-				<br />
-				<br />
-				<button onClick={this.engineerSignUp}>Sign Up</button>
-				<br />
-				<br />
-				<NavLink to="/signinEngineer" activeStyle={{ color: 'purple' }}>
-					<button value="Already Signed up? Sign In">Already Signed up? Sign In</button>
-				</NavLink>
+				{this.state.toggleSignUp ? (
+					<div>
+						<NavLink to="/" activeStyle={{ color: 'purple' }}>
+							<button value="Go Back home">Go Back home</button>
+						</NavLink>{' '}
+						<br />
+						<br />
+						<h1>Sign Up for Engineers</h1>
+						<input
+							type="text"
+							name="fullname"
+							placeholder="fullName"
+							onChange={this.changed.bind(this)}
+						/>{' '}
+						<br />
+						<br />
+						<input type="text" name="username" placeholder="userName" onChange={this.changed.bind(this)} />
+						<br />
+						<br />
+						<input
+							type="password"
+							name="password"
+							placeholder="password"
+							onChange={this.changed.bind(this)}
+						/>
+						<br />
+						<br />
+						<input
+							type="text"
+							name="sitelocation"
+							placeholder="Site Location"
+							onChange={this.changed.bind(this)}
+						/>
+						<br />
+						<br />
+						<input
+							type="number"
+							name="phonenumber"
+							placeholder="Phone Number"
+							onChange={this.changed.bind(this)}
+						/>
+						<br />
+						<br />
+						<br />
+						<button onClick={this.engineerSignUp.bind(this)}>Sign Up</button>
+						<br />
+						<br />
+						<NavLink to="/signinEngineer" activeStyle={{ color: 'purple' }}>
+							<button value="Already Signed up? Sign In">Already Signed up? Sign In</button>
+						</NavLink>
+					</div>
+				) : (
+					<EngineerSignIn />
+				)}
+				{/* {this.state.toggleSignIn ? <EngineerSignIn /> : null} */}
 			</div>
 		);
 	}
