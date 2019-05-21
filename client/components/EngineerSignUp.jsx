@@ -48,12 +48,6 @@ class EngineerSignUp extends React.Component {
 					console.log(response.error);
 				}
 			});
-
-		if (that.state.phonenumber === '') {
-			that.setState({
-				WrongPhoneNumber: true
-			});
-		}
 	}
 
 	render() {
