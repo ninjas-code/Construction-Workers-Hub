@@ -71,14 +71,15 @@ app.post('/signinEngineer', function(req, res) {
 //worker
 
 app.post('/signupWorker', function(req, res) {
-	const fullName =  req.body.fullname;
-	const username = req.body.username;
-	const password = req.body.password;
-	const experienceLevel = req.body.experiencelevel;
-	const expectedSalary = req.body.expectedsalary;
-	const phoneNumber = req.body.phonenumber;
-	const role = req.body.role;
-	const status = req.body.status;
+	const fullName =  req.body.info.fullname;
+	const username = req.body.info.username;
+	const password = req.body.info.password;
+	const experienceLevel = req.body.info.experiencelevel;
+	const expectedSalary = req.body.info.expectedsalary;
+	const phoneNumber = req.body.info.phonenumber;
+	const role = req.body.info.role;
+	const status = req.body.info.status;
+	// console.log(req.body.info)
 	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
@@ -93,7 +94,7 @@ app.post('/signupWorker', function(req, res) {
 			role: role
 		})
 		.then(function() {
-			return res.status(201).send('Sign up as worker successful');
+			return res.status(201).send({result:'Sign up as worker successful'});
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
