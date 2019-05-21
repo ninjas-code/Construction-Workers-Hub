@@ -2,36 +2,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class WorkerSignUp extends React.Component {
-	constructor(){
+	constructor() {
 		super();
-		this.state={
-			fullname:'',
-			username:'',
-			password:'',
-			phonenumber:'',
-			experiencelevel:'',
-			expectedsalary:'',
-			role:''
-		}
+		this.state = {
+			fullname: '',
+			username: '',
+			password: '',
+			phonenumber: '',
+			experiencelevel: '',
+			expectedsalary: '',
+			role: ''
+		};
 	}
-	onChange(e){
+	onChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
-		})
+		});
 	}
-	clicked(){
-		console.log(this.state)
-		var that =this;
+	clicked() {
+		console.log(this.state);
+		var that = this;
 		//workerSignUp
 		$.ajax({
-			type: "POST",
+			type: 'POST',
 			url: 'signupWorker',
 			data: that.state,
 			dataType: 'json',
-			success: (data)=>{
+			success: (data) => {
 				console.log(data);
 			}
-			
 		});
 	}
 	render() {
@@ -42,51 +41,43 @@ class WorkerSignUp extends React.Component {
 				</Link>{' '}
 				<br />
 				<br />
-				<input type="text" name="fullname"
-				 placeholder="fullName"
-				 onChange={this.onChange.bind(this)}
-				 />
+				<h1>Sign Up for construction Workers</h1>
+				<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 				<br />
 				<br />
-				<input type="text" name="username"
-				placeholder="userName" 
-				onChange={this.onChange.bind(this)}
+				<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
+				<br />
+				<br />
+				<input type="password" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
+				<br />
+				<br />
+				<input type="text" name="phonenumber" placeholder="Phone Number" onChange={this.onChange.bind(this)} />
+				<br />
+				<br />
+				<input
+					type="text"
+					name="experiencelevel"
+					placeholder="experience level"
+					onChange={this.onChange.bind(this)}
 				/>
 				<br />
 				<br />
-				<input type="password" name="password" 
-				placeholder="password" 
-				onChange={this.onChange.bind(this)}
-				/>
-				<br />
-				<br />
-				<input type="text" name="phonenumber" 
-				placeholder="Phone Number" 
-				onChange={this.onChange.bind(this)}
-				/>
-				<br />
-				<br />
-				<input type="text" name="experiencelevel"
-				placeholder="experience level" 
-				onChange={this.onChange.bind(this)}
-				/>
-				<br />
-				<br />
-				<input type="text" name="expectedsalary"
-				placeholder="expected salary" 
-				onChange={this.onChange.bind(this)}
+				<input
+					type="number"
+					name="expectedsalary"
+					placeholder="expected salary"
+					onChange={this.onChange.bind(this)}
 				/>
 				<br />
 				<p>ex: Smith or Carpenter</p>
-				<input type="text" name="role" 
-				placeholder="role" 
-				onChange={this.onChange.bind(this)}
-				/>
+				<input type="text" name="role" placeholder="role" onChange={this.onChange.bind(this)} />
 				<br />
 				<br />
-				<button id='signUpWorker' onClick={this.clicked.bind(this)}>Sign Up</button>
+				<button id="signUpWorker" onClick={this.clicked.bind(this)}>
+					Sign Up
+				</button>
 				<Link to="/signinWorker">
-					<button  value="sign In as a construction Worker">Sign In</button>
+					<button value="sign In as a construction Worker">Sign In</button>
 				</Link>
 			</div>
 		);

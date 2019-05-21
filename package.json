@@ -6,9 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "nodemon server.js",
-		"web": "webpack",
-		"build": "webpack -d --watch",
-		"babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline -w"
+		"build": "webpack -d --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -24,6 +22,7 @@
 		"@babel/cli": "^7.4.4",
 		"@babel/core": "^7.4.4",
 		"@babel/preset-react": "^7.0.0",
+		"axios": "^0.18.0",
 		"babel-preset-env": "^1.7.0",
 		"balanced-match": "^1.0.0",
 		"bcrypt": "^3.0.6",

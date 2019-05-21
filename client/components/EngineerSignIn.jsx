@@ -18,19 +18,18 @@ class EngineerSignIn extends React.Component {
 	engineerSignIn() {
 		var that = this;
 		console.log(this.state);
-		$.ajax({
-			type: 'POST',
-			url: '/signinEngineer',
-			data: that.state,
-			dataType: 'json',
-			success: function success(data) {
-				console.log(data);
-			},
-			error: function error(error){
-				console.log(error)
+		fetch('/signinEngineer', {
+			method: 'POST',
+			body: JSON.stringify(that.state),
+			headers: {
+				'Content-Type': 'application/json'
 			}
-			
-		});
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				console.log('Success:', res.token);
+			})
+			.catch((error) => console.error('Error:', error.err));
 	}
 
 	render() {
@@ -48,6 +47,11 @@ class EngineerSignIn extends React.Component {
 				<br />
 				<br />
 				<button onClick={this.engineerSignIn}>Sign In</button>
+				<br />
+				<br />
+				<Link to="/engineerPage">
+					<button value="Go to profile">Go to profile</button>
+				</Link>
 			</div>
 		);
 	}

@@ -9,7 +9,12 @@ const { engineer, worker } = require('./database/models');
 const app = express();
 const port = process.env.PORT || 5000;
 
-//Middleware
+//things to install
+//npm i bcrypt
+//npm i cors --save
+//npm install body-parser --save
+// npm install --save bluebird
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -74,6 +79,7 @@ app.post('/signupWorker', function(req, res) {
 	const expectedSalary = req.body.expectedsalary;
 	const phoneNumber = req.body.phonenumber;
 	const role = req.body.role;
+	const status = req.body.status;
 	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
@@ -84,6 +90,7 @@ app.post('/signupWorker', function(req, res) {
 			experienceLevel: experienceLevel,
 			expectedSalary: expectedSalary,
 			phoneNumber: phoneNumber,
+			status: status,
 			role: role
 		})
 		.then(function() {
@@ -109,7 +116,7 @@ app.post('/signinWorker', function(req, res) {
 		bcrypt.compare(password, workerPassword).then(function(isMatching) {
 			if (isMatching) {
 				// console.log(user)
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -133,38 +140,40 @@ const authenticate = function(req, res, next) {
 		//Check if user exists in the database
 		const username = data.username;
 
-		if (data.role){
-		//console.log(username)
-		worker
-			.findOne({ where: { userName: username } })
-			.then((user) => {
-				//console.log(user)
-				if (!user) {
-					return res.status(401).send('Please sign up');
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
-		}else {
-			engineer.findOne({where: {userName: username}}).then( (user) => {
-            //console.log(user)
-			if(!user){
-				return res.status(401).send('Please sign up');
-			}
-			req.body.user = user; // put user in req.body
-			//console.log(user)
-			return next();
-		}).catch(function(err){
-			return res.status(500).send(err);
-		})
+		if (data.role) {
+			//console.log(username)
+			worker
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
+		} else {
+			engineer
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
 		}
 	});
 };
-
 
 app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
@@ -178,6 +187,7 @@ app.get('/workerPage', authenticate, function(req, res) {
 				experienceLevel: user.experienceLevel,
 				expectedSalary: user.expectedSalary,
 				phoneNumber: user.phoneNumber,
+				status: user.status,
 				role: user.role
 			});
 		})
@@ -198,83 +208,123 @@ app.get('/engineerPage', authenticate, function(req, res) {
 		});
 });
 
+// will filter out  from database by server
 
-//get workers data via role button
+// app.get('/role' ,  authenticate , function(req, res) {
+//     const workerArr =[];
 
- app.get('/smith', function(req, res) {
+// 	const Role = req.body.role;
+
+// 	worker
+// 		.findAll({ where: { role : Role } })
+// 		.then(function(users) {
+
+// users.forEach(function(user) {
+//       workerArr.push({ fullName: user.fullName,
+// 				experienceLevel: user.experienceLevel,
+// 				expectedSalary: user.expectedSalary,
+// 				phoneNumber: user.phoneNumber,
+// 				status : user.status,
+// 				role: user.role});
+//     });
+// return res.send({workerArr});
+
+// 		})
+// 		.catch(function(err) {
+// 			return res.status(500).send(err);
+// 		});
+// });
+
+app.get('/smith', function(req, res) {
 	const Role = 'smith';
 	worker
-		.findAll({ where: { role : Role } })
-		.then(function(smithData) {
-            if(!smithData){
-                return res.send({error :"we don't have smiths yet"});   
-            }
-			return res.send(smithData);
+		.findAll({ where: { role: Role } })
+		.then(function(users) {
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no smiths available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
-
-
-app.get('/carpenter', function(req, res) {
+app.get('/carpenter', authenticate, function(req, res) {
 	const Role = 'carpenter';
+
 	worker
-		.findAll({ where: { role : Role } })
-		.then(function(carpenterData) {
-            if(!carpenterData.length){
-                return res.send("we don't have carpenters yet");   
-            }
-			return res.send(carpenterData);
+		.findAll({ where: { role: Role } })
+		.then(function(users) {
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no carpenters available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
+app.get('/stoneBuilder', authenticate, function(req, res) {
+	const Role = 'stoneBuilder';
 
+	worker
+		.findAll({ where: { role: Role } })
+		.then(function(users) {
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no stone Builders available' });
+			}
 
-app.get('/painter', function(req, res) {
+			return res.send(users);
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+app.get('/painter', authenticate, function(req, res) {
 	const Role = 'painter';
+
 	worker
-		.findAll({ where: { role : Role } })
-		.then(function(painterData) {
-            if(!painterData.length){
-                return res.send("we don't have painter yet");   
-            }
-				return res.send(painterData);
+		.findAll({ where: { role: Role } })
+		.then(function(users) {
+			if (!users) {
+				return res.send({ error: 'Sorry, There are no painters available' });
+			}
+
+			return res.send(users);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
 
-app.get('/engineerworker', authenticate , function(req, res) {
-	const username = req.body.username;
+app.get('/engineerworker/:userName',  function(req, res) {
+	const username = req.params.userName;
 	console.log(username)
 	worker
-		.findOne({ where: { userName : username } })
+		.findOne({ where: { userName: username } })
 		.then(function(user) {
-      return res.send({fullName: user.fullName,
+			return res.send({
+				fullName: user.fullName,
 				experienceLevel: user.experienceLevel,
 				expectedSalary: user.expectedSalary,
 				phoneNumber: user.phoneNumber,
-				status : user.status,
-				role: user.role});
-      		})
+				status: user.status,
+				role: user.role
+			});
+		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
-
 
 app.listen(port, function() {
 	console.log(`app listening on port ${port}!`);
 });
-
-
 //npm i bcrypt
 //npm i cors --save
 //npm install body-parser --save
-//npm install --save bluebird
