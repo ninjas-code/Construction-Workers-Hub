@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import WorkerMainPage from './WorkerMainPage.jsx';
 class WorkerSignIn extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			username: '',
-			password: ''
+			password: '',
+			fullName: '',
+			phoneNumber: '',
+			toggleSignIn: true,
+			toggleWorkerpage: false,
+			token: '',
+			experienceLevel: '',
+			expectedSalary: '',
+			role: '',
+			status: ''
 		};
 	}
 	onChange(e) {
@@ -15,31 +24,83 @@ class WorkerSignIn extends React.Component {
 		});
 	}
 	clicked() {
-		console.log(this.state);
+		var { username, password } = this.state;
+		var worker = { username, password };
 		var that = this;
-		//workerSignUp
-		$.ajax({
-			type: 'POST',
-			url: 'signinWorker',
-			data: that.state,
-			success: function success(data) {
-				console.log(data);
-			},
-			dataType: 'json'
+		console.log(this.state);
+		fetch('/signinWorker', {
+			method: 'POST',
+			body: JSON.stringify(worker),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => {
+			if (response.status == 200) {
+				response.json().then((body) => {
+					that.setState(
+						{ toggleSignIn: false, toggleWorkerpage: true, token: body.token, password: '', username: '' },
+						() => {
+							that.workerPage(that);
+						}
+					);
+				});
+			} else {
+				console.log('err');
+			}
 		});
 	}
+
+	workerPage(that) {
+		fetch('/workerPage', {
+			method: 'get',
+			headers: { 'x-access-token': that.state.token }
+		}).then(function(response) {
+			if (response.status == 200) {
+				response.json().then((body) => {
+					that.setState({
+						fullName: body.fullName,
+						phoneNumber: body.phoneNumber,
+						experienceLevel: body.experienceLevel,
+						expectedSalary: body.expectedSalary,
+						role: body.role,
+						status: body.status
+					});
+				});
+			} else {
+				response.then((error) => {
+					that.setState({ errorMessage: error });
+				});
+			}
+		});
+	}
+
 	render() {
 		return (
 			<div>
-				<Link to="/">
-					<button value="Go Back home">Go Back home</button>
-				</Link>{' '}
-				<h1>Hello</h1>
-				<input type="text" name="username"  placeholder="userName" onChange={this.onChange.bind(this)} />
-				<br />
-				<br />
-				<input type="password" name="password"  placeholder="password" onChange={this.onChange.bind(this)} />
-				<button onClick={this.clicked.bind(this)}>Sign In</button>
+				{this.state.toggleSignIn ? (
+					<div>
+						<Link to="/">
+							<button value="Go Back home">Go Back home</button>
+						</Link>{' '}
+						<h1>Worker Sign In Page</h1>
+						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
+						<br />
+						<br />
+						<input type="text" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
+						<button onClick={this.clicked.bind(this)}>Sign In</button>
+					</div>
+				) : (
+					<WorkerMainPage
+						fullName={this.state.fullName}
+						phoneNumber={this.state.phoneNumber}
+						token={this.state.token}
+						siteLocation={this.state.siteLocation}
+						experienceLevel={this.state.experienceLevel}
+						expectedSalary={this.state.expectedSalary}
+						role={this.state.role}
+						status={this.state.status}
+					/>
+				)}
 			</div>
 		);
 	}

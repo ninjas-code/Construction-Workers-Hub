@@ -26,9 +26,9 @@ class WorkerSignUp extends React.Component {
 	}
 
 	clicked() {
+		var that = this;
 		var { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status } = this.state;
 		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status };
-		let that = this; 
 		fetch('/signupWorker', {
 			method: 'POST',
 			body: JSON.stringify({ info }),
@@ -45,11 +45,13 @@ class WorkerSignUp extends React.Component {
 					that.setState({
 						username: '',
 						password: '',
-						toggleSignIn: true,
-						toggleSignUp: false
+						toggleSignUp: false,
+						toggleSignIn: true
 					});
+					return;
 				} else {
 					console.log(response.error);
+					return;
 				}
 			});
 	}
@@ -72,60 +74,70 @@ class WorkerSignUp extends React.Component {
 
 		return (
 			<div>
-				<Link to="/">
-					<button value="Go Back home">Go Back home</button>
-				</Link>{' '}
-				<br />
-				<br />
-				<h1>Sign Up for construction Workers</h1>
-				<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
-				<br />
-				<br />
-				<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
-				<br />
-				<br />
-				<input type="password" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
-				<br />
-				<br />
-				<input
-					type="number"
-					name="phonenumber"
-					placeholder="079-123-4567"
-					onChange={this.onChange.bind(this)}
-				/>
-				<br />
-				{/* pattern="[0-9]{3}[0-9]{3}[0-9]{4}" */}
-				<br />
-				<select name="experiencelevel" onChange={this.onChange.bind(this)}>
-					{chooseExperienceLevel}
-				</select>
-				<br />
-				<br />
-				<input
-					type="number"
-					name="expectedsalary"
-					placeholder="expected salary"
-					onChange={this.onChange.bind(this)}
-				/>{' '}
-				JD
-				<br />
-				<br />
-				<select name="role" onChange={this.onChange.bind(this)}>
-					{chooseRoles}
-				</select>
-				<br />
-				<br />
-				<select name="status" onChange={this.onChange.bind(this)}>
-					{chooseStatus}
-				</select>
-				<br />
-				<br />
-				<button id="signUpWorker" onClick={this.clicked.bind(this)}>
-					Sign Up
-				</button>
-				<Link to="/signinWorker">
-					<button value="sign In as a construction Worker">Sign In</button>
-				</Link>
+				{this.state.toggleSignUp ? (
+					<div>
+						<Link to="/">
+							<button value="Go Back home">Go Back home</button>
+						</Link>{' '}
+						<br />
+						<br />
+						<h1>Sign Up for construction Workers</h1>
+						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
+						<br />
+						<br />
+						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
+						<br />
+						<br />
+						<input
+							type="password"
+							name="password"
+							placeholder="password"
+							onChange={this.onChange.bind(this)}
+						/>
+						<br />
+						<br />
+						<input
+							type="number"
+							name="phonenumber"
+							placeholder="079-123-4567"
+							onChange={this.onChange.bind(this)}
+						/>
+						<br />
+						<br />
+						<select name="experiencelevel" onChange={this.onChange.bind(this)}>
+							{chooseExperienceLevel}
+						</select>
+						<br />
+						<br />
+						<input
+							type="number"
+							name="expectedsalary"
+							placeholder="expected salary"
+							onChange={this.onChange.bind(this)}
+						/>{' '}
+						JD
+						<br />
+						<br />
+						<select name="role" onChange={this.onChange.bind(this)}>
+							{chooseRoles}
+						</select>
+						<br />
+						<br />
+						<select name="status" onChange={this.onChange.bind(this)}>
+							{chooseStatus}
+						</select>
+						<br />
+						<br />
+						<button id="signUpWorker" onClick={this.clicked.bind(this)}>
+							Sign Up
+						</button>
+						<Link to="/signinWorker">
+							<button value="sign In as a construction Worker">Sign In</button>
+						</Link>
+					</div>
+				) : (
+					<WorkerSignIn />
+				)}
 			</div>
 		);
 	}

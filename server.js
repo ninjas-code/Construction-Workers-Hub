@@ -36,11 +36,11 @@ app.post('/signupEngineer', function(req, res) {
 			password: hashedPassword
 		})
 		.then(function() {
-			return res.status(201).send('Sign up as engineer successful');
+			return res.status(201).send({success:'Sign up as engineer successful'});
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send('This username is already taken');
+				return res.status(400).send({error:'This username is already taken'});
 			}
 			return res.status(500).send('Server Error');
 		});
@@ -72,7 +72,7 @@ app.post('/signinEngineer', function(req, res) {
 //worker
 
 app.post('/signupWorker', function(req, res) {
-	const fullName =  req.body.info.fullname;
+	const fullName = req.body.info.fullname;
 	const username = req.body.info.username;
 	const password = req.body.info.password;
 	const experienceLevel = req.body.info.experiencelevel;
@@ -96,67 +96,69 @@ app.post('/signupWorker', function(req, res) {
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as worker successful' });
-
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
 				return res.status(401).send({ error: 'This username is already taken' });
 			}
-			return res.status(500).send({ error:'Server Error'});
+			console.log(err);
+			return res.status(500).send({ error: 'Server Error' });
 		});
 });
 
-
 app.post('/signinWorker', function(req, res) {
-    const username = req.body.username;
-    const password = req.body.password;
+	const username = req.body.username;
+	const password = req.body.password;
 
-    worker.findOne({where : {userName: username}}).then(function(user){
-        if(!user){
-            return res.status(401).send({error: 'Wrong username'}); 
-        }
-        const workerPassword =user.password;
-        bcrypt.compare(password , workerPassword).then(function(isMatching){
-            if(isMatching){
-                // console.log(user)
-                const token = jwt.sign({username: user.userName}, SECRET_KEY, {expiresIn: 900});
-                return res.send({token: token});
-            } else {
-                return res.status(401).send({error: 'Wrong password'});
-            }
-        });
-    });
-    
-});
-
-
-const authenticateWorker = function(req, res, next){
-	const token = req.headers['x-access-token']; //Username encoded in token
-	if(!token){
-		return res.status(401).send('Please sign in');
-	}
-	jwt.verify(token, SECRET_KEY, (err, data) => {
-        //console.log(data)
-		if(err){
-			return res.status(401).send('Please sign in');
+	worker.findOne({ where: { userName: username } }).then(function(user) {
+		if (!user) {
+			return res.status(401).send({ error: 'Wrong username' });
 		}
 		const workerPassword = user.password;
 		bcrypt.compare(password, workerPassword).then(function(isMatching) {
 			if (isMatching) {
 				// console.log(user)
-				const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
 			}
-			req.body.user = user; // put user in req.body
-			//console.log(user)
-			return next();
-		}).catch(function(err){
-			return res.status(500).send(err);
-		})
+		});
 	});
- };
+});
+
+const authenticateWorker = function(req, res, next) {
+	const token = req.headers['x-access-token']; //Username encoded in token
+	if (!token) {
+		return res.status(401).send('Please sign in');
+	}
+	jwt.verify(token, SECRET_KEY, (err, data) => {
+		//console.log(data)
+		if (err) {
+			return res.status(401).send('Please sign in');
+		}
+		const workerPassword = user.password;
+		bcrypt
+			.compare(password, workerPassword)
+			.then(function(isMatching) {
+				if (isMatching) {
+					// console.log(user)
+					const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, {
+						expiresIn: 900
+					});
+					return res.send({ token: token });
+				} else {
+					return res.status(401).send({ error: 'Wrong password' });
+				}
+				req.body.user = user; // put user in req.body
+				//console.log(user)
+				return next();
+			})
+			.catch(function(err) {
+				return res.status(500).send(err);
+			});
+	});
+};
 
 const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
@@ -348,6 +350,37 @@ app.get('/engineerworker/:id',  function(req, res) {
 				role: user.role,
 				
  			}]);
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+app.post('/orders', authenticate, function(req, res) {
+	const workers = req.body.workers;
+	const user = req.body.user;
+	const endDate = req.body.endDate;
+
+	engineer
+		.findOne({ where: { id: user.id } })
+		.then(function(user) {
+			const engineers = user.userName;
+			worker.findOne({ where: { userName: workers } }).then(function(users) {
+				if (users.status === 'Not Available') {
+					return res.status(400).send({ error: 'The worker is not available' });
+				} else {
+					order
+						.create({
+							engineerName: engineers,
+							workerName: workers,
+							endDate: endDate,
+							status: 'Not Available'
+						})
+						.then(function() {
+							return res.status(201).send({ success: 'save data' });
+						});
+				}
+			});
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
