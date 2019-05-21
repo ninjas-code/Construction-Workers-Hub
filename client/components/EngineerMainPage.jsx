@@ -2,6 +2,17 @@ import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
 
 class EngineerMainPage extends React.Component {
+	smithClick() {
+		fetch('/smith')
+			.then(function(data) {
+				console.log(data);
+				return data.json();
+			})
+			.then(function(data) {
+				console.log({ 'the data': data.json() });
+			});
+	}
+
 	
 	render() {
 		return (

@@ -11,7 +11,7 @@ import Smiths from './components/Smiths.jsx';
 import Carpenters from './components/Carpenters.jsx';
 import StoneBuilders from './components/StoneBuilders.jsx';
 import Painters from './components/Painters.jsx';
-import SmithsProfile from './components/SmithsProfile.jsx';
+import Profiles from './components/Profiles.jsx';
 
 class App extends React.Component {
 	render() {
@@ -48,7 +48,7 @@ class App extends React.Component {
 					<Route path="/carpenter" component={Carpenters} />
 					<Route path="/stoneBuilder" component={StoneBuilders} />
 					<Route path="/painter" component={Painters} />
-					<Route path="/engineerworker" component={SmithsProfile} />
+					<Route path="/engineerworker/:id" component={Profiles} />
 				</div>
 			</BrowserRouter>
 		);

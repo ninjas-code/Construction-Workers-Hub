@@ -36,11 +36,11 @@ app.post('/signupEngineer', function(req, res) {
 			password: hashedPassword
 		})
 		.then(function() {
-			return res.status(201).send({ success: 'Sign up as engineer successful' });
+			return res.status(201).send('Sign up as engineer successful');
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send({ error: 'This username is already taken' });
+				return res.status(400).send('This username is already taken');
 			}
 			return res.status(500).send('Server Error');
 		});
@@ -251,7 +251,7 @@ app.get('/smith', function(req, res) {
 		});
 });
 
-app.get('/carpenter', authenticate, function(req, res) {
+app.get('/carpenter',  function(req, res) {
 	const Role = 'carpenter';
 
 	worker
@@ -268,7 +268,7 @@ app.get('/carpenter', authenticate, function(req, res) {
 		});
 });
 
-app.get('/stoneBuilder', authenticate, function(req, res) {
+app.get('/stoneBuilder',  function(req, res) {
 	const Role = 'stoneBuilder';
 
 	worker
@@ -285,7 +285,7 @@ app.get('/stoneBuilder', authenticate, function(req, res) {
 		});
 });
 
-app.get('/painter', authenticate, function(req, res) {
+app.get('/painter',  function(req, res) {
 	const Role = 'painter';
 
 	worker
@@ -302,20 +302,21 @@ app.get('/painter', authenticate, function(req, res) {
 		});
 });
 
-app.get('/engineerworker/:userName',  function(req, res) {
-	const username = req.params.userName;
-	console.log(username)
+app.get('/engineerworker/:id',  function(req, res) {
+	const userId = req.params.id;
+	console.log(userId)
 	worker
-		.findOne({ where: { userName: username } })
+		.findOne({ where: { id: userId } })
 		.then(function(user) {
-			return res.send({
+			return res.send([{
 				fullName: user.fullName,
 				experienceLevel: user.experienceLevel,
 				expectedSalary: user.expectedSalary,
 				phoneNumber: user.phoneNumber,
 				status: user.status,
-				role: user.role
-			});
+				role: user.role,
+				
+ 			}]);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
