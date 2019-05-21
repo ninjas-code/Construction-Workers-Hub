@@ -95,11 +95,7 @@ app.post('/signupWorker', function(req, res) {
 			role: role
 		})
 		.then(function() {
-<<<<<<< HEAD
 			return res.status(201).send({ success: 'Sign up as worker successful' });
-=======
-			return res.status(201).send({result:'Sign up as worker successful'});
->>>>>>> f16de0d5d6c3dedc4287411c587ed0048d74d947
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {

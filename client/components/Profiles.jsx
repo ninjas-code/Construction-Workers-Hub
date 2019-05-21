@@ -15,7 +15,7 @@ class Profiles extends React.Component {
 		const  { match }  = this.props;
 	   //console.log()
 		fetch(`/engineerworker/${match.params.id}`)
-		  .then( (response) => response.json())
+		  .then( (response) => response.json())	
 			.then( data =>  that.setState({userProfile: data }))
 			//.then(console.log(that.state.userProfile))
 			.catch(err => { console.log(err) })
