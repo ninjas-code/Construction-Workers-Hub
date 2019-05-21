@@ -93,11 +93,11 @@ app.post('/signupWorker', function(req, res) {
 			role: role
 		})
 		.then(function() {
-			return res.status(201).send('Sign up as worker successful');
+			return res.status(201).send({ success: 'Sign up as worker successful' });
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(401).send('This username is already taken');
+				return res.status(401).send({ error: 'This username is already taken' });
 			}
 			return res.status(500).send('Server Error');
 		});
