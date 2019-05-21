@@ -2,12 +2,12 @@ var mysql = require('mysql');
 var Sequelize = require('sequelize');
 
 //Database connection
-const db = new Sequelize('construction_worker_hub', 'root', '1111', {
+const db = new Sequelize('construction_worker_hub', 'root', '1998', {
 	host: 'localhost',
 	dialect: 'mysql'
 });
 
-db.sync({ force: true, logging: false }).then(() => {
+db.sync({ force: false, logging: false }).then(() => {
 	console.log(`Database & tables created!`);
 });
 

@@ -36,11 +36,11 @@ app.post('/signupEngineer', function(req, res) {
 			password: hashedPassword
 		})
 		.then(function() {
-			return res.status(201).send({success:'Sign up as engineer successful'});
+			return res.status(201).send({ success: 'Sign up as engineer successful' });
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send({error:'This username is already taken'});
+				return res.status(400).send({ error: 'This username is already taken' });
 			}
 			return res.status(500).send('Server Error');
 		});
@@ -60,7 +60,7 @@ app.post('/signinEngineer', function(req, res) {
 		bcrypt.compare(password, existingHashedPassword).then(function(isMatching) {
 			if (isMatching) {
 				//Create a token and send to client
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 10000 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -268,7 +268,7 @@ app.get('/engineerPage', authenticate, function(req, res) {
 // 		});
 // });
 
-app.get('/smith', function(req, res) {
+app.get('/smith', authenticate, function(req, res) {
 	const Role = 'smith';
 	worker
 		.findAll({ where: { role: Role } })
@@ -284,7 +284,7 @@ app.get('/smith', function(req, res) {
 		});
 });
 
-app.get('/carpenter',  function(req, res) {
+app.get('/carpenter', authenticate, function(req, res) {
 	const Role = 'carpenter';
 
 	worker
@@ -301,7 +301,7 @@ app.get('/carpenter',  function(req, res) {
 		});
 });
 
-app.get('/stoneBuilder',  function(req, res) {
+app.get('/stoneBuilder', authenticate, function(req, res) {
 	const Role = 'stoneBuilder';
 
 	worker
@@ -318,7 +318,7 @@ app.get('/stoneBuilder',  function(req, res) {
 		});
 });
 
-app.get('/painter',  function(req, res) {
+app.get('/painter', authenticate, function(req, res) {
 	const Role = 'painter';
 
 	worker
@@ -335,21 +335,22 @@ app.get('/painter',  function(req, res) {
 		});
 });
 
-app.get('/engineerworker/:id',  function(req, res) {
+app.get('/engineerworker/:id', function(req, res) {
 	const userId = req.params.id;
-	console.log(userId)
+	console.log(userId);
 	worker
 		.findOne({ where: { id: userId } })
 		.then(function(user) {
-			return res.send([{
-				fullName: user.fullName,
-				experienceLevel: user.experienceLevel,
-				expectedSalary: user.expectedSalary,
-				phoneNumber: user.phoneNumber,
-				status: user.status,
-				role: user.role,
-				
- 			}]);
+			return res.send([
+				{
+					fullName: user.fullName,
+					experienceLevel: user.experienceLevel,
+					expectedSalary: user.expectedSalary,
+					phoneNumber: user.phoneNumber,
+					status: user.status,
+					role: user.role
+				}
+			]);
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
