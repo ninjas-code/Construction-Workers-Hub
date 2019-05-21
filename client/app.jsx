@@ -11,7 +11,8 @@ import Smiths from './components/Smiths.jsx';
 import Carpenters from './components/Carpenters.jsx';
 import StoneBuilders from './components/StoneBuilders.jsx';
 import Painters from './components/Painters.jsx';
-var role = ['paint','carpenter']
+import Profiles from './components/Profiles.jsx';
+
 class App extends React.Component {
 	render() {
 		return (
@@ -47,6 +48,7 @@ class App extends React.Component {
 					<Route path="/carpenter" component={Carpenters} />
 					<Route path="/stoneBuilder" component={StoneBuilders} />
 					<Route path="/painter" component={Painters} />
+					<Route path="/engineerworker/:id" component={Profiles} />
 				</div>
 			</BrowserRouter>
 		);

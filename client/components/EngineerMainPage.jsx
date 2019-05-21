@@ -13,6 +13,7 @@ class EngineerMainPage extends React.Component {
 			});
 	}
 
+	
 	render() {
 		return (
 			<div>
@@ -29,9 +30,7 @@ class EngineerMainPage extends React.Component {
 				<br />
 				<h2>Construction Workers:</h2>
 				<NavLink to="/smith" activeStyle={{ color: 'purple' }}>
-					<button value="Smiths" onClick={this.smithClick.bind(this)}>
-						Smiths
-					</button>
+					<button value="Smiths" >Smiths</button>
 				</NavLink>
 				<NavLink to="/carpenter" activeStyle={{ color: 'purple' }}>
 					<button value="Carpenters">Carpenters</button>
