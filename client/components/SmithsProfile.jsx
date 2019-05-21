@@ -11,7 +11,7 @@ class SmithsProfile extends React.Component {
 	componentDidMount(){
 		let that = this;
 	    //const { match: { params } } = this.props;
-		fetch('/engineerworker/:userName')
+		fetch('/engineerworker/')
 		  .then( (response) => response.json())
 		  .then( data => console.log(data))
 		  .catch(err => { console.log(err) })
