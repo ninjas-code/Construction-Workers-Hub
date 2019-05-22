@@ -40,7 +40,7 @@ app.post('/signupEngineer', function(req, res) {
 		})
 		.catch(function(err) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
-				return res.status(400).send({error:'This username is already taken'});
+				return res.status(400).send({error : 'This username is already taken'});
 			}
 			return res.status(500).send('Server Error');
 		});
