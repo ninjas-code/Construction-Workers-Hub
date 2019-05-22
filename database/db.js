@@ -7,7 +7,7 @@ const db = new Sequelize('construction_worker_hub', 'root', '', {
 	dialect: 'mysql'
 });
 
-db.sync({ force: false, logging: false }).then(() => {
+db.sync({ force: false , logging: false }).then(() => {
 	console.log(`Database & tables created!`);
 });
 

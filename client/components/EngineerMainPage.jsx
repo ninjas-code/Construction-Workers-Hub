@@ -22,6 +22,9 @@ class EngineerMainPage extends React.Component {
 				<br />
 				<br />
 				<br />
+				<label>Full Name : </label><text>{this.props.fullName}</text>
+				<label>Phone Number : </label><text>{this.props.phoneNumber}</text>
+				<label>Site Location : </label><text>{this.props.siteLocation}</text>
 				<br />
 				<br />
 				<br />

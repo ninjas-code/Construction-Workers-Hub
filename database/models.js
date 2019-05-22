@@ -26,7 +26,7 @@ const order = db.define('order', {
 	engineerName: { type: Sequelize.STRING, required: true },
 	workerName: { type: Sequelize.STRING, required: true },
 	endDate: { type: Sequelize.DATE },
-	status: { type: Sequelize.INTEGER },
+	status: { type: Sequelize.STRING },
 	feedBack: { type: Sequelize.STRING, required: false }
 });
 
