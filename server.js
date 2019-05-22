@@ -303,40 +303,36 @@ app.get('/engineerworker/:id', function(req, res) {
 		});
 });
 
-app
-	.post('/orders', authenticate, function(req, res) {
-		const workers = req.body.workers;
-		const user = req.body.user;
-		const endDate = req.body.endDate;
+app.post('/orders', authenticate, function(req, res) {
+	const workers = req.body.workers;
+	const user = req.body.user;
+	const endDate = req.body.endDate;
 
-		engineer
-			.findOne({ where: { id: user.id } })
-			.then(function(user) {
-				const engineers = user.userName;
-				worker.findOne({ where: { userName: workers } }).then(function(users) {
-					if (users.status === 'not Available') {
-						return res.status(400).send({ error: 'The worker is not available' });
-					} else {
-						order
-							.create({
-								engineerName: engineers,
-								workerName: workers,
-								endDate: endDate,
-								status: 'not Available'
-							})
-							.then(function() {
-								return res.status(201).send({ success: 'save data' });
-							});
-					}
-				});
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
+	engineer
+		.findOne({ where: { id: user.id } })
+		.then(function(user) {
+			const engineers = user.userName;
+			worker.findOne({ where: { userName: workers } }).then(function(users) {
+				if (users.status === 'not Available') {
+					return res.status(400).send({ error: 'The worker is not available' });
+				} else {
+					order
+						.create({
+							engineerName: engineers,
+							workerName: workers,
+							endDate: endDate,
+							status: 'not Available'
+						})
+						.then(function() {
+							return res.status(201).send({ success: 'save data' });
+						});
+				}
 			});
-	})
-	.catch(function(err) {
-		return res.status(500).send(err);
-	});
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
 
 const nexmo = new Nexmo({
 	apiKey: '3b3e43dc',
