@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const SECRET_KEY = 'somesting';
 //const cors = require("cors");
-const { engineer, worker } = require('./database/models');
+const { engineer, worker , order } = require('./database/models');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -60,7 +60,7 @@ app.post('/signinEngineer', function(req, res) {
 		bcrypt.compare(password, existingHashedPassword).then(function(isMatching) {
 			if (isMatching) {
 				//Create a token and send to client
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 10000 });
+				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -106,6 +106,7 @@ app.post('/signupWorker', function(req, res) {
 		});
 });
 
+
 app.post('/signinWorker', function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -118,7 +119,7 @@ app.post('/signinWorker', function(req, res) {
 		bcrypt.compare(password, workerPassword).then(function(isMatching) {
 			if (isMatching) {
 				// console.log(user)
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName , role : user.role }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -127,38 +128,8 @@ app.post('/signinWorker', function(req, res) {
 	});
 });
 
-const authenticateWorker = function(req, res, next) {
-	const token = req.headers['x-access-token']; //Username encoded in token
-	if (!token) {
-		return res.status(401).send('Please sign in');
-	}
-	jwt.verify(token, SECRET_KEY, (err, data) => {
-		//console.log(data)
-		if (err) {
-			return res.status(401).send('Please sign in');
-		}
-		const workerPassword = user.password;
-		bcrypt
-			.compare(password, workerPassword)
-			.then(function(isMatching) {
-				if (isMatching) {
-					// console.log(user)
-					const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, {
-						expiresIn: 900
-					});
-					return res.send({ token: token });
-				} else {
-					return res.status(401).send({ error: 'Wrong password' });
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
-	});
-};
+
+
 
 const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
@@ -173,40 +144,40 @@ const authenticate = function(req, res, next) {
 		//Check if user exists in the database
 		const username = data.username;
 
-		if (data.role) {
-			//console.log(username)
-			worker
-				.findOne({ where: { userName: username } })
-				.then((user) => {
-					//console.log(user)
-					if (!user) {
-						return res.status(401).send('Please sign up');
-					}
-					req.body.user = user; // put user in req.body
-					//console.log(user)
-					return next();
-				})
-				.catch(function(err) {
-					return res.status(500).send(err);
-				});
-		} else {
-			engineer
-				.findOne({ where: { userName: username } })
-				.then((user) => {
-					//console.log(user)
-					if (!user) {
-						return res.status(401).send('Please sign up');
-					}
-					req.body.user = user; // put user in req.body
-					//console.log(user)
-					return next();
-				})
-				.catch(function(err) {
-					return res.status(500).send(err);
-				});
+		if (data.role){
+		//console.log(username)
+		worker
+			.findOne({ where: { userName: username } })
+			.then((user) => {
+				//console.log(user)
+				if (!user) {
+					return res.status(401).send('Please sign up');
+				}
+				req.body.user = user; // put user in req.body
+				//console.log(user)
+				return next();
+			})
+			.catch(function(err) {
+				return res.status(500).send(err);
+			});
+		}else {
+			engineer.findOne({where: {userName: username}}).then( (user) => {
+            //console.log(user)
+			if(!user){
+				return res.status(401).send('Please sign up');
+			}
+			req.body.user = user; // put user in req.body
+			//console.log(user)
+			return next();
+		}).catch(function(err){
+			return res.status(500).send(err);
+		})
 		}
 	});
 };
+
+
+
 
 app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
@@ -229,12 +200,15 @@ app.get('/workerPage', authenticate, function(req, res) {
 		});
 });
 
+
+
+
 app.get('/engineerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	engineer
 		.findOne({ where: { id: user.id } })
 		.then(function(user) {
-			return res.send({ fullName: user.fullName, userName: user.userName, phoneNumber: user.phoneNumber });
+			return res.send({ fullName: user.fullName, userName: user.userName, phoneNumber: user.phoneNumber , siteLocation : user.siteLocation});
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
@@ -357,35 +331,36 @@ app.get('/engineerworker/:id', function(req, res) {
 		});
 });
 
-app.post('/orders', authenticate, function(req, res) {
+app.post('/orders',authenticate, function(req, res) {
 	const workers = req.body.workers;
 	const user = req.body.user;
 	const endDate = req.body.endDate;
 
-	engineer
-		.findOne({ where: { id: user.id } })
-		.then(function(user) {
-			const engineers = user.userName;
-			worker.findOne({ where: { userName: workers } }).then(function(users) {
-				if (users.status === 'Not Available') {
-					return res.status(400).send({ error: 'The worker is not available' });
-				} else {
-					order
-						.create({
-							engineerName: engineers,
-							workerName: workers,
-							endDate: endDate,
-							status: 'Not Available'
-						})
-						.then(function() {
-							return res.status(201).send({ success: 'save data' });
-						});
-				}
+	engineer.findOne({ where: { id: user.id } })
+	.then(function(user) {
+	const engineers = user.userName;
+			 worker.findOne({ where: { userName : workers} })
+			 .then(function(users) {
+
+					 if (users.status === "not Available" ){
+							 return res.status(400).send({ error: 'The worker is not available'});
+					 }
+					 else{  
+						order.create({
+						engineerName : engineers,
+						workerName : workers,
+						endDate: endDate,
+						status: "not Available"
+					})
+				.then(function() {
+					return res.status(201).send({ success: 'save data' });
+				})
+			 }
+			 })
+			})
+			.catch(function(err) {
+					return res.status(500).send(err);
 			});
-		})
-		.catch(function(err) {
-			return res.status(500).send(err);
-		});
 });
 
 app.listen(port, function() {
