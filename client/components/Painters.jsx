@@ -26,13 +26,15 @@ class Painters extends React.Component {
 		 <table> 
 		  <tbody>
 			{this.state.allPainters.map( (user, i) => 
-      <tr key = {user.id } style={{  margin: '10px', display:'block' }}>  
-			<td><strong>fullName:</strong></td><td>{user.fullName}</td>
-			<td><strong>experienceLevel:</strong></td><td>{user.experienceLevel}</td>
-			<td><strong>expectedSalary:</strong></td><td>{user.expectedSalary}</td>
-			<td><strong>phoneNumber:</strong></td><td>{user.phoneNumber}</td>
-			<td><strong>status:</strong></td><td>{user.status}</td>
-			<td><strong>role:</strong></td><td>{user.role}</td>
+      <tr key = {user.id } style={{  
+			margin: '10px', display:'block', color: 'white', 
+			fontSize: '20px', borderStyle: 'solid', padding: '15px' }}>  
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Full Name:</strong></td><td>{user.fullName}</td>
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Experience Level:</strong></td><td>{user.experienceLevel}</td>
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Expected Salary:</strong></td><td>{user.expectedSalary}</td>
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Phone Number:</strong></td><td>{user.phoneNumber}</td>
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Status:</strong></td><td>{user.status}</td>
+			<td style= {{color: 'orange', fontSize: '18px'}}><strong>Role:</strong></td><td>{user.role}</td>
 			<td><NavLink to={"/engineerworker/"+user.id} activeStyle={{ color: 'purple' }}>
 			<button value="GoToProfile"  >Go To Profile</button>
 		    </NavLink></td>

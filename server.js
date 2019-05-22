@@ -2,9 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const Nexmo = require('nexmo');
 const SECRET_KEY = 'somesting';
 //const cors = require("cors");
-const { engineer, worker , order } = require('./database/models');
+const { engineer, worker, order } = require('./database/models');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -106,7 +107,6 @@ app.post('/signupWorker', function(req, res) {
 		});
 });
 
-
 app.post('/signinWorker', function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -119,7 +119,7 @@ app.post('/signinWorker', function(req, res) {
 		bcrypt.compare(password, workerPassword).then(function(isMatching) {
 			if (isMatching) {
 				// console.log(user)
-				const token = jwt.sign({ username: user.userName , role : user.role }, SECRET_KEY, { expiresIn: 900 });
+				const token = jwt.sign({ username: user.userName, role: user.role }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -127,9 +127,6 @@ app.post('/signinWorker', function(req, res) {
 		});
 	});
 });
-
-
-
 
 const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
@@ -144,40 +141,40 @@ const authenticate = function(req, res, next) {
 		//Check if user exists in the database
 		const username = data.username;
 
-		if (data.role){
-		//console.log(username)
-		worker
-			.findOne({ where: { userName: username } })
-			.then((user) => {
-				//console.log(user)
-				if (!user) {
-					return res.status(401).send('Please sign up');
-				}
-				req.body.user = user; // put user in req.body
-				//console.log(user)
-				return next();
-			})
-			.catch(function(err) {
-				return res.status(500).send(err);
-			});
-		}else {
-			engineer.findOne({where: {userName: username}}).then( (user) => {
-            //console.log(user)
-			if(!user){
-				return res.status(401).send('Please sign up');
-			}
-			req.body.user = user; // put user in req.body
-			//console.log(user)
-			return next();
-		}).catch(function(err){
-			return res.status(500).send(err);
-		})
+		if (data.role) {
+			//console.log(username)
+			worker
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
+		} else {
+			engineer
+				.findOne({ where: { userName: username } })
+				.then((user) => {
+					//console.log(user)
+					if (!user) {
+						return res.status(401).send('Please sign up');
+					}
+					req.body.user = user; // put user in req.body
+					//console.log(user)
+					return next();
+				})
+				.catch(function(err) {
+					return res.status(500).send(err);
+				});
 		}
 	});
 };
-
-
-
 
 app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
@@ -200,47 +197,22 @@ app.get('/workerPage', authenticate, function(req, res) {
 		});
 });
 
-
-
-
 app.get('/engineerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	engineer
 		.findOne({ where: { id: user.id } })
 		.then(function(user) {
-			return res.send({ fullName: user.fullName, userName: user.userName, phoneNumber: user.phoneNumber , siteLocation : user.siteLocation});
+			return res.send({
+				fullName: user.fullName,
+				userName: user.userName,
+				phoneNumber: user.phoneNumber,
+				siteLocation: user.siteLocation
+			});
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
 		});
 });
-
-// will filter out  from database by server
-
-// app.get('/role' ,  authenticate , function(req, res) {
-//     const workerArr =[];
-
-// 	const Role = req.body.role;
-
-// 	worker
-// 		.findAll({ where: { role : Role } })
-// 		.then(function(users) {
-
-// users.forEach(function(user) {
-//       workerArr.push({ fullName: user.fullName,
-// 				experienceLevel: user.experienceLevel,
-// 				expectedSalary: user.expectedSalary,
-// 				phoneNumber: user.phoneNumber,
-// 				status : user.status,
-// 				role: user.role});
-//     });
-// return res.send({workerArr});
-
-// 		})
-// 		.catch(function(err) {
-// 			return res.status(500).send(err);
-// 		});
-// });
 
 app.get('/smith', function(req, res) {
 	const Role = 'smith';
@@ -331,36 +303,48 @@ app.get('/engineerworker/:id', function(req, res) {
 		});
 });
 
-app.post('/orders',authenticate, function(req, res) {
+app.post('/orders', authenticate, function(req, res) {
 	const workers = req.body.workers;
 	const user = req.body.user;
 	const endDate = req.body.endDate;
 
-	engineer.findOne({ where: { id: user.id } })
-	.then(function(user) {
-	const engineers = user.userName;
-			 worker.findOne({ where: { userName : workers} })
-			 .then(function(users) {
-
-					 if (users.status === "not Available" ){
-							 return res.status(400).send({ error: 'The worker is not available'});
-					 }
-					 else{  
-						order.create({
-						engineerName : engineers,
-						workerName : workers,
-						endDate: endDate,
-						status: "not Available"
-					})
-				.then(function() {
-					return res.status(201).send({ success: 'save data' });
-				})
-			 }
-			 })
-			})
-			.catch(function(err) {
-					return res.status(500).send(err);
+	engineer
+		.findOne({ where: { id: user.id } })
+		.then(function(user) {
+			const engineers = user.userName;
+			worker.findOne({ where: { userName: workers } }).then(function(users) {
+				if (users.status === 'not Available') {
+					return res.status(400).send({ error: 'The worker is not available' });
+				} else {
+					order
+						.create({
+							engineerName: engineers,
+							workerName: workers,
+							endDate: endDate,
+							status: 'not Available'
+						})
+						.then(function() {
+							return res.status(201).send({ success: 'save data' });
+						});
+				}
 			});
+		})
+		.catch(function(err) {
+			return res.status(500).send(err);
+		});
+});
+
+const nexmo = new Nexmo({
+	apiKey: '3b3e43dc',
+	apiSecret: 'Dj049nK9Vu7xZ1zB'
+});
+
+app.post('/sentMessage', function(req, res) {
+	console.log(req.body);
+	let from = 'Bug-Busters-200';
+	let to = req.body.number;
+	let text = req.body.msg;
+	nexmo.message.sendSms(from, to, text);
 });
 
 app.listen(port, function() {
