@@ -107,8 +107,6 @@ class EngineerSignUp extends React.Component {
 				) : (
 					<EngineerSignIn />
 				)}
-				{this.state.WrongPhoneNumber ? <W /> : null}
-				{this.state.toggleNotOkay ? <NotOkay /> : null}
 			</div>
 		);
 	}
