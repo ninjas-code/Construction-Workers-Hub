@@ -268,7 +268,7 @@ app.get('/engineerPage', authenticate, function(req, res) {
 // 		});
 // });
 
-app.get('/smith', authenticate, function(req, res) {
+app.get('/smith',  function(req, res) {
 	const Role = 'smith';
 	worker
 		.findAll({ where: { role: Role } })
@@ -284,7 +284,7 @@ app.get('/smith', authenticate, function(req, res) {
 		});
 });
 
-app.get('/carpenter', authenticate, function(req, res) {
+app.get('/carpenter',  function(req, res) {
 	const Role = 'carpenter';
 
 	worker
@@ -301,7 +301,7 @@ app.get('/carpenter', authenticate, function(req, res) {
 		});
 });
 
-app.get('/stoneBuilder', authenticate, function(req, res) {
+app.get('/stoneBuilder', function(req, res) {
 	const Role = 'stoneBuilder';
 
 	worker
@@ -318,7 +318,7 @@ app.get('/stoneBuilder', authenticate, function(req, res) {
 		});
 });
 
-app.get('/painter', authenticate, function(req, res) {
+app.get('/painter', function(req, res) {
 	const Role = 'painter';
 
 	worker
