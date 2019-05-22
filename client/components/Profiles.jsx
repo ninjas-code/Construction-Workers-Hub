@@ -5,11 +5,11 @@ class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				userProfile: []
-				
+				userProfile: [],
+				x: ""
 			};
 		}
-	componentDidMount(){
+	componentWillMount(){
 		 let that = this;
 		
 		const  { match }  = this.props;
@@ -26,23 +26,26 @@ class Profiles extends React.Component {
 			
 			return (
 		    <div>
-				<h1>THE PROFILE OF WORKER YOU CHOOSED</h1>
-		    <table> 
-		     <tbody>
-			{this.state.userProfile.map( (user, i) => 
-            <tr key = {i } style={{  margin: '10px', display:'block' }}>  
-			<td><strong> NAME: </strong></td><td>{user.fullName}</td>
-			<td><strong>EXPERIENCE LEVEL:</strong></td><td>{user.experienceLevel}</td>
-			<td><strong>SALARY:</strong></td><td>{user.expectedSalary}</td>
-			<td><strong>PHONE NUMBER:</strong></td><td>{user.phoneNumber}</td>
-			<td><strong>STATUS:</strong></td><td>{user.status}</td>
-			<td><strong>ROLE:</strong></td><td>{user.role}</td>
-		   </tr>
-		  )}
-		 </tbody>
-		  
-		</table>
-	 </div>	
+				   <h1> {console.log(this.state.x)} </h1>
+					{ this.state.userProfile.map( (user, i)=>
+				  <ul key = {i} >
+					<h2  style={{  margin: '10px', display:'block' }}>	
+					<strong>{ 'WELCOME to  '+ user.fullName +"'s   PROFILE"}</strong><br/>
+					</h2>
+					<h2> {'Name:  '} {user.fullName}</h2> 
+					<h2> {'experienceLevel:  '} {user.experienceLevel}</h2> 
+					<h2> {'expectedSalary:  '} {user.expectedSalary}</h2>
+					<h2> {'phoneNumber:  '} {user.phoneNumber}</h2>  
+					<h2> {'status:  '} {user.status}</h2> 
+					<h2> {'role:  '} {user.role}</h2>
+					
+					</ul>
+					) 
+					
+					}
+				
+			
+	      </div>	
 
 		);
 	}
@@ -50,3 +53,22 @@ class Profiles extends React.Component {
 }
 
 export default Profiles;
+
+// { console.log(this.state.x) }
+// <h1>{'WELCOME '+this.state.x +'' }</h1>
+// <table> 
+//  <tbody>
+// {this.state.userProfile.map( (user, i) => 
+// 		<tr key = {i } style={{  margin: '10px', display:'block' }}>  
+// <td><strong> NAME: </strong></td><td>{user.fullName}</td>
+// <td><strong>EXPERIENCE LEVEL:</strong></td><td>{user.experienceLevel}</td>
+// <td><strong>SALARY:</strong></td><td>{user.expectedSalary}</td>
+// <td><strong>PHONE NUMBER:</strong></td><td>{user.phoneNumber}</td>
+// <td><strong>STATUS:</strong></td><td>{user.status}</td>
+// <td><strong>ROLE:</strong></td><td>{user.role}</td>
+// { this.state.x = user.fullName}
+// </tr>
+// )}
+// </tbody>
+
+// </table>
