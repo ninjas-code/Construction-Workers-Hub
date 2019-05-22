@@ -5,8 +5,7 @@ class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				userProfile: [],
-				x: ""
+				userProfile: [] 
 			};
 		}
 	componentWillMount(){
@@ -22,16 +21,11 @@ class Profiles extends React.Component {
 		
 	}
 
-		// onclick(){
-			
-		// }
+
 	 
 	 	render() {
-			//const  { params }  = this.props;
-			
 			return (
 		    <div>
-				   <h1> {console.log(this.state.x)} </h1>
 					{ this.state.userProfile.map( (user, i)=>
 				  <ul key = {i} >
 					<h2  style={{  margin: '10px', display:'block', color: 'orange', fontSize: '25px' }}>	
