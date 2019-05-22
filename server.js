@@ -60,7 +60,7 @@ app.post('/signinEngineer', function(req, res) {
 		bcrypt.compare(password, existingHashedPassword).then(function(isMatching) {
 			if (isMatching) {
 				//Create a token and send to client
-				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 10000 });
+				const token = jwt.sign({ username: user.userName }, SECRET_KEY, { expiresIn: 900 });
 				return res.send({ token: token });
 			} else {
 				return res.status(401).send({ error: 'Wrong password' });
@@ -268,7 +268,7 @@ app.get('/engineerPage', authenticate, function(req, res) {
 // 		});
 // });
 
-app.get('/smith',  function(req, res) {
+app.get('/smith', function(req, res) {
 	const Role = 'smith';
 	worker
 		.findAll({ where: { role: Role } })
@@ -284,7 +284,7 @@ app.get('/smith',  function(req, res) {
 		});
 });
 
-app.get('/carpenter',  function(req, res) {
+app.get('/carpenter', function(req, res) {
 	const Role = 'carpenter';
 
 	worker
