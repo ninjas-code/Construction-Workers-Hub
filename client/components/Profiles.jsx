@@ -5,9 +5,15 @@ class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				userProfile: []
+				userProfile: [],
+				show:false
 				
 			};
+		}
+		clicked(){
+			this.setState({
+				show : !this.state.show
+			})
 		}
 	componentDidMount(){
 		 let that = this;
@@ -17,16 +23,20 @@ class Profiles extends React.Component {
 		fetch(`/engineerworker/${match.params.id}`)
 		  .then( (response) => response.json())	
 			.then( data =>  that.setState({userProfile: data }))
-			//.then(console.log(that.state.userProfile))
+			// .then(console.log(that.state.userProfile))
 			.catch(err => { console.log(err) })
 		
 	}
 	 	render() {
 			//const  { params }  = this.props;
+			// var x= this.state.userProfile;
+			// var name = x[0];
+			// console.log(name);
+			// console.log(x[0])
 			
 			return (
 		    <div>
-				<h1>THE PROFILE OF WORKER YOU CHOOSED</h1>
+				<h1>THE PROFILE OF {this.state.userProfile.fullName}YOU CHOOSED</h1>
 		    <table> 
 		     <tbody>
 			{this.state.userProfile.map( (user, i) => 
@@ -40,8 +50,11 @@ class Profiles extends React.Component {
 		   </tr>
 		  )}
 		 </tbody>
+		 
 		  
 		</table>
+		<button onClick={this.clicked.bind(this)}>Book Worker</button><br/><br/>
+				{this.state.show===true ? <input type='text' placeholder='putdate'/> : null }
 	 </div>	
 
 		);
