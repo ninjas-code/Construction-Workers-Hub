@@ -13,6 +13,10 @@ import StoneBuilders from './components/StoneBuilders.jsx';
 import Painters from './components/Painters.jsx';
 import Profiles from './components/Profiles.jsx';
 import WorkerMainPage from './components/WorkerMainPage.jsx';
+
+
+
+	
 class App extends React.Component {
 	render() {
 		return (
