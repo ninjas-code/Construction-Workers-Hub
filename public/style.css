@@ -1,8 +1,8 @@
 body {
-	background-image: url("./image/project\ background10.png");
-	max-width: 100%;
-	height: auto;
-	width: auto;
+	background-image: url("./image/projectBJ1.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-size: cover;
 }
 .logo {
 	position: relative;
