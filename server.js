@@ -352,6 +352,9 @@ app.post('/orders',authenticate, function(req, res) {
 						endDate: endDate,
 						status: "not Available"
 					})
+					
+				
+			
 				.then(function() {
 					return res.status(201).send({ success: 'save data' });
 				})
