@@ -58,6 +58,7 @@ class EngineerSignIn extends React.Component {
 				response.json().then((body) => {
 					that.setState({
 						fullName: body.fullName,
+						username: body.userName,
 						phoneNumber: body.phoneNumber,
 						siteLocation: body.siteLocation
 					});
@@ -102,8 +103,8 @@ class EngineerSignIn extends React.Component {
 					<EngineerMainPage
 						fullName={this.state.fullName}
 						phoneNumber={this.state.phoneNumber}
-						token={this.state.token}
 						siteLocation={this.state.siteLocation}
+						token={this.state.token}
 					/>
 				)}
 			</div>

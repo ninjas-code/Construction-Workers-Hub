@@ -8,7 +8,7 @@ class Profiles extends React.Component {
 				userProfile: [] 
 			};
 		}
-	componentWillMount(){
+	componentDidMount(){
 		 let that = this;
 		
 		const  { match }  = this.props;
@@ -42,7 +42,7 @@ class Profiles extends React.Component {
 							alert(user.fullName + 'is not availbale at the moment');
 							return;
 						 }else{
-							 const workerNAME = user.userName ;
+							 const workerNAME = user.user.fullName ;
 							 fetch('/orders', {
 								method: 'POST',
 								body: JSON.stringify({ workers : workerNAME , endDate: '2019-05-25 21:13:03' }),
@@ -54,11 +54,11 @@ class Profiles extends React.Component {
 							 .then( (data)=> console.log(data) ) 		
 						 }
 					 } } >Book Now</button>}
+					 { <label style={{ color: 'white' }}>{'  '}End date:</label>}
+					 {<input type="date" id="date" name="endDate"></input>}
 					</ul>
-					
-					) 
-					
-					}
+						) 
+						}
 				
 			 
 	      </div>	
@@ -69,22 +69,3 @@ class Profiles extends React.Component {
 }
 
 export default Profiles;
-
-// { console.log(this.state.x) }
-// <h1>{'WELCOME '+this.state.x +'' }</h1>
-// <table> 
-//  <tbody>
-// {this.state.userProfile.map( (user, i) => 
-// 		<tr key = {i } style={{  margin: '10px', display:'block' }}>  
-// <td><strong> NAME: </strong></td><td>{user.fullName}</td>
-// <td><strong>EXPERIENCE LEVEL:</strong></td><td>{user.experienceLevel}</td>
-// <td><strong>SALARY:</strong></td><td>{user.expectedSalary}</td>
-// <td><strong>PHONE NUMBER:</strong></td><td>{user.phoneNumber}</td>
-// <td><strong>STATUS:</strong></td><td>{user.status}</td>
-// <td><strong>ROLE:</strong></td><td>{user.role}</td>
-// { this.state.x = user.fullName}
-// </tr>
-// )}
-// </tbody>
-
-// </table>
