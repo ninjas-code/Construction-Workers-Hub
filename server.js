@@ -241,33 +241,6 @@ app.get('/engineerPage', authenticate, function(req, res) {
 		});
 });
 
-// will filter out  from database by server
-
-// app.get('/role' ,  authenticate , function(req, res) {
-//     const workerArr =[];
-
-// 	const Role = req.body.role;
-
-// 	worker
-// 		.findAll({ where: { role : Role } })
-// 		.then(function(users) {
-
-// users.forEach(function(user) {
-//       workerArr.push({ fullName: user.fullName,
-// 				experienceLevel: user.experienceLevel,
-// 				expectedSalary: user.expectedSalary,
-// 				phoneNumber: user.phoneNumber,
-// 				status : user.status,
-// 				role: user.role});
-//     });
-// return res.send({workerArr});
-
-// 		})
-// 		.catch(function(err) {
-// 			return res.status(500).send(err);
-// 		});
-// });
-
 app.get('/smith',  function(req, res) {
 	const Role = 'smith';
 	worker
@@ -357,7 +330,7 @@ app.get('/engineerworker/:id', function(req, res) {
 		});
 });
 
-app.post('/orders', authenticate, function(req, res) {
+app.post('/orders',  function(req, res) {
 	const workers = req.body.workers;
 	const user = req.body.user;
 	const endDate = req.body.endDate;

@@ -21,6 +21,11 @@ class Profiles extends React.Component {
 			.catch(err => { console.log(err) })
 		
 	}
+
+		// onclick(){
+			
+		// }
+	 
 	 	render() {
 			//const  { params }  = this.props;
 			
@@ -29,22 +34,39 @@ class Profiles extends React.Component {
 				   <h1> {console.log(this.state.x)} </h1>
 					{ this.state.userProfile.map( (user, i)=>
 				  <ul key = {i} >
-					<h2  style={{  margin: '10px', display:'block' }}>	
+					<h2  style={{  margin: '10px', display:'block', color: 'orange', fontSize: '25px' }}>	
 					<strong>{ 'WELCOME to  '+ user.fullName +"'s   PROFILE"}</strong><br/>
 					</h2>
-					<h2> {'Name:  '} {user.fullName}</h2> 
-					<h2> {'experienceLevel:  '} {user.experienceLevel}</h2> 
-					<h2> {'expectedSalary:  '} {user.expectedSalary}</h2>
-					<h2> {'phoneNumber:  '} {user.phoneNumber}</h2>  
-					<h2> {'status:  '} {user.status}</h2> 
-					<h2> {'role:  '} {user.role}</h2>
-					
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'Name:  '} {user.fullName}</h2> 
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'experienceLevel:  '} {user.experienceLevel}</h2> 
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'expectedSalary:  '} {user.expectedSalary}</h2>
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'phoneNumber:  '} {user.phoneNumber}</h2>  
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'status:  '} {user.status}</h2> 
+					<h2 style= {{color: 'white', fontSize: '18px'}}> {'role:  '} {user.role}</h2>
+					 {<button id="book" onClick={ () =>{
+						 if(user.status === "not Available"){
+							alert(user.fullName + 'is not availbale at the moment');
+							return;
+						 }else{
+							 const workerNAME = user.userName ;
+							 fetch('/orders', {
+								method: 'POST',
+								body: JSON.stringify({ workers : workerNAME , endDate: '2019-05-25 21:13:03' }),
+								headers: {'Content-Type': 'application/json'}
+							 })
+							 .then((response) => {
+									return response.json();
+								})
+							 .then( (data)=> console.log(data) ) 		
+						 }
+					 } } >Book Now</button>}
 					</ul>
+					
 					) 
 					
 					}
 				
-			
+			 
 	      </div>	
 
 		);
