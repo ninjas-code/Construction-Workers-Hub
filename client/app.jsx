@@ -12,7 +12,7 @@ import Carpenters from './components/Carpenters.jsx';
 import StoneBuilders from './components/StoneBuilders.jsx';
 import Painters from './components/Painters.jsx';
 import Profiles from './components/Profiles.jsx';
-
+import WorkerMainPage from './components/WorkerMainPage.jsx';
 class App extends React.Component {
 	render() {
 		return (
@@ -44,6 +44,7 @@ class App extends React.Component {
 					<Route path="/engineerSignUp" component={EngineerSignUp} />
 					<Route path="/workerSignUp" component={workerSignUp} />
 					<Route path="/engineerPage" component={EngineerMainPage} />
+					<Route path="/WorkerMainPage" component={WorkerMainPage} />
 					<Route path="/smith" component={Smiths} />
 					<Route path="/carpenter" component={Carpenters} />
 					<Route path="/stoneBuilder" component={StoneBuilders} />
