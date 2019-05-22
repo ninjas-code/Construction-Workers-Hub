@@ -97,7 +97,7 @@ class WorkerSignUp extends React.Component {
 						<br />
 						<br />
 						<input
-							type="number"
+							type="tel"
 							name="phonenumber"
 							placeholder="079-123-4567"
 							onChange={this.onChange.bind(this)}

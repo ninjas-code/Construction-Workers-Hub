@@ -89,7 +89,7 @@ class EngineerSignUp extends React.Component {
 						<br />
 						<br />
 						<input
-							type="number"
+							type="tel"
 							name="phonenumber"
 							placeholder="Phone Number"
 							onChange={this.changed.bind(this)}
