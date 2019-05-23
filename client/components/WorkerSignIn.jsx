@@ -16,7 +16,8 @@
                 experienceLevel :"",
                 expectedSalary : "",
                 role:"",
-                status : ""
+                status : "",
+                url : ""
             };
         }
         onChange(e) {
@@ -40,6 +41,7 @@
                         response.json().then((body) => {
                             const token = body.token;
                             localStorage.setItem('token', token);
+                           
                             this.setState({username: '', password: '' , toggleSignIn: false ,
                             toggleWorkerpage: true }
                         , () => {
@@ -61,7 +63,7 @@
     }).then(function(response){
         if(response.status == 200){
         response.json().then((body) => {
-        that.setState({fullName : body.fullName , phoneNumber : body.phoneNumber , experienceLevel : body.experienceLevel , expectedSalary : body.expectedSalary , role : body.role , status : body.status});
+        that.setState({fullName : body.fullName , phoneNumber : body.phoneNumber , experienceLevel : body.experienceLevel , expectedSalary : body.expectedSalary , role : body.role , status : body.status , url : body.url});
         })
         } 
         else {
@@ -81,7 +83,6 @@
                     <Link to="/">
                         <button value="Go Back home">Go Back home</button>
                     </Link>{' '}
-                    <h1>Hello</h1>
                     <input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
                     <br />
                     <br />
@@ -96,6 +97,7 @@
                         expectedSalary = {this.state.expectedSalary}
                         role = {this.state.role}
                         status = {this.state.status}
+                        url = {this.state.url}
                         />
                     )}
                 </div>

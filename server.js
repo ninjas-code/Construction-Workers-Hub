@@ -28,13 +28,15 @@ app.post('/signupEngineer', function(req, res) {
 	let location = req.body.sitelocation;
 	let phonenumber = req.body.phonenumber;
 	let hashedPassword = bcrypt.hashSync(password, 10);
+	const url = req.body.url
 	engineer
 		.create({
 			fullName: fullname,
 			userName: username,
 			siteLocation: location,
 			phoneNumber: phonenumber,
-			password: hashedPassword
+			password: hashedPassword, 
+			url : url
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as engineer successful' });
@@ -81,7 +83,7 @@ app.post('/signupWorker', function(req, res) {
 	const phoneNumber = req.body.info.phonenumber;
 	const role = req.body.info.role;
 	const status = req.body.info.status;
-	// console.log(req.body.info)
+	const url = req.body.info.url
 	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
@@ -93,7 +95,8 @@ app.post('/signupWorker', function(req, res) {
 			expectedSalary: expectedSalary,
 			phoneNumber: phoneNumber,
 			status: status,
-			role: role
+			role: role,
+			url : url
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as worker successful' });
@@ -189,7 +192,8 @@ app.get('/workerPage', authenticate, function(req, res) {
 				expectedSalary: user.expectedSalary,
 				phoneNumber: user.phoneNumber,
 				status: user.status,
-				role: user.role
+				role: user.role,
+				url : user.url
 			});
 		})
 		.catch(function(err) {
@@ -206,7 +210,8 @@ app.get('/engineerPage', authenticate, function(req, res) {
 				fullName: user.fullName,
 				userName: user.userName,
 				phoneNumber: user.phoneNumber,
-				siteLocation: user.siteLocation
+				siteLocation: user.siteLocation,
+				url : user.url
 			});
 		})
 		.catch(function(err) {
@@ -294,7 +299,8 @@ app.get('/engineerworker/:id', function(req, res) {
 					expectedSalary: user.expectedSalary,
 					phoneNumber: user.phoneNumber,
 					status: user.status,
-					role: user.role
+					role: user.role,
+					url : user.url
 				}
 			]);
 		})

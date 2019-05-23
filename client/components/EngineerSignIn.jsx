@@ -12,7 +12,8 @@ class EngineerSignIn extends React.Component {
 			phoneNumber: '',
 			toggleSignIn: true,
 			toggleEngpage: false,
-			siteLocation: ''
+			siteLocation: '',
+			url : ''
 		};
 		this.engineerSignIn = this.engineerSignIn.bind(this);
 	}
@@ -64,7 +65,8 @@ class EngineerSignIn extends React.Component {
 						fullName: body.fullName,
 						username: body.userName,
 						phoneNumber: body.phoneNumber,
-						siteLocation: body.siteLocation
+						siteLocation: body.siteLocation,
+						url : body.url
 					});
 				});
 			} else {
@@ -109,7 +111,7 @@ class EngineerSignIn extends React.Component {
 						userName = {this.state.username}
 						phoneNumber={this.state.phoneNumber}
 						siteLocation={this.state.siteLocation}
-						token={this.state.token}
+						url = {this.state.url}
 					/>
 				)}
 			</div>
