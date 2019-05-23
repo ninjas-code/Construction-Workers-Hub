@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import WorkerSignIn from './EngineerSignIn.jsx';
+import WorkerSignIn from './WorkerSignIn.jsx';
 
 class WorkerSignUp extends React.Component {
 	constructor(props) {
@@ -14,7 +14,7 @@ class WorkerSignUp extends React.Component {
 			expectedsalary: '',
 			role: '',
 			toggleSignUp: true,
-			toggleSignIn: false,
+			//toggleSignIn: false,
 			status: ''
 		};
 	}
@@ -46,7 +46,7 @@ class WorkerSignUp extends React.Component {
 						username: '',
 						password: '',
 						toggleSignUp: false,
-						toggleSignIn: true
+						//toggleSignIn: true
 					});
 					return;
 				} else {

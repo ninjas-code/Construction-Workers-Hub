@@ -5,7 +5,8 @@ class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				userProfile: [] 
+				userProfile: [],
+				engneerIfo: [] 
 			};
 		}
 	componentDidMount(){
@@ -16,14 +17,11 @@ class Profiles extends React.Component {
 		fetch(`/engineerworker/${match.params.id}`)
 		  .then( (response) => response.json())	
 			.then( data =>  that.setState({userProfile: data }))
-			//.then(console.log(that.state.userProfile))
 			.catch(err => { console.log(err) })
-		
 	}
-
-
 	 
 	 	render() {
+			 console.log(this.state.engneerIfo)
 			return (
 		    <div>
 					{ this.state.userProfile.map( (user, i)=>

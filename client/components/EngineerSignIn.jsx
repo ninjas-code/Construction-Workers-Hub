@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import EngineerMainPage from './EngineerMainPage.jsx';
 
 class EngineerSignIn extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		this.state = {
 			username: '',
 			password: '',
@@ -12,7 +12,6 @@ class EngineerSignIn extends React.Component {
 			phoneNumber: '',
 			toggleSignIn: true,
 			toggleEngpage: false,
-			token: '',
 			siteLocation: ''
 		};
 		this.engineerSignIn = this.engineerSignIn.bind(this);
@@ -36,12 +35,14 @@ class EngineerSignIn extends React.Component {
 		}).then((response) => {
 			if (response.status == 200) {
 				response.json().then((body) => {
-					that.setState(
-						{ toggleSignIn: false, toggleEngpage: true, token: body.token, password: '', username: '' },
-						() => {
-							that.engineerPage(that);
-						}
-					);
+					const token = body.token;
+					localStorage.setItem('token', token);
+					this.setState({username: '', password: '' , toggleSignIn: false ,
+					toggleEngpage: true },
+					() => {
+						that.engineerPage(that);
+					}
+				)
 				});
 			} else {
 				console.log('err');
@@ -50,12 +51,15 @@ class EngineerSignIn extends React.Component {
 	}
 
 	engineerPage(that) {
+		const token = localStorage.getItem('token');
+		console.log(token)
 		fetch('/engineerPage', {
 			method: 'get',
-			headers: { 'x-access-token': that.state.token }
+			headers: { 'x-access-token': token }
 		}).then(function(response) {
 			if (response.status == 200) {
 				response.json().then((body) => {
+					console.log("hi")
 					that.setState({
 						fullName: body.fullName,
 						username: body.userName,
@@ -102,6 +106,7 @@ class EngineerSignIn extends React.Component {
 				) : (
 					<EngineerMainPage
 						fullName={this.state.fullName}
+						userName = {this.state.username}
 						phoneNumber={this.state.phoneNumber}
 						siteLocation={this.state.siteLocation}
 						token={this.state.token}

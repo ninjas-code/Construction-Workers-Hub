@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
+import  profiles  from './Profiles.jsx'
 
 class EngineerMainPage extends React.Component {
 	constructor(props) {
@@ -14,18 +15,17 @@ class EngineerMainPage extends React.Component {
 		
 		return (
 			<div>
-				<h1>Welcome to your Profile</h1>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<h2>Construction Workers:</h2>
+				<h2  style={{  margin: '10px', display:'block', color: 'darkOrange', fontSize: '25px' }}>	
+					<strong>{ 'WELCOME to  '+ this.props.fullName +"'s   PROFILE"}</strong><br/>
+				</h2>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Name:  '} {this.props.fullName}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'User Name:  '} {this.props.userName}</h2>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Phone Number:  '} {this.props.phoneNumber}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Location:  '} {this.props.siteLocation}</h2>
+
+				<h2  style={{  margin: '10px', display:'block', color: 'darkOrange', fontSize: '25px' }}>	
+					<strong>Construction Workers:</strong><br/>
+				</h2>
 				<NavLink to="/smith" activeStyle={{ color: 'purple' }}>
 					<button value="Smiths" >Smiths</button>
 				</NavLink>
