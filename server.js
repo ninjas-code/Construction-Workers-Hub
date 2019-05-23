@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const Nexmo = require('nexmo');
+const socketio = require('socket.io');
 const SECRET_KEY = 'somesting';
 //const cors = require("cors");
 const { engineer, worker, order } = require('./database/models');
@@ -28,15 +29,15 @@ app.post('/signupEngineer', function(req, res) {
 	let location = req.body.sitelocation;
 	let phonenumber = req.body.phonenumber;
 	let hashedPassword = bcrypt.hashSync(password, 10);
-	const url = req.body.url
+	const url = req.body.url;
 	engineer
 		.create({
 			fullName: fullname,
 			userName: username,
 			siteLocation: location,
 			phoneNumber: phonenumber,
-			password: hashedPassword, 
-			url : url
+			password: hashedPassword,
+			url: url
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as engineer successful' });
@@ -45,7 +46,7 @@ app.post('/signupEngineer', function(req, res) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
 				return res.status(400).send({ error: 'This username is already taken' });
 			}
-			return res.status(500).send('Server Error');
+			return res.status(500).send({ error: 'Server Error' });
 		});
 });
 
@@ -83,7 +84,7 @@ app.post('/signupWorker', function(req, res) {
 	const phoneNumber = req.body.info.phonenumber;
 	const role = req.body.info.role;
 	const status = req.body.info.status;
-	const url = req.body.info.url
+	const url = req.body.info.url;
 	const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
@@ -96,7 +97,7 @@ app.post('/signupWorker', function(req, res) {
 			phoneNumber: phoneNumber,
 			status: status,
 			role: role,
-			url : url
+			url: url
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as worker successful' });
@@ -193,7 +194,7 @@ app.get('/workerPage', authenticate, function(req, res) {
 				phoneNumber: user.phoneNumber,
 				status: user.status,
 				role: user.role,
-				url : user.url
+				url: user.url
 			});
 		})
 		.catch(function(err) {
@@ -211,7 +212,7 @@ app.get('/engineerPage', authenticate, function(req, res) {
 				userName: user.userName,
 				phoneNumber: user.phoneNumber,
 				siteLocation: user.siteLocation,
-				url : user.url
+				url: user.url
 			});
 		})
 		.catch(function(err) {
@@ -300,7 +301,7 @@ app.get('/engineerworker/:id', function(req, res) {
 					phoneNumber: user.phoneNumber,
 					status: user.status,
 					role: user.role,
-					url : user.url
+					url: user.url
 				}
 			]);
 		})
@@ -340,22 +341,48 @@ app.post('/orders', authenticate, function(req, res) {
 		});
 });
 
-const nexmo = new Nexmo({
-	apiKey: '3b3e43dc',
-	apiSecret: 'Dj049nK9Vu7xZ1zB'
-});
+//api connection
+const nexmo = new Nexmo(
+	{
+		apiKey: '3b3e43dc',
+		apiSecret: 'Dj049nK9Vu7xZ1zB'
+	},
+	{ debug: true }
+);
 
+//send sms message function
 app.post('/sentMessage', function(req, res) {
 	console.log(req.body);
 	let from = 'Bug-Busters-200';
 	let to = req.body.number;
 	let text = req.body.msg;
-	nexmo.message.sendSms(from, to, text);
+	nexmo.message.sendSms(from, to, text, { type: 'unicode' }, (err, responseData) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.dir(responseData);
+			//Get data from response
+			const data = {
+				id: responseData.messages[0]['message-id'],
+				number: responseData.messages[0]['to']
+			};
+
+			//Emit to client
+			// io.emit('smsStatus', data);
+		}
+	});
+	console.log(data);
 });
 
-app.listen(port, function() {
+const server = app.listen(port, () => {
 	console.log(`app listening on port ${port}!`);
 });
-//npm i bcrypt
-//npm i cors --save
-//npm install body-parser --save
+
+// //connect to socket.io
+// const io = socketio(server);
+// io.on('connection', (socket) => {
+// 	console.log('Connected');
+// 	io.on('disconnect', () => {
+// 		console.log('Disconnected');
+// 	});
+// });
