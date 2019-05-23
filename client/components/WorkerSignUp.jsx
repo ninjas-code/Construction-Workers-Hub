@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { NavLink } from 'react-router-dom';
 import WorkerSignIn from './WorkerSignIn.jsx';
 import { storage } from '../firebase';
@@ -52,32 +53,87 @@ class WorkerSignUp extends React.Component {
 		var that = this;
 		var { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status } = this.state;
 		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status };
+=======
+import { Link } from 'react-router-dom';
+import WorkerSignIn from './WorkerSignIn.jsx';
+import {storage} from "../firebase"
+class WorkerSignUp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullname: '',
+            username: '',
+            password: '',
+            phonenumber: '',
+            experiencelevel: '',
+            expectedsalary: '',
+            role: '',
+            toggleSignUp: true,
+            toggleSignIn: false,
+            status: '',
+            image : null,
+            url : ''
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(e){
+        if(e.target.files[0]){
+            const image =  e.target.files[0]
+			this.setState(()=>({image}))
+			console.log(image)
+        }
+    }
+    handleUpload(){
+	const {image} = this.state;
+	const uploadTask =  storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(`state_changed`,
+     (snapshot)=>{
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes)*100)
+    } , (error)=>{
+    } , ()=>{
+        storage.ref(`images`).child(image.name).getDownloadURL().then(url=>{
+            console.log(url)
+            this.setState({url})
+        });
+    })
+    }
+    onChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+    clicked() {
+        var that = this;
+        var { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status , url} = this.state;
+        var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status , url };
+		console.log(info);
+>>>>>>> 3720f749e0e7ecc4160828ab20340db215e3e7e1
 		fetch('/signupWorker', {
-			method: 'POST',
-			body: JSON.stringify({ info }),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then((response) => {
-				return response.json();
-			})
-			.then((response) => {
-				console.log(response);
-				if (response.success === 'Sign up as worker successful') {
-					that.setState({
-						username: '',
-						password: '',
-						toggleSignUp: false,
-						toggleSignIn: true
-					});
-					return;
-				} else {
-					console.log(response.error);
-					return;
-				}
-			});
-	}
+            method: 'POST',
+            body: JSON.stringify({ info }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((response) => {
+                console.log(response);
+                if (response.success === 'Sign up as worker successful') {
+                    that.setState({
+                        username: '',
+                        password: '',
+                        toggleSignUp: false,
+                        toggleSignIn: true
+                    });
+                    return;
+                } else {
+                    console.log(response.error);
+                    return;
+                }
+            });
+    }
 
 	render() {
 		let role = [ 'role', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
@@ -107,9 +163,24 @@ class WorkerSignUp extends React.Component {
 						</h1>
 						<br />
 						<br />
+<<<<<<< HEAD
 						<input type="file" name="image" onChange={this.handleChange} />
 						<button onClick={this.handleUpload.bind(this)} />
+=======
+						<h1>Sign Up for construction Workers</h1>
 						<br />
+						<br />
+						<h1> Upload image </h1>
+						<br />
+						<br />
+						<input type="file"  onChange = {this.handleChange}/>
+						<button onClick={this.handleUpload.bind(this)}>Upload</button>
+						<br />
+						<br />
+						<img src = {this.state.url || 'https://via.placeholder.com/150' } alt = "uploaded image" height = "150" width = "200" />
+>>>>>>> 3720f749e0e7ecc4160828ab20340db215e3e7e1
+						<br />
+                        <br />
 						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 						<br />
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />

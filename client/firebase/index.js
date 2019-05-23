@@ -15,4 +15,14 @@
 
 // const storage = firebase.storage();
 
+<<<<<<< HEAD
 // export { storage, firebase as default };
+=======
+const storage = firebase.storage();
+
+
+
+export{
+  storage, firebase as default
+}
+>>>>>>> 3720f749e0e7ecc4160828ab20340db215e3e7e1

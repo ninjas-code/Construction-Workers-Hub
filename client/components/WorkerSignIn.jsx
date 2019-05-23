@@ -15,7 +15,8 @@ class WorkerSignIn extends React.Component {
 			experienceLevel: '',
 			expectedSalary: '',
 			role: '',
-			status: ''
+			status: '',
+			url: ''
 		};
 	}
 	onChange(e) {
@@ -38,6 +39,7 @@ class WorkerSignIn extends React.Component {
 				response.json().then((body) => {
 					const token = body.token;
 					localStorage.setItem('token', token);
+
 					this.setState(
 						{
 							username: '',
@@ -70,7 +72,8 @@ class WorkerSignIn extends React.Component {
 						experienceLevel: body.experienceLevel,
 						expectedSalary: body.expectedSalary,
 						role: body.role,
-						status: body.status
+						status: body.status,
+						url: body.url
 					});
 				});
 			} else {
@@ -84,28 +87,16 @@ class WorkerSignIn extends React.Component {
 	render() {
 		return (
 			<div>
-				<br />
-				<NavLink to="/" activeStyle={{ color: 'white' }}>
-					<h2 id="homeButton">Home</h2>
-				</NavLink>
 				{this.state.toggleSignIn ? (
 					<div>
-						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
-							Construction Worker Sign In
-						</h1>
-						<br />
+						<Link to="/">
+							<button value="Go Back home">Go Back home</button>
+						</Link>{' '}
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
 						<br />
-						<input
-							type="password"
-							name="password"
-							placeholder="password"
-							onChange={this.onChange.bind(this)}
-						/>
 						<br />
-						<button onClick={this.clicked.bind(this)} className="Button">
-							Sign In
-						</button>
+						<input type="text" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
+						<button onClick={this.clicked.bind(this)}>Sign In</button>
 					</div>
 				) : (
 					<WorkerMainPage
@@ -115,6 +106,7 @@ class WorkerSignIn extends React.Component {
 						expectedSalary={this.state.expectedSalary}
 						role={this.state.role}
 						status={this.state.status}
+						url={this.state.url}
 					/>
 				)}
 			</div>
