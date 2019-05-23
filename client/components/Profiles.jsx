@@ -73,32 +73,28 @@ class Profiles extends React.Component {
 							{'role:  '} {user.role}
 						</h2>
 						{
-							<button
-								id="book"
-								onClick={() => {
-									if (user.status === 'not Available') {
-										alert(user.fullName + ' is not availbale at the moment');
-										return;
-									} else {
-										const workerNAME = user.userName;
-										fetch('/orders', {
-											method: 'POST',
-											body: JSON.stringify({
-												workers: workerNAME,
-												endDate: '2019-05-25 21:13:03'
-											}),
-											headers: { 'Content-Type': 'application/json' }
-										})
-											.then((response) => {
-												return response.json();
-											})
-											.then((data) => console.log(data));
-									}
-								}}
-							>
-								Book Now
-							</button>
-						}
+							//in this button i tried to access engineer username 
+							//to save in order table with worker username but i can't
+							//mybe we have to use taken ?
+						 <button id="book" onClick={ () =>{
+						 if(user.status === "not Available"){
+							alert(user.fullName + 'is not availbale at the moment');
+							return;
+						 }else{
+							 const workerNAME = user.user.fullName ;
+							 fetch('/orders', {
+								method: 'POST',
+								body: JSON.stringify({ workers : workerNAME , endDate: '2019-05-25 21:13:03'/*example date*/ }),
+								headers: {'Content-Type': 'application/json'}
+							 })
+							 .then((response) => {
+									return response.json();
+								})
+							 .then( (data)=> console.log(data) ) 		
+						 }
+					 } } >Book Now</button>}
+					 { <label style={{ color: 'white' }}>{'  '}End date:</label>}
+					 {<input type="date" id="date" name="endDate"></input>}
 					</ul>
 				))}
 				<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
