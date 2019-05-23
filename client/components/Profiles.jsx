@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
-const response = document.querySelector('.response');
-
 class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +11,6 @@ class Profiles extends React.Component {
 	}
 	componentWillMount() {
 		let that = this;
-
 		const { match } = this.props;
 		//console.log()
 		fetch(`/engineerworker/${match.params.id}`)
@@ -30,22 +27,19 @@ class Profiles extends React.Component {
 	sendMessage() {
 		var that = this;
 		var { number, msg } = that.state;
-		var messages = { number, msg };
-
+		var message = { number, msg };
 		fetch('/sentMessage', {
 			method: 'POST',
-			body: JSON.stringify(messages),
+			body: JSON.stringify(message),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
+		console.log(message);
 	}
 	render() {
 		return (
 			<div>
-				<NavLink to="/" activeStyle={{ color: 'white' }}>
-					<h2 id="homeButton">Home</h2>
-				</NavLink>
 				{this.state.userProfile.map((user, i) => (
 					<ul key={i}>
 						<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
@@ -55,10 +49,10 @@ class Profiles extends React.Component {
 						<br />
 						<br />
 						<img
-							src={user.url || 'https://via.placeholder.com/150'}
+							src={this.state.url || 'https://via.placeholder.com/150'}
 							alt="uploaded image"
-							height="200"
-							width="300"
+							height="150"
+							width="200"
 						/>
 						<br />
 						<br />
@@ -107,8 +101,6 @@ class Profiles extends React.Component {
 								Book Now
 							</button>
 						}
-						{<label style={{ color: 'white' }}>{'  '}End date:</label>}
-						{<input type="date" id="date" name="endDate" />}
 					</ul>
 				))}
 				<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
@@ -137,5 +129,4 @@ class Profiles extends React.Component {
 		);
 	}
 }
-
 export default Profiles;
