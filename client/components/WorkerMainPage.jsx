@@ -6,12 +6,15 @@ class WorkerMainPage extends React.Component {
 		console.log(this.props)
 		return (
 			<div>
-				<label>fullName : </label><text>{this.props.fullName}</text>
-				<label>phoneNumber : </label><text>{this.props.phoneNumber}</text>
-				<label>experience Level : </label><text>{this.props.experienceLevel}</text>
-				<label>expected Salary : </label><text>{this.props.expectedSalary}</text>
-				<label>role : </label><text>{this.props.role}</text>
-				<label>status : </label><text>{this.props.status}</text>
+				<img src = {this.props.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "150" width = "200" />
+				<br/>
+				<br/>
+				<label>fullName : </label><p>{this.props.fullName}</p>
+				<label>phoneNumber : </label><p>{this.props.phoneNumber}</p>
+				<label>experience Level : </label><p>{this.props.experienceLevel}</p>
+				<label>expected Salary : </label><p>{this.props.expectedSalary}</p>
+				<label>role : </label><p>{this.props.role}</p>
+				<label>status : </label><p>{this.props.status}</p>
 			</div>
 		);
 	}

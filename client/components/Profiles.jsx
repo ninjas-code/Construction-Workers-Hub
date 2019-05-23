@@ -17,8 +17,9 @@ class Profiles extends React.Component {
 		//console.log()
 		fetch(`/engineerworker/${match.params.id}`)
 			.then((response) => response.json())
-			.then((data) => that.setState({ userProfile: data }))
-			//.then(console.log(that.state.userProfile))
+			.then((data) => that.setState({userProfile: data }
+				))
+			.then(console.log(that.state.userProfile))
 			.catch((err) => {
 				console.log(err);
 			});
@@ -41,13 +42,20 @@ class Profiles extends React.Component {
 	}
 	render() {
 		return (
+			
 			<div>
+				
 				{this.state.userProfile.map((user, i) => (
 					<ul key={i}>
 						<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
 							<strong>{'WELCOME to  ' + user.fullName + "'s   PROFILE"}</strong>
 							<br />
 						</h2>
+						  <br/>
+							<br/>
+							<img src = {user.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "200" width = "300" />
+							<br/>
+							<br/>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
 							{'Name:  '} {user.fullName}

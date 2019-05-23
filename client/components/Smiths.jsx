@@ -24,6 +24,7 @@ class Smiths extends React.Component {
 			<div>
 			{ this.state.allSmiths.length === 0 ? <h1> there is no Smiths provided yet</h1> :
 		 <table> 
+			 
 		  <tbody>
 			{this.state.allSmiths.map( (user, i) => 
 			<tr key = {user.id } style={{ margin: '10px', display:'block', 

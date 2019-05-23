@@ -20,11 +20,12 @@ class EngineerMainPage extends React.Component {
 				<h1>Welcome to your Profile</h1>
 				<br />
 				<br />
+				<img src = {this.props.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "150" width = "200" />
 				<br />
 				<br />
-				<label>Full Name : </label><text>{this.props.fullName}</text>
-				<label>Phone Number : </label><text>{this.props.phoneNumber}</text>
-				<label>Site Location : </label><text>{this.props.siteLocation}</text>
+				<label>Full Name : </label><p>{this.props.fullName}</p>
+				<label>Phone Number : </label><p>this.props.phoneNumber}</p>
+				<label>Site Location : </label><p>{this.props.siteLocation}</p>
 				<br />
 				<br />
 				<br />
