@@ -1,9 +1,9 @@
 body {
 	background-image: url("./image/projectBJ1.png");
-	background-repeat: no-repeat;
+	/* background-repeat: no-repeat;
 	background-size: contain;
 	background-size: cover;
-	grid-area: auto;
+	grid-area: auto; */
 }
 .logo {
 	position: relative;
