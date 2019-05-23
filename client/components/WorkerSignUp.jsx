@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import WorkerSignIn from './WorkerSignIn.jsx';
-
+import WorkerSignIn from './EngineerSignIn.jsx';
+import {storage} from "../firebase"
 class WorkerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -14,9 +14,35 @@ class WorkerSignUp extends React.Component {
 			expectedsalary: '',
 			role: '',
 			toggleSignUp: true,
-			//toggleSignIn: false,
-			status: ''
+			toggleSignIn: false,
+			status: '',
+			image : null,
+			url : ''
 		};
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+
+	handleChange(e){
+		if(e.target.files[0]){
+			const image =  e.target.files[0]
+			this.setState(()=>({image})
+				)
+		}
+	}
+
+	handleUpload(){
+	const {image} = this.state;
+	const uploadTask =	storage.ref(`images/${image.name}`).put(image);
+	uploadTask.on(`state_changed` , ()=>{
+
+	} , (error)=>{
+
+	} , ()=>{
+		storage.ref(`images`).child(image.name).getDownloadURL().then(url=>{
+			
+		});
+	})
 	}
 
 	onChange(e) {
@@ -82,6 +108,12 @@ class WorkerSignUp extends React.Component {
 						<br />
 						<br />
 						<h1>Sign Up for construction Workers</h1>
+						<br />
+						<br />
+						<input type="file" name = "image" onChange = {this.handleChange}/>
+						<button onClick={this.handleUpload.bind(this)}></button>
+						<br />
+						<br />
 						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 						<br />
 						<br />
@@ -97,7 +129,7 @@ class WorkerSignUp extends React.Component {
 						<br />
 						<br />
 						<input
-							type="number"
+							type="tel"
 							name="phonenumber"
 							placeholder="079-123-4567"
 							onChange={this.onChange.bind(this)}
