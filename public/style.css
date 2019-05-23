@@ -1,7 +1,7 @@
 body {
 	background-image: url("./image/projectBJ1.png");
-	/* background-repeat: no-repeat;
-	background-size: contain;
+	/* background-repeat: no-repeat; */
+	/* background-size: contain;
 	background-size: cover;
 	grid-area: auto; */
 }
@@ -75,6 +75,15 @@ select {
 	box-sizing: border-box;
 }
 input[type=number],
+select {
+	padding: 6px 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+input[type=file],
 select {
 	padding: 6px 10px;
 	margin: 8px 0;

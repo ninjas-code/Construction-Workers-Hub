@@ -46,7 +46,7 @@ app.post('/signupEngineer', function(req, res) {
 			if (err.name === 'SequelizeUniqueConstraintError') {
 				return res.status(400).send({ error: 'This username is already taken' });
 			}
-			return res.status(500).send('Server Error');
+			return res.status(500).send({ error: 'Server Error' });
 		});
 });
 
@@ -341,6 +341,7 @@ app.post('/orders', authenticate, function(req, res) {
 		});
 });
 
+//api connection
 const nexmo = new Nexmo(
 	{
 		apiKey: '3b3e43dc',
@@ -367,7 +368,7 @@ app.post('/sentMessage', function(req, res) {
 			};
 
 			//Emit to client
-			io.emit('smsStatus', data);
+			// io.emit('smsStatus', data);
 		}
 	});
 	console.log(data);

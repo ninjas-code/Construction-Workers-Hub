@@ -32,11 +32,6 @@ class Profiles extends React.Component {
 		var { number, msg } = that.state;
 		var messages = { number, msg };
 
-		// button.addEventListener('click', send, false);
-		// const socket = io();
-		// socket.on('smsStatus', function(data) {
-		// 	response.innerHTML = '<h5>Text message sent to' + data.number + '</h5>';
-		// });
 		fetch('/sentMessage', {
 			method: 'POST',
 			body: JSON.stringify(messages),
@@ -44,13 +39,6 @@ class Profiles extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		});
-		// 	.then(function(res) {
-		// 		console.log(res);
-		// 	})
-		// 	.catch(function(err) {
-		// 		console.log(err);
-		// 	});
-		// console.log(message);
 	}
 	render() {
 		return (
@@ -99,29 +87,20 @@ class Profiles extends React.Component {
 							{'role:  '} {user.role}
 						</h2>
 						{
-							//in this button i tried to access engineer username
-							//to save in order table with worker username but i can't
-							//mybe we have to use taken ?
 							<button
 								id="book"
 								onClick={() => {
 									if (user.status === 'not Available') {
-										alert(user.fullName + 'is not availbale at the moment');
+										alert(user.fullName + ' is not availbale at the moment');
 										return;
 									} else {
-										const workerNAME = user.user.fullName;
-										fetch('/orders', {
-											method: 'POST',
-											body: JSON.stringify({
-												workers: workerNAME,
-												endDate: '2019-05-25 21:13:03' /*example date*/
-											}),
-											headers: { 'Content-Type': 'application/json' }
-										})
-											.then((response) => {
-												return response.json();
-											})
-											.then((data) => console.log(data));
+										alert(
+											'Booked ' +
+												user.fullName +
+												' successfully send ' +
+												user.fullName +
+												' a message bellow '
+										);
 									}
 								}}
 							>

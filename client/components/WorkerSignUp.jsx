@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import WorkerSignIn from './WorkerSignIn.jsx';
 import { storage } from '../firebase';
 class WorkerSignUp extends React.Component {
@@ -115,20 +115,12 @@ class WorkerSignUp extends React.Component {
 				</NavLink>
 				{this.state.toggleSignUp ? (
 					<div>
-						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange' }}>
 							Sign Up for construction Workers
 						</h1>
-						<br />
-						<br />
-						<h1>Sign Up for construction Workers</h1>
-						<br />
-						<br />
-						<h1> Upload image </h1>
-						<br />
-						<br />
+						<h4 style={{ color: 'white' }}> Upload profile photo </h4>
 						<input type="file" onChange={this.handleChange} />
 						<button onClick={this.handleUpload.bind(this)}>Upload</button>
-						<br />
 						<br />
 						<img
 							src={this.state.url || 'https://via.placeholder.com/150'}
@@ -136,7 +128,6 @@ class WorkerSignUp extends React.Component {
 							height="150"
 							width="200"
 						/>
-						<br />
 						<br />
 						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 						<br />
@@ -159,10 +150,9 @@ class WorkerSignUp extends React.Component {
 						<input
 							type="number"
 							name="expectedsalary"
-							placeholder="expected salary"
+							placeholder="expected salary / hour"
 							onChange={this.onChange.bind(this)}
 						/>{' '}
-						JD/hr.
 						<br />
 						<select name="experiencelevel" onChange={this.onChange.bind(this)}>
 							{chooseExperienceLevel}

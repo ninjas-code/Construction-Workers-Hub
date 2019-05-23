@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
 import EngineerSignIn from './EngineerSignIn.jsx';
 import { storage } from '../firebase';
-
 class EngineerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -85,7 +84,6 @@ class EngineerSignUp extends React.Component {
 				return response.json();
 			})
 			.then((response) => {
-				console.log(response.success);
 				if (response.success === 'Sign up as engineer successful') {
 					that.setState({
 						username: '',
@@ -93,12 +91,12 @@ class EngineerSignUp extends React.Component {
 						toggleSignIn: true,
 						toggleSignUp: false
 					});
+					console.log(response.success);
 				} else {
 					console.log(response.error);
 				}
 			});
 	}
-
 	render() {
 		return (
 			<div>
@@ -110,18 +108,8 @@ class EngineerSignUp extends React.Component {
 						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
 							Sign Up for Engineers
 						</h1>
-						<br />
-						<h1>Sign Up for Engineers</h1>
-						<br />
-						<br />
-						<h1> Upload image </h1>
-						<br />
-						<br />
 						<input type="file" name="image" onChange={this.handleChange} />
-						<br />
-						<br />
 						<button onClick={this.handleUpload.bind(this)}>Upload</button>
-						<br />
 						<br />
 						<img
 							src={this.state.url || 'https://via.placeholder.com/150'}
@@ -130,7 +118,6 @@ class EngineerSignUp extends React.Component {
 							width="200"
 						/>
 						<br />
-						<br />
 						<input
 							type="text"
 							name="fullname"
@@ -138,9 +125,7 @@ class EngineerSignUp extends React.Component {
 							onChange={this.changed.bind(this)}
 						/>{' '}
 						<br />
-						<br />
 						<input type="text" name="username" placeholder="userName" onChange={this.changed.bind(this)} />
-						<br />
 						<br />
 						<input
 							type="password"
@@ -149,7 +134,6 @@ class EngineerSignUp extends React.Component {
 							onChange={this.changed.bind(this)}
 						/>
 						<br />
-						<br />
 						<input
 							type="text"
 							name="sitelocation"
@@ -157,14 +141,12 @@ class EngineerSignUp extends React.Component {
 							onChange={this.changed.bind(this)}
 						/>
 						<br />
-						<br />
 						<input
 							type="number"
 							name="phonenumber"
 							placeholder="Phone Number"
 							onChange={this.changed.bind(this)}
 						/>
-						<br />
 						<br />
 						<button className="Button" onClick={this.engineerSignUp.bind(this)}>
 							Sign Up
@@ -183,5 +165,4 @@ class EngineerSignUp extends React.Component {
 		);
 	}
 }
-
 export default EngineerSignUp;

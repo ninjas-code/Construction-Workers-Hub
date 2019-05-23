@@ -13,7 +13,7 @@ class EngineerSignIn extends React.Component {
 			toggleSignIn: true,
 			toggleEngpage: false,
 			siteLocation: '',
-			url : ''
+			url: ''
 		};
 		this.engineerSignIn = this.engineerSignIn.bind(this);
 	}
@@ -71,7 +71,7 @@ class EngineerSignIn extends React.Component {
 						username: body.userName,
 						phoneNumber: body.phoneNumber,
 						siteLocation: body.siteLocation,
-						url : body.url
+						url: body.url
 					});
 				});
 			} else {
@@ -85,7 +85,6 @@ class EngineerSignIn extends React.Component {
 	render() {
 		return (
 			<div>
-				<br />
 				<NavLink to="/" activeStyle={{ color: 'white' }}>
 					<h2 id="homeButton">Home</h2>
 				</NavLink>
@@ -111,10 +110,10 @@ class EngineerSignIn extends React.Component {
 				) : (
 					<EngineerMainPage
 						fullName={this.state.fullName}
-						userName = {this.state.username}
+						userName={this.state.username}
 						phoneNumber={this.state.phoneNumber}
 						siteLocation={this.state.siteLocation}
-						url = {this.state.url}
+						url={this.state.url}
 					/>
 				)}
 			</div>

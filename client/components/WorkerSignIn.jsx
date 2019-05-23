@@ -87,16 +87,29 @@ class WorkerSignIn extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
+				<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+					Construction Worker Sign In
+				</h1>
+				<br />
 				{this.state.toggleSignIn ? (
 					<div>
-						<Link to="/">
-							<button value="Go Back home">Go Back home</button>
-						</Link>{' '}
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
 						<br />
 						<br />
-						<input type="text" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
-						<button onClick={this.clicked.bind(this)}>Sign In</button>
+						<input
+							type="password"
+							name="password"
+							placeholder="password"
+							onChange={this.onChange.bind(this)}
+						/>
+						<br />
+						<br />
+						<button onClick={this.clicked.bind(this)} className="Button">
+							Sign In
+						</button>
 					</div>
 				) : (
 					<WorkerMainPage
