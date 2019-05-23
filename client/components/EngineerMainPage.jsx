@@ -13,8 +13,8 @@ class EngineerMainPage extends React.Component {
 	render() {
 		return (
 			<div>
-				<h2 style={{ margin: '10px', display: 'block', color: 'darkOrange', fontSize: '25px' }}>
-					<strong>{'WELCOME to  ' + this.props.fullName + "'s   PROFILE"}</strong>
+				<h2 style={{ margin: '10px', display: 'block', color: 'darkOrange' }}>
+					<strong>{'WELCOME ' + this.props.fullName + ' TO YOUR PROFILE'}</strong>
 					<br />
 				</h2>
 				<img
@@ -23,19 +23,19 @@ class EngineerMainPage extends React.Component {
 					height="150"
 					width="200"
 				/>
-				<h2 style={{ color: 'white', fontSize: '18px' }}>
+				<h2 style={{ color: 'white' }}>
 					{' '}
 					{'Name:  '} {this.props.fullName}
 				</h2>
-				<h2 style={{ color: 'white', fontSize: '18px' }}>
+				<h2 style={{ color: 'white' }}>
 					{' '}
 					{'User Name:  '} {this.props.userName}
 				</h2>
-				<h2 style={{ color: 'white', fontSize: '18px' }}>
+				<h2 style={{ color: 'white' }}>
 					{' '}
 					{'Phone Number:  '} {this.props.phoneNumber}
 				</h2>
-				<h2 style={{ color: 'white', fontSize: '18px' }}>
+				<h2 style={{ color: 'white' }}>
 					{' '}
 					{'Location:  '} {this.props.siteLocation}
 				</h2>
@@ -45,16 +45,24 @@ class EngineerMainPage extends React.Component {
 					<br />
 				</h2>
 				<NavLink to="/smith" activeStyle={{ color: 'purple' }}>
-					<button value="Smiths">Smiths</button>
+					<button value="Smiths" className="Button">
+						Smiths
+					</button>
 				</NavLink>
 				<NavLink to="/carpenter" activeStyle={{ color: 'purple' }}>
-					<button value="Carpenters">Carpenters</button>
+					<button value="Carpenters" className="Button">
+						Carpenters
+					</button>
 				</NavLink>
 				<NavLink to="/stoneBuilder" activeStyle={{ color: 'purple' }}>
-					<button value="Stone Builders">Stone Builders</button>
+					<button value="Stone Builders" className="Button">
+						Stone Builders
+					</button>
 				</NavLink>
 				<NavLink to="/painter" activeStyle={{ color: 'purple' }}>
-					<button value="Painters">Painters</button>
+					<button value="Painters" className="Button">
+						Painters
+					</button>
 				</NavLink>
 			</div>
 		);

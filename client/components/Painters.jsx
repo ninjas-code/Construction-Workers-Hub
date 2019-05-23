@@ -68,7 +68,9 @@ class Painters extends React.Component {
 									<td>{user.role}</td>
 									<td>
 										<NavLink to={'/engineerworker/' + user.id} activeStyle={{ color: 'purple' }}>
-											<button value="GoToProfile">Go To Profile</button>
+											<button value="GoToProfile" className="Button">
+												Go To Profile
+											</button>
 										</NavLink>
 									</td>
 								</tr>

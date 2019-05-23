@@ -98,7 +98,7 @@ class WorkerSignUp extends React.Component {
 			return <option key={option}>{option}</option>;
 		});
 
-		let experienceLevel = [ 'experiencelevel', 'Professional', 'Intermediate', 'Beginner' ];
+		let experienceLevel = [ 'experience level', 'Professional', 'Intermediate', 'Beginner' ];
 		const chooseExperienceLevel = experienceLevel.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
@@ -120,7 +120,9 @@ class WorkerSignUp extends React.Component {
 						</h1>
 						<h4 style={{ color: 'white' }}> Upload profile photo </h4>
 						<input type="file" onChange={this.handleChange} />
-						<button onClick={this.handleUpload.bind(this)}>Upload</button>
+						<button onClick={this.handleUpload.bind(this)} className="Button">
+							Upload
+						</button>
 						<br />
 						<img
 							src={this.state.url || 'https://via.placeholder.com/150'}
