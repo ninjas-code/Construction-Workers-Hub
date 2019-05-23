@@ -72,7 +72,7 @@ class WorkerSignUp extends React.Component {
 						username: '',
 						password: '',
 						toggleSignUp: false,
-						toggleSignIn: true
+						//toggleSignIn: true
 					});
 					return;
 				} else {
