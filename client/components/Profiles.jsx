@@ -40,6 +40,9 @@ class Profiles extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.userProfile.map((user, i) => (
 					<ul key={i}>
 						<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
@@ -97,6 +100,7 @@ class Profiles extends React.Component {
 										);
 									}
 								}}
+								className="Button"
 							>
 								Book Now
 							</button>
@@ -124,7 +128,9 @@ class Profiles extends React.Component {
 				/>
 				<br />
 				<br />
-				<button onClick={this.sendMessage.bind(this)}>Send Message</button>
+				<button onClick={this.sendMessage.bind(this)} className="Button">
+					Send Message
+				</button>
 			</div>
 		);
 	}

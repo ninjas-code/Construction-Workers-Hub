@@ -22,6 +22,9 @@ class Smiths extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.allSmiths.length === 0 ? (
 					<h1> there is no Smiths provided yet</h1>
 				) : (
@@ -65,7 +68,9 @@ class Smiths extends React.Component {
 									<td>{user.role}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
 										<NavLink to={'/engineerworker/' + user.id} activeStyle={{ color: 'purple' }}>
-											<button value="GoToProfile">Go To Profile</button>
+											<button value="GoToProfile" className="Button">
+												Go To Profile
+											</button>
 										</NavLink>
 									</td>
 								</tr>

@@ -90,12 +90,12 @@ class WorkerSignIn extends React.Component {
 				<NavLink to="/" activeStyle={{ color: 'white' }}>
 					<h2 id="homeButton">Home</h2>
 				</NavLink>
-				<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
-					Construction Worker Sign In
-				</h1>
 				<br />
 				{this.state.toggleSignIn ? (
 					<div>
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+							Construction Worker Sign In
+						</h1>
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
 						<br />
 						<br />

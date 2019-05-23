@@ -109,7 +109,9 @@ class EngineerSignUp extends React.Component {
 							Sign Up for Engineers
 						</h1>
 						<input type="file" name="image" onChange={this.handleChange} />
-						<button onClick={this.handleUpload.bind(this)}>Upload</button>
+						<button onClick={this.handleUpload.bind(this)} className="Button">
+							Upload
+						</button>
 						<br />
 						<img
 							src={this.state.url || 'https://via.placeholder.com/150'}
