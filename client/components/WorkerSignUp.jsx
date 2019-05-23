@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import WorkerSignIn from './EngineerSignIn.jsx';
-import {storage} from "../firebase"
+import { NavLink } from 'react-router-dom';
+import WorkerSignIn from './WorkerSignIn.jsx';
+import { storage } from '../firebase';
+
 class WorkerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,33 +17,29 @@ class WorkerSignUp extends React.Component {
 			toggleSignUp: true,
 			toggleSignIn: false,
 			status: '',
-			image : null,
-			url : ''
+			image: null,
+			url: ''
 		};
-		this.handleChange = this.handleChange.bind(this);
 	}
 
-
-	handleChange(e){
-		if(e.target.files[0]){
-			const image =  e.target.files[0]
-			this.setState(()=>({image})
-				)
+	handleChange(e) {
+		if (e.target.files[0]) {
+			const image = e.target.files[0];
+			this.setState(() => ({ image }));
 		}
 	}
 
-	handleUpload(){
-	const {image} = this.state;
-	const uploadTask =	storage.ref(`images/${image.name}`).put(image);
-	uploadTask.on(`state_changed` , ()=>{
-
-	} , (error)=>{
-
-	} , ()=>{
-		storage.ref(`images`).child(image.name).getDownloadURL().then(url=>{
-			
-		});
-	})
+	handleUpload() {
+		const { image } = this.state;
+		const uploadTask = storage.ref(`images/${image.name}`).put(image);
+		uploadTask.on(
+			`state_changed`,
+			() => {},
+			(error) => {},
+			() => {
+				storage.ref(`images`).child(image.name).getDownloadURL().then((url) => {});
+			}
+		);
 	}
 
 	onChange(e) {
@@ -83,42 +80,39 @@ class WorkerSignUp extends React.Component {
 	}
 
 	render() {
-		let role = [ 'Choose One', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
+		let role = [ 'role', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
 		const chooseRoles = role.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let experienceLevel = [ 'Choose One', 'Professional', 'Intermediate', 'Beginner' ];
+		let experienceLevel = [ 'experiencelevel', 'Professional', 'Intermediate', 'Beginner' ];
 		const chooseExperienceLevel = experienceLevel.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let status = [ 'Choose One', 'Available', 'not Available' ];
+		let status = [ 'status', 'Available', 'not Available' ];
 		const chooseStatus = status.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.toggleSignUp ? (
 					<div>
-						<Link to="/">
-							<button value="Go Back home">Go Back home</button>
-						</Link>{' '}
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+							Sign Up for construction Workers
+						</h1>
 						<br />
 						<br />
-						<h1>Sign Up for construction Workers</h1>
-						<br />
-						<br />
-						<input type="file" name = "image" onChange = {this.handleChange}/>
-						<button onClick={this.handleUpload.bind(this)}></button>
-						<br />
+						<input type="file" name="image" onChange={this.handleChange} />
+						<button onClick={this.handleUpload.bind(this)} />
 						<br />
 						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 						<br />
-						<br />
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
-						<br />
 						<br />
 						<input
 							type="password"
@@ -127,19 +121,12 @@ class WorkerSignUp extends React.Component {
 							onChange={this.onChange.bind(this)}
 						/>
 						<br />
-						<br />
 						<input
-							type="tel"
+							type="number"
 							name="phonenumber"
 							placeholder="079-123-4567"
 							onChange={this.onChange.bind(this)}
 						/>
-						<br />
-						<br />
-						<select name="experiencelevel" onChange={this.onChange.bind(this)}>
-							{chooseExperienceLevel}
-						</select>
-						<br />
 						<br />
 						<input
 							type="number"
@@ -147,25 +134,28 @@ class WorkerSignUp extends React.Component {
 							placeholder="expected salary"
 							onChange={this.onChange.bind(this)}
 						/>{' '}
-						JD
+						JD/hr.
 						<br />
+						<select name="experiencelevel" onChange={this.onChange.bind(this)}>
+							{chooseExperienceLevel}
+						</select>
 						<br />
 						<select name="role" onChange={this.onChange.bind(this)}>
 							{chooseRoles}
 						</select>
 						<br />
-						<br />
 						<select name="status" onChange={this.onChange.bind(this)}>
 							{chooseStatus}
 						</select>
 						<br />
-						<br />
-						<button id="signUpWorker" onClick={this.clicked.bind(this)}>
+						<button id="signUpWorker" className="Button" onClick={this.clicked.bind(this)}>
 							Sign Up
 						</button>
-						<Link to="/signinWorker">
-							<button value="sign In as a construction Worker">Sign In</button>
-						</Link>
+						<NavLink to="/signinWorker">
+							<button value="sign In as a construction Worker" className="Button">
+								Aready Signed up? Sign In Here
+							</button>
+						</NavLink>
 					</div>
 				) : (
 					<WorkerSignIn />

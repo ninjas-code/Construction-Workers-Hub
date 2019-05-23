@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
 import EngineerSignIn from './EngineerSignIn.jsx';
-
 class EngineerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -53,14 +52,15 @@ class EngineerSignUp extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.toggleSignUp ? (
 					<div>
-						<NavLink to="/" activeStyle={{ color: 'purple' }}>
-							<button value="Go Back home">Go Back home</button>
-						</NavLink>{' '}
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+							Sign Up for Engineers
+						</h1>
 						<br />
-						<br />
-						<h1>Sign Up for Engineers</h1>
 						<input
 							type="text"
 							name="fullname"
@@ -89,19 +89,21 @@ class EngineerSignUp extends React.Component {
 						<br />
 						<br />
 						<input
-							type="tel"
+							type="number"
 							name="phonenumber"
 							placeholder="Phone Number"
 							onChange={this.changed.bind(this)}
 						/>
 						<br />
 						<br />
-						<br />
-						<button onClick={this.engineerSignUp.bind(this)}>Sign Up</button>
-						<br />
+						<button className="Button" onClick={this.engineerSignUp.bind(this)}>
+							Sign Up
+						</button>
 						<br />
 						<NavLink to="/signinEngineer" activeStyle={{ color: 'purple' }}>
-							<button value="Already Signed up? Sign In">Already Signed up? Sign In</button>
+							<button value="Already Signed up? Sign In" className="Button">
+								Already Signed up? Sign In Here
+							</button>
 						</NavLink>
 					</div>
 				) : (

@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var Sequelize = require('sequelize');
 
 //Database connection
-const db = new Sequelize('construction_worker_hub', 'root', '', {
+const db = new Sequelize('construction_worker_hub', 'root', '1998', {
 	host: 'localhost',
 	dialect: 'mysql'
 });

@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const Nexmo = require('nexmo');
+const socketio = require('socket.io');
 const SECRET_KEY = 'somesting';
 //const cors = require("cors");
 const { engineer, worker, order } = require('./database/models');
@@ -334,22 +335,47 @@ app.post('/orders', authenticate, function(req, res) {
 		});
 });
 
-const nexmo = new Nexmo({
-	apiKey: '3b3e43dc',
-	apiSecret: 'Dj049nK9Vu7xZ1zB'
-});
+const nexmo = new Nexmo(
+	{
+		apiKey: '3b3e43dc',
+		apiSecret: 'Dj049nK9Vu7xZ1zB'
+	},
+	{ debug: true }
+);
 
+//send sms message function
 app.post('/sentMessage', function(req, res) {
 	console.log(req.body);
 	let from = 'Bug-Busters-200';
 	let to = req.body.number;
 	let text = req.body.msg;
-	nexmo.message.sendSms(from, to, text);
+	nexmo.message.sendSms(from, to, text, { type: 'unicode' }, (err, responseData) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.dir(responseData);
+			//Get data from response
+			const data = {
+				id: responseData.messages[0]['message-id'],
+				number: responseData.messages[0]['to']
+			};
+
+			//Emit to client
+			io.emit('smsStatus', data);
+		}
+	});
+	console.log(data);
 });
 
-app.listen(port, function() {
+const server = app.listen(port, () => {
 	console.log(`app listening on port ${port}!`);
 });
-//npm i bcrypt
-//npm i cors --save
-//npm install body-parser --save
+
+//connect to socket.io
+const io = socketio(server);
+io.on('connection', (socket) => {
+	console.log('Connected');
+	io.on('disconnect', () => {
+		console.log('Disconnected');
+	});
+});

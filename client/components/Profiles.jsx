@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
+const response = document.querySelector('.response');
 
 class Profiles extends React.Component {
 	constructor(props) {
@@ -29,19 +30,34 @@ class Profiles extends React.Component {
 	sendMessage() {
 		var that = this;
 		var { number, msg } = that.state;
-		var message = { number, msg };
+		var messages = { number, msg };
+
+		// button.addEventListener('click', send, false);
+		// const socket = io();
+		// socket.on('smsStatus', function(data) {
+		// 	response.innerHTML = '<h5>Text message sent to' + data.number + '</h5>';
+		// });
 		fetch('/sentMessage', {
 			method: 'POST',
-			body: JSON.stringify(message),
+			body: JSON.stringify(messages),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
-		console.log(message);
+		// 	.then(function(res) {
+		// 		console.log(res);
+		// 	})
+		// 	.catch(function(err) {
+		// 		console.log(err);
+		// 	});
+		// console.log(message);
 	}
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.userProfile.map((user, i) => (
 					<ul key={i}>
 						<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>

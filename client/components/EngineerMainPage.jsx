@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, Redirect } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 class EngineerMainPage extends React.Component {
 	smithClick() {
@@ -13,18 +13,22 @@ class EngineerMainPage extends React.Component {
 			});
 	}
 
-	
 	render() {
 		return (
 			<div>
-				<h1>Welcome to your Profile</h1>
+				<h1 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
+					Welcome to your profile
+				</h1>
 				<br />
 				<br />
 				<br />
 				<br />
-				<label>Full Name : </label><text>{this.props.fullName}</text>
-				<label>Phone Number : </label><text>{this.props.phoneNumber}</text>
-				<label>Site Location : </label><text>{this.props.siteLocation}</text>
+				<label>Full Name : </label>
+				<text>{this.props.fullName}</text>
+				<label>Phone Number : </label>
+				<text>{this.props.phoneNumber}</text>
+				<label>Site Location : </label>
+				<text>{this.props.siteLocation}</text>
 				<br />
 				<br />
 				<br />
@@ -33,7 +37,7 @@ class EngineerMainPage extends React.Component {
 				<br />
 				<h2>Construction Workers:</h2>
 				<NavLink to="/smith" activeStyle={{ color: 'purple' }}>
-					<button value="Smiths" >Smiths</button>
+					<button value="Smiths">Smiths</button>
 				</NavLink>
 				<NavLink to="/carpenter" activeStyle={{ color: 'purple' }}>
 					<button value="Carpenters">Carpenters</button>
