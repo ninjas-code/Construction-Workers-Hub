@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import WorkerSignIn from './EngineerSignIn.jsx';
-import {storage} from "../firebase"
+import {storage} from "../firebase";
+import Noty from 'noty';
+
+import '../../node_modules/noty/lib/noty';
+// import '../../node_modules/noty/lib/themes/bootstrap-v4.css';
+
 class WorkerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -17,7 +22,10 @@ class WorkerSignUp extends React.Component {
 			toggleSignIn: false,
 			status: '',
 			image : null,
-			url : ''
+			url : '',
+			alert_success:'',
+			alert_ServerError:'',
+			alert_AlreadyTaken:''
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -66,34 +74,53 @@ class WorkerSignUp extends React.Component {
 				return response.json();
 			})
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				if (response.success === 'Sign up as worker successful') {
 					that.setState({
 						username: '',
 						password: '',
 						toggleSignUp: false,
-						toggleSignIn: true
+						toggleSignIn: true,
+						alert_success:response.success
 					});
 					return;
 				} else {
-					console.log(response.error);
+					if (response.error === 'This username is already taken'){
+						this.setState({
+							alert_ServerError:response.error
+						})
+					} else {
+						this.setState({
+							alert_ServerError:response.error
+						})
+					}
+					
+					console.log(this.state.alert_ServerError);
 					return;
 				}
 			});
 	}
 
+	show(){
+		let that = this;
+		let mess = 'hello';
+		new Noty({
+			text:mess,
+		}).show();
+	}
+
 	render() {
-		let role = [ 'Choose One', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
+		let role = [ 'Choose The Role', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
 		const chooseRoles = role.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let experienceLevel = [ 'Choose One', 'Professional', 'Intermediate', 'Beginner' ];
+		let experienceLevel = [ 'Choose Experience Level', 'Professional', 'Intermediate', 'Beginner' ];
 		const chooseExperienceLevel = experienceLevel.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let status = [ 'Choose One', 'Available', 'not Available' ];
+		let status = [ 'Choose Status', 'Available', 'not Available' ];
 		const chooseStatus = status.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
@@ -107,7 +134,7 @@ class WorkerSignUp extends React.Component {
 						</Link>{' '}
 						<br />
 						<br />
-						<h1>Sign Up for construction Workers</h1>
+						<h1 style={{color :'orange'}}>Sign Up for construction Workers</h1>
 						<br />
 						<br />
 						<input type="file" name = "image" onChange = {this.handleChange}/>
@@ -146,8 +173,8 @@ class WorkerSignUp extends React.Component {
 							name="expectedsalary"
 							placeholder="expected salary"
 							onChange={this.onChange.bind(this)}
-						/>{' '}
-						JD
+						/>
+						<p style={{color :'orange', display:'inline', marginLeft:'10px'}}>JD</p>
 						<br />
 						<br />
 						<select name="role" onChange={this.onChange.bind(this)}>
@@ -160,7 +187,10 @@ class WorkerSignUp extends React.Component {
 						</select>
 						<br />
 						<br />
-						<button id="signUpWorker" onClick={this.clicked.bind(this)}>
+						{/* this.clicked.bind(this) */}
+						<button id="signUpWorker" onClick={(e)=> {this.clicked(e) , this.show(e)}}
+						
+						>
 							Sign Up
 						</button>
 						<Link to="/signinWorker">

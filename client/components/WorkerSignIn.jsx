@@ -86,6 +86,8 @@
                     <br />
                     <br />
                     <input type="text" name="password" placeholder="password" onChange={this.onChange.bind(this)} />
+					<br />
+                    <br />
                     <button onClick={this.clicked.bind(this)}>Sign In</button>
                     </div>
                     ) : (
