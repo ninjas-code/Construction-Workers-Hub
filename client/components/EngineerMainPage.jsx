@@ -1,38 +1,32 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
+import  profiles  from './Profiles.jsx'
 
 class EngineerMainPage extends React.Component {
-	smithClick() {
-		fetch('/smith')
-			.then(function(data) {
-				console.log(data);
-				return data.json();
-			})
-			.then(function(data) {
-				console.log({ 'the data': data.json() });
-			});
+	constructor(props) {
+		super(props);
+		this.state = {
+			engProfile: []
+		};
 	}
-
+	
 	
 	render() {
+		
 		return (
 			<div>
-				<h1>Welcome to your Profile</h1>
-				<br />
-				<br />
+				<h2  style={{  margin: '10px', display:'block', color: 'darkOrange', fontSize: '25px' }}>	
+					<strong>{ 'WELCOME to  '+ this.props.fullName +"'s   PROFILE"}</strong><br/>
+				</h2>
 				<img src = {this.props.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "150" width = "200" />
-				<br />
-				<br />
-				<label>Full Name : </label><p>{this.props.fullName}</p>
-				<label>Phone Number : </label><p>this.props.phoneNumber}</p>
-				<label>Site Location : </label><p>{this.props.siteLocation}</p>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<h2>Construction Workers:</h2>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Name:  '} {this.props.fullName}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'User Name:  '} {this.props.userName}</h2>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Phone Number:  '} {this.props.phoneNumber}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Location:  '} {this.props.siteLocation}</h2>
+
+				<h2  style={{  margin: '10px', display:'block', color: 'darkOrange', fontSize: '25px' }}>	
+					<strong>Construction Workers:</strong><br/>
+				</h2>
 				<NavLink to="/smith" activeStyle={{ color: 'purple' }}>
 					<button value="Smiths" >Smiths</button>
 				</NavLink>

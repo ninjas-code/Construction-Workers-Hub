@@ -116,7 +116,7 @@ class EngineerSignUp extends React.Component {
                         <button onClick={this.handleUpload.bind(this)}>Upload</button>
                         <br />
                         <br />
-												<img src = {this.state.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "150" width = "200"/>
+												<img src = {this.state.url || 'https://via.placeholder.com/150' } alt = "uploaded image" height = "150" width = "200" />
                         <br />
                         <br />
 						<input

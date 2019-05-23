@@ -5,17 +5,18 @@ class WorkerMainPage extends React.Component {
 	render() {
 		console.log(this.props)
 		return (
-			<div>
+			<div >
+				<h2  style={{  margin: '10px', display:'block', color: 'darkOrange', fontSize: '25px' }}>	
+					<strong>{ 'WELCOME to  '+ this.props.fullName +"'s   PROFILE"}</strong><br/>
+				</h2>
 				<img src = {this.props.url || 'https://via.placeholder.com/150'} alt = "uploaded image" height = "150" width = "200" />
-				<br/>
-				<br/>
-				<label>fullName : </label><p>{this.props.fullName}</p>
-				<label>phoneNumber : </label><p>{this.props.phoneNumber}</p>
-				<label>experience Level : </label><p>{this.props.experienceLevel}</p>
-				<label>expected Salary : </label><p>{this.props.expectedSalary}</p>
-				<label>role : </label><p>{this.props.role}</p>
-				<label>status : </label><p>{this.props.status}</p>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Name:  '} {this.props.fullName}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'Phone Number:  '} {this.props.phoneNumber}</h2> 
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'ExperienceLevel:  '} {this.props.experienceLevel}</h2>
+				  <h2 style= {{color: 'white', fontSize: '18px'}}> {'expectedSalary:  '} {this.props.expectedSalary}</h2>
+
 			</div>
+
 		);
 	}
 }
