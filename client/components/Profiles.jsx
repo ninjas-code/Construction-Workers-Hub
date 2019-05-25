@@ -6,8 +6,7 @@ class Profiles extends React.Component {
 		this.state = {
 			userProfile: [],
 			number: '',
-			msg: '',
-			url: ''
+			msg: ''
 		};
 	}
 	componentWillMount() {
@@ -54,7 +53,7 @@ class Profiles extends React.Component {
 						<br />
 						<img
 							src={
-								this.state.url ||
+								user.url ||
 								'https://i0.wp.com/addisonavenuemarketing.com/wp-content/uploads/2016/07/facebook-avatar.jpg?fit=690%2C435'
 							}
 							alt="uploaded image"
