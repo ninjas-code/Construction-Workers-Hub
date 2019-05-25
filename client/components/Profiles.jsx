@@ -40,6 +40,9 @@ class Profiles extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.userProfile.map((user, i) => (
 					<ul key={i}>
 						<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
@@ -49,7 +52,10 @@ class Profiles extends React.Component {
 						<br />
 						<br />
 						<img
-							src={this.state.url || 'https://via.placeholder.com/150'}
+							src={
+								this.state.url ||
+								'https://i0.wp.com/addisonavenuemarketing.com/wp-content/uploads/2016/07/facebook-avatar.jpg?fit=690%2C435'
+							}
 							alt="uploaded image"
 							height="150"
 							width="200"
@@ -62,45 +68,74 @@ class Profiles extends React.Component {
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'experienceLevel:  '} {user.experienceLevel}
+							{'Experience Level:  '} {user.experienceLevel}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'expectedSalary:  '} {user.expectedSalary}
+							{'Expected Salary:  '} {user.expectedSalary}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'phoneNumber:  '} {user.phoneNumber}
+							{'Phone Number:  '} {user.phoneNumber}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'status:  '} {user.status}
+							{'Status:  '} {user.status}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'role:  '} {user.role}
+							{'Role:  '} {user.role}
 						</h2>
 						{
-							<button
-								id="book"
-								onClick={() => {
-									if (user.status === 'not Available') {
-										alert(user.fullName + ' is not availbale at the moment');
-										return;
-									} else {
-										alert(
-											'Booked ' +
-												user.fullName +
-												' successfully send ' +
-												user.fullName +
-												' a message bellow '
-										);
-									}
-								}}
-							>
-								Book Now
-							</button>
-						}
+                            <button
+                                id="book"
+                                onClick={() => {
+                                    if (user.status === 'not Available') {
+                                        alert(user.fullName + ' is not availbale at the moment');
+                                        return;
+                                    } else {
+                                        alert(
+                                            'Booked ' +
+                                                user.fullName +
+                                                ' successfully send ' +
+                                                user.fullName +
+                                                ' a message bellow '
+                                        );
+                                        let that = this;
+                                        const { match } = this.props;
+                                        //console.log()
+                                        fetch(`/engineerworker/${match.params.id}`,{
+                                            method: 'put'
+                                        }).then(function(response) {
+                                            if (response.status == 200) {
+                                                    console.log('hi');
+                                            } else {
+                                                response.then((error) => {
+                                                    console.log(error);
+                                                });
+                                            }
+                                        });
+                                        const token = localStorage.getItem('token');
+                                        console.log(token);
+                                        fetch(`/engineerworker/${match.params.id}`,{
+                                            method: 'post'
+                                            ,
+                                                headers: { 'x-access-token': token }
+                                        }).then(function(response) {
+                                            if (response.status == 201) {
+                                                    console.log('added');
+                                            } else {
+                                        console.log("err");
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                                className="Button"
+                            >
+                                Book Now
+                            </button>
+                        }
 					</ul>
 				))}
 				<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>
@@ -124,7 +159,9 @@ class Profiles extends React.Component {
 				/>
 				<br />
 				<br />
-				<button onClick={this.sendMessage.bind(this)}>Send Message</button>
+				<button onClick={this.sendMessage.bind(this)} className="Button">
+					Send Message
+				</button>
 			</div>
 		);
 	}

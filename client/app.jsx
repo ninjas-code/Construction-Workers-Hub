@@ -13,6 +13,7 @@ import StoneBuilders from './components/StoneBuilders.jsx';
 import Painters from './components/Painters.jsx';
 import Profiles from './components/Profiles.jsx';
 import WorkerMainPage from './components/WorkerMainPage.jsx';
+import LearnMore from './components/learnMore.jsx';
 
 class App extends React.Component {
 	render() {
@@ -30,6 +31,9 @@ class App extends React.Component {
 							</div>
 						)}
 					/>
+					<NavLink to="/learnMore" activeStyle={{ color: 'white' }}>
+						<h3 id="LearnMore">Learn More</h3>
+					</NavLink>
 
 					<Route
 						exact
@@ -60,6 +64,7 @@ class App extends React.Component {
 					<Route path="/stoneBuilder" component={StoneBuilders} />
 					<Route path="/painter" component={Painters} />
 					<Route path="/engineerworker/:id" component={Profiles} />
+					<Route path="/learnMore" component={LearnMore} />
 				</div>
 			</BrowserRouter>
 		);

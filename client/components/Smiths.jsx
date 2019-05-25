@@ -22,6 +22,9 @@ class Smiths extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.allSmiths.length === 0 ? (
 					<h1> there is no Smiths provided yet</h1>
 				) : (
@@ -48,15 +51,7 @@ class Smiths extends React.Component {
 									</td>
 									<td>{user.experienceLevel}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>expectedSalary:</strong>
-									</td>
-									<td>{user.expectedSalary}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>phoneNumber:</strong>
-									</td>
-									<td>{user.phoneNumber}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>status:</strong>
+										<strong>Status:</strong>
 									</td>
 									<td>{user.status}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
@@ -65,7 +60,9 @@ class Smiths extends React.Component {
 									<td>{user.role}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
 										<NavLink to={'/engineerworker/' + user.id} activeStyle={{ color: 'purple' }}>
-											<button value="GoToProfile">Go To Profile</button>
+											<button value="GoToProfile" className="Button">
+												Go To Profile
+											</button>
 										</NavLink>
 									</td>
 								</tr>

@@ -43,32 +43,26 @@ class Carpenter extends React.Component {
 									}}
 								>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>fullName:</strong>
+										<strong>Full Name:</strong>
 									</td>
 									<td>{user.fullName}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>experienceLevel:</strong>
+										<strong>Experience Level:</strong>
 									</td>
 									<td>{user.experienceLevel}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>expectedSalary:</strong>
-									</td>
-									<td>{user.expectedSalary}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>phoneNumber:</strong>
-									</td>
-									<td>{user.phoneNumber}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>status:</strong>
+										<strong>Status:</strong>
 									</td>
 									<td>{user.status}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>role:</strong>
+										<strong>Role:</strong>
 									</td>
 									<td>{user.role}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
 										<NavLink to={'/engineerworker/' + user.id} activeStyle={{ color: 'purple' }}>
-											<button value="GoToProfile">Go To Profile</button>
+											<button value="GoToProfile" className="Button">
+												Go To Profile
+											</button>
 										</NavLink>
 									</td>
 								</tr>
