@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var Sequelize = require('sequelize');
 
 //Database connection
-const db = new Sequelize('csql2292452', 'sql2292452', 'cV9!kH3%', {
+const db = new Sequelize('sql2292452', 'sql2292452', 'cV9!kH3%', {
 	host: 'sql2.freesqldatabase.com',
 	dialect: 'mysql'
 });
