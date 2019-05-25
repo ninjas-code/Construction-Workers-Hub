@@ -76,20 +76,39 @@ class WorkerSignUp extends React.Component {
 				return response.json();
 			})
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				if (response.success === 'Sign up as worker successful') {
 					that.setState({
 						username: '',
 						password: '',
 						toggleSignUp: false,
-						toggleSignIn: true
+						toggleSignIn: true,
+						alert_success:response.success
 					});
 					return;
 				} else {
-					console.log(response.error);
+					if (response.error === 'This username is already taken'){
+						this.setState({
+							alert_ServerError:response.error
+						})
+					} else {
+						this.setState({
+							alert_ServerError:response.error
+						})
+					}
+					
+					console.log(this.state.alert_ServerError);
 					return;
 				}
 			});
+	}
+
+	show(){
+		let that = this;
+		let mess = 'hello';
+		new Noty({
+			text:mess,
+		}).show();
 	}
 
 	render() {

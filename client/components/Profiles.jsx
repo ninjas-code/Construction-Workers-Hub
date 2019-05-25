@@ -87,27 +87,55 @@ class Profiles extends React.Component {
 							{'Role:  '} {user.role}
 						</h2>
 						{
-							<button
-								id="book"
-								onClick={() => {
-									if (user.status === 'not Available') {
-										alert(user.fullName + ' is not availbale at the moment');
-										return;
-									} else {
-										alert(
-											'Booked ' +
-												user.fullName +
-												' successfully send ' +
-												user.fullName +
-												' a message bellow '
-										);
-									}
-								}}
-								className="Button"
-							>
-								Book Now
-							</button>
-						}
+                            <button
+                                id="book"
+                                onClick={() => {
+                                    if (user.status === 'not Available') {
+                                        alert(user.fullName + ' is not availbale at the moment');
+                                        return;
+                                    } else {
+                                        alert(
+                                            'Booked ' +
+                                                user.fullName +
+                                                ' successfully send ' +
+                                                user.fullName +
+                                                ' a message bellow '
+                                        );
+                                        let that = this;
+                                        const { match } = this.props;
+                                        //console.log()
+                                        fetch(`/engineerworker/${match.params.id}`,{
+                                            method: 'put'
+                                        }).then(function(response) {
+                                            if (response.status == 200) {
+                                                    console.log('hi');
+                                            } else {
+                                                response.then((error) => {
+                                                    console.log(error);
+                                                });
+                                            }
+                                        });
+                                        const token = localStorage.getItem('token');
+                                        console.log(token);
+                                        fetch(`/engineerworker/${match.params.id}`,{
+                                            method: 'post'
+                                            ,
+                                                headers: { 'x-access-token': token }
+                                        }).then(function(response) {
+                                            if (response.status == 201) {
+                                                    console.log('added');
+                                            } else {
+                                        console.log("err");
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                                className="Button"
+                            >
+                                Book Now
+                            </button>
+                        }
 					</ul>
 				))}
 				<h2 style={{ margin: '10px', display: 'block', color: 'orange', fontSize: '25px' }}>

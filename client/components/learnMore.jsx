@@ -5,6 +5,9 @@ class LearnMore extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				<h2 className="learnMore">
 					<h1 id="title">Construction Workers Hub Documentation</h1>
 					In some countries, there are many construction workers who are waiting under the hot <br /> blazing

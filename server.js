@@ -296,28 +296,113 @@ app.get('/painter', function(req, res) {
 
 //shows the profile of all construction workers category from the engineer side
 app.get('/engineerworker/:id', function(req, res) {
-	const userId = req.params.id;
-	console.log(userId);
-	worker
-		.findOne({ where: { id: userId } })
-		.then(function(user) {
-			return res.send([
-				{
-					fullName: user.fullName,
-					experienceLevel: user.experienceLevel,
-					expectedSalary: user.expectedSalary,
-					phoneNumber: user.phoneNumber,
-					status: user.status,
-					role: user.role,
-					url: user.url
-				}
-			]);
-		})
-		.catch(function(err) {
-			return res.status(500).send(err);
-		});
+  const userId = req.params.id;
+  console.log(userId);
+  worker
+      .findOne({ where: { id: userId } })
+      .then(function(user) {
+          return res.send([
+              {
+                fullName: user.fullName,
+                experienceLevel: user.experienceLevel,
+                expectedSalary: user.expectedSalary,
+                phoneNumber: user.phoneNumber,
+                status: user.status,
+                role: user.role,
+                username : user.userName,
+                url: user.url
+              }
+          ]);
+      })
+      .catch(function(err) {
+          return res.status(500).send(err);
+      });
 });
 
+app.put('/engineerworker/:id', function (req, res , next ) {
+    const userId = req.params.id;
+
+    console.log(userId);
+    worker.update({
+             status : 'not Available'
+            }, {
+                    where: {
+                            id :  userId
+                    }
+            })
+            .then(function() {
+                res.send("updated")
+            })
+            .catch(next)
+         })
+
+
+
+
+        //  app.put('/updateworker', function (req, res , next ) {
+        //     const userId = req.params.id;
+        
+        //     console.log(userId);
+        //     worker.update({
+        //                  status : 'not Available'
+        //             }, {
+        //                     where: {
+        //                             id :  userId
+        //                     }
+        //             })
+        //             .then(function() {
+        //                 res.send("updated")
+        //             })
+        //             .catch(next)
+        //          })
+
+
+app.get('/workerMainPage', authenticate , function (req, res) {
+  const user = req.body.user;
+  order.findOne({ where: { workerName : user.userName } })
+  .then(function(users) {
+      if (!users) {
+          return res.send({ error: 'no order' });
+      }
+      return res.send(users);
+
+  })
+  .catch(function(err) {
+      return res.status(500).send(err);
+  });
+
+})
+
+//////////////////////////////////////
+
+app.post('/engineerworker/:id', authenticate, function(req, res) {
+  const userId = req.params.id;
+  const user = req.body.user;
+  // const endDate = req.body.endDate;
+
+  engineer
+      .findOne({ where: { id: user.id } })
+      .then(function(user) {
+          const engineers = user.userName;
+          worker.findOne({ where: { id :  userId } }).then(function(users) {
+                  order
+                      .create({
+                          engineerName: engineers,
+                          workerName: users.userName,
+                          status: 'not Available'
+                      })
+                      .then(function() {
+                          return res.status(201).send({ success: 'save data' });
+                      });
+              
+          });
+      })
+      .catch(function(err) {
+          return res.status(500).send(err);
+      });
+});
+
+//no need for this 
 // app.post('/orders', authenticate, function(req, res) {
 // 	const workers = req.body.workers;
 // 	const user = req.body.user;
@@ -381,6 +466,7 @@ app.post('/sentMessage', function(req, res) {
 	});
 	console.log(data);
 });
+
 
 const server = app.listen(port, () => {
 	console.log(`app listening on port ${port}!`);
