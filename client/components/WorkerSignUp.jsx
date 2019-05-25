@@ -110,11 +110,11 @@ class WorkerSignUp extends React.Component {
 
 		return (
 			<div>
-				<NavLink to="/" activeStyle={{ color: 'white' }}>
-					<h2 id="homeButton">Home</h2>
-				</NavLink>
 				{this.state.toggleSignUp ? (
 					<div>
+						<NavLink to="/" activeStyle={{ color: 'white' }}>
+							<h2 id="homeButton">Home</h2>
+						</NavLink>
 						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange' }}>
 							Sign Up for construction Workers
 						</h1>
@@ -125,7 +125,10 @@ class WorkerSignUp extends React.Component {
 						</button>
 						<br />
 						<img
-							src={this.state.url || 'https://via.placeholder.com/150'}
+							src={
+								this.state.url ||
+								'https://i0.wp.com/addisonavenuemarketing.com/wp-content/uploads/2016/07/facebook-avatar.jpg?fit=690%2C435'
+							}
 							alt="uploaded image"
 							height="150"
 							width="200"
