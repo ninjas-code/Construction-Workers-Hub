@@ -51,14 +51,6 @@ class Painters extends React.Component {
 									</td>
 									<td>{user.experienceLevel}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>Expected Salary:</strong>
-									</td>
-									<td>{user.expectedSalary}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>Phone Number:</strong>
-									</td>
-									<td>{user.phoneNumber}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
 										<strong>Status:</strong>
 									</td>
 									<td>{user.status}</td>

@@ -52,7 +52,10 @@ class Profiles extends React.Component {
 						<br />
 						<br />
 						<img
-							src={this.state.url || 'https://via.placeholder.com/150'}
+							src={
+								this.state.url ||
+								'https://i0.wp.com/addisonavenuemarketing.com/wp-content/uploads/2016/07/facebook-avatar.jpg?fit=690%2C435'
+							}
 							alt="uploaded image"
 							height="150"
 							width="200"
@@ -65,23 +68,23 @@ class Profiles extends React.Component {
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'experienceLevel:  '} {user.experienceLevel}
+							{'Experience Level:  '} {user.experienceLevel}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'expectedSalary:  '} {user.expectedSalary}
+							{'Expected Salary:  '} {user.expectedSalary}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'phoneNumber:  '} {user.phoneNumber}
+							{'Phone Number:  '} {user.phoneNumber}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'status:  '} {user.status}
+							{'Status:  '} {user.status}
 						</h2>
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
-							{'role:  '} {user.role}
+							{'Role:  '} {user.role}
 						</h2>
 						{
 							<button

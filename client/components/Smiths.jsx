@@ -51,15 +51,7 @@ class Smiths extends React.Component {
 									</td>
 									<td>{user.experienceLevel}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>expectedSalary:</strong>
-									</td>
-									<td>{user.expectedSalary}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>phoneNumber:</strong>
-									</td>
-									<td>{user.phoneNumber}</td>
-									<td style={{ color: 'orange', fontSize: '18px' }}>
-										<strong>status:</strong>
+										<strong>Status:</strong>
 									</td>
 									<td>{user.status}</td>
 									<td style={{ color: 'orange', fontSize: '18px' }}>

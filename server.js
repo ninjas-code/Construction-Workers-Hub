@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-//Create new user in the database
+//sign up for engineer in the database
 app.post('/signupEngineer', function(req, res) {
 	let fullname = req.body.fullname;
 	let username = req.body.username;
@@ -50,7 +50,7 @@ app.post('/signupEngineer', function(req, res) {
 		});
 });
 
-//Sign in user
+//Sign in for engineer
 app.post('/signinEngineer', function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -73,8 +73,7 @@ app.post('/signinEngineer', function(req, res) {
 	});
 });
 
-//worker
-
+//worker sign up
 app.post('/signupWorker', function(req, res) {
 	const fullName = req.body.info.fullname;
 	const username = req.body.info.username;
@@ -111,6 +110,7 @@ app.post('/signupWorker', function(req, res) {
 		});
 });
 
+//worker sign in
 app.post('/signinWorker', function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -132,6 +132,7 @@ app.post('/signinWorker', function(req, res) {
 	});
 });
 
+//authentication for both the engineer and workers
 const authenticate = function(req, res, next) {
 	const token = req.headers['x-access-token']; //Username encoded in token
 	if (!token) {
@@ -180,6 +181,7 @@ const authenticate = function(req, res, next) {
 	});
 };
 
+//worker profile
 app.get('/workerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	//console.log(user)
@@ -202,6 +204,7 @@ app.get('/workerPage', authenticate, function(req, res) {
 		});
 });
 
+//engineer profile
 app.get('/engineerPage', authenticate, function(req, res) {
 	const user = req.body.user;
 	engineer
@@ -220,6 +223,7 @@ app.get('/engineerPage', authenticate, function(req, res) {
 		});
 });
 
+//gets all the smiths from the database to the client when the smiths button is clicked
 app.get('/smith', function(req, res) {
 	const Role = 'smith';
 	worker
@@ -236,6 +240,7 @@ app.get('/smith', function(req, res) {
 		});
 });
 
+//gets all the carpenter from the database to the client when the carpenter button is clicked
 app.get('/carpenter', function(req, res) {
 	const Role = 'carpenter';
 
@@ -253,6 +258,7 @@ app.get('/carpenter', function(req, res) {
 		});
 });
 
+//gets all the stone builders from the database to the client when the stone builders button is clicked
 app.get('/stoneBuilder', function(req, res) {
 	const Role = 'stoneBuilder';
 
@@ -270,6 +276,7 @@ app.get('/stoneBuilder', function(req, res) {
 		});
 });
 
+//gets all the painters from the database to the client when the painters button is clicked
 app.get('/painter', function(req, res) {
 	const Role = 'painter';
 
@@ -287,6 +294,7 @@ app.get('/painter', function(req, res) {
 		});
 });
 
+//shows the profile of all construction workers category from the engineer side
 app.get('/engineerworker/:id', function(req, res) {
 	const userId = req.params.id;
 	console.log(userId);
@@ -310,38 +318,38 @@ app.get('/engineerworker/:id', function(req, res) {
 		});
 });
 
-app.post('/orders', authenticate, function(req, res) {
-	const workers = req.body.workers;
-	const user = req.body.user;
-	const endDate = req.body.endDate;
+// app.post('/orders', authenticate, function(req, res) {
+// 	const workers = req.body.workers;
+// 	const user = req.body.user;
+// 	const endDate = req.body.endDate;
 
-	engineer
-		.findOne({ where: { id: user.id } })
-		.then(function(user) {
-			const engineers = user.userName;
-			worker.findOne({ where: { userName: workers } }).then(function(users) {
-				if (users.status === 'not Available') {
-					return res.status(400).send({ error: 'The worker is not available' });
-				} else {
-					order
-						.create({
-							engineerName: engineers,
-							workerName: workers,
-							endDate: endDate,
-							status: 'not Available'
-						})
-						.then(function() {
-							return res.status(201).send({ success: 'save data' });
-						});
-				}
-			});
-		})
-		.catch(function(err) {
-			return res.status(500).send(err);
-		});
-});
+// 	engineer
+// 		.findOne({ where: { id: user.id } })
+// 		.then(function(user) {
+// 			const engineers = user.userName;
+// 			worker.findOne({ where: { userName: workers } }).then(function(users) {
+// 				if (users.status === 'not Available') {
+// 					return res.status(400).send({ error: 'The worker is not available' });
+// 				} else {
+// 					order
+// 						.create({
+// 							engineerName: engineers,
+// 							workerName: workers,
+// 							endDate: endDate,
+// 							status: 'not Available'
+// 						})
+// 						.then(function() {
+// 							return res.status(201).send({ success: 'save data' });
+// 						});
+// 				}
+// 			});
+// 		})
+// 		.catch(function(err) {
+// 			return res.status(500).send(err);
+// 		});
+// });
 
-//api connection
+//api connection from nexmo
 const nexmo = new Nexmo(
 	{
 		apiKey: '3b3e43dc',
@@ -350,7 +358,7 @@ const nexmo = new Nexmo(
 	{ debug: true }
 );
 
-//send sms message function
+//send sms message
 app.post('/sentMessage', function(req, res) {
 	console.log(req.body);
 	let from = 'Bug-Busters-200';
