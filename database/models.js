@@ -6,7 +6,8 @@ const engineer = db.define('engineer', {
 	userName: { type: Sequelize.STRING, required: true, unique: true },
 	password: { type: Sequelize.STRING, required: true },
 	siteLocation: { type: Sequelize.STRING, required: true },
-	phoneNumber: { type: Sequelize.INTEGER, required: true }
+	phoneNumber: { type: Sequelize.INTEGER, required: true },
+	url: { type: Sequelize.STRING}
 });
 
 const worker = db.define('worker', {
@@ -18,7 +19,8 @@ const worker = db.define('worker', {
 	expectedSalary: { type: Sequelize.INTEGER, required: true },
 	phoneNumber: { type: Sequelize.INTEGER, required: true },
 	status: { type: Sequelize.STRING },
-	role: { type: Sequelize.STRING, required: true }
+	role: { type: Sequelize.STRING, required: true },
+	url: { type: Sequelize.STRING}
 });
 
 const order = db.define('order', {
@@ -36,3 +38,8 @@ worker.belongsToMany(engineer, { through: order });
 module.exports.engineer = engineer;
 module.exports.worker = worker;
 module.exports.order = order;
+
+
+
+
+

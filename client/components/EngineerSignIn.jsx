@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import EngineerMainPage from './EngineerMainPage.jsx';
 
 class EngineerSignIn extends React.Component {
@@ -12,7 +12,8 @@ class EngineerSignIn extends React.Component {
 			phoneNumber: '',
 			toggleSignIn: true,
 			toggleEngpage: false,
-			siteLocation: ''
+			siteLocation: '',
+			url: ''
 		};
 		this.engineerSignIn = this.engineerSignIn.bind(this);
 	}
@@ -37,12 +38,17 @@ class EngineerSignIn extends React.Component {
 				response.json().then((body) => {
 					const token = body.token;
 					localStorage.setItem('token', token);
-					this.setState({username: '', password: '' , toggleSignIn: false ,
-					toggleEngpage: true },
-					() => {
-						that.engineerPage(that);
-					}
-				)
+					this.setState(
+						{
+							username: '',
+							password: '',
+							toggleSignIn: false,
+							toggleEngpage: true
+						},
+						() => {
+							that.engineerPage(that);
+						}
+					);
 				});
 			} else {
 				console.log('err');
@@ -52,18 +58,20 @@ class EngineerSignIn extends React.Component {
 
 	engineerPage(that) {
 		const token = localStorage.getItem('token');
-		console.log(token)
+		console.log(token);
 		fetch('/engineerPage', {
 			method: 'get',
 			headers: { 'x-access-token': token }
 		}).then(function(response) {
 			if (response.status == 200) {
 				response.json().then((body) => {
-					console.log("hi")
+					console.log('hi');
 					that.setState({
 						fullName: body.fullName,
+						username: body.userName,
 						phoneNumber: body.phoneNumber,
-						siteLocation: body.siteLocation
+						siteLocation: body.siteLocation,
+						url: body.url
 					});
 				});
 			} else {
@@ -77,15 +85,16 @@ class EngineerSignIn extends React.Component {
 	render() {
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.toggleSignIn ? (
 					<div>
-						<Link to="/">
-							<button value="Go Back home">Go Back home</button>
-						</Link>{' '}
-						<br />
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange', fontSize: '25px' }}>
+							Engineer Sign In
+						</h1>
 						<br />
 						<input type="text" name="username" placeholder="userName" onChange={this.changed.bind(this)} />
-						<br />
 						<br />
 						<input
 							type="password"
@@ -94,19 +103,17 @@ class EngineerSignIn extends React.Component {
 							onChange={this.changed.bind(this)}
 						/>
 						<br />
-						<br />
-						<button onClick={this.engineerSignIn}>Sign In</button>
-						<br />
-						<br />
-						<Link to="/engineerPage">
-							<button value="Go to profile">Go to profile</button>
-						</Link>
+						<button onClick={this.engineerSignIn} className="Button">
+							Sign In
+						</button>
 					</div>
 				) : (
 					<EngineerMainPage
 						fullName={this.state.fullName}
+						userName={this.state.username}
 						phoneNumber={this.state.phoneNumber}
 						siteLocation={this.state.siteLocation}
+						url={this.state.url}
 					/>
 				)}
 			</div>

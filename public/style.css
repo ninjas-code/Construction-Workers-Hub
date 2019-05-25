@@ -1,8 +1,9 @@
 body {
 	background-image: url("./image/projectBJ1.png");
-	background-repeat: no-repeat;
-	background-size: contain;
+	/* background-repeat: no-repeat; */
+	/* background-size: contain;
 	background-size: cover;
+	grid-area: auto; */
 }
 .logo {
 	position: relative;
@@ -33,4 +34,74 @@ body {
 #alreadySignUp {
 	display: block;
 	margin-top: 15px;
+}
+.signUp {
+	color: darkorange;
+	font-family: Garamond;
+	margin: -200px;
+}
+
+#homeButton {
+	margin-bottom: 11%;
+	margin-left: 84%;
+	margin-top: -5%;
+	background-color: darkorange;
+	color: white;
+	padding: 5px 5px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	width: 70px;
+}
+#homeButton:hover {
+	background-color: #f06c00;
+}
+input[type=text],
+select {
+	padding: 6px 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+input[type=password],
+select {
+	padding: 6px 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+input[type=number],
+select {
+	padding: 6px 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+input[type=file],
+select {
+	padding: 6px 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.Button {
+	background-color: darkorange;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.Button:hover {
+	background-color: #f06c00;
 }

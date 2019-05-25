@@ -1,12 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import WorkerSignIn from './EngineerSignIn.jsx';
-import {storage} from "../firebase";
-import Noty from 'noty';
-
-import '../../node_modules/noty/lib/noty';
-// import '../../node_modules/noty/lib/themes/bootstrap-v4.css';
-
+import { Link, NavLink } from 'react-router-dom';
+import WorkerSignIn from './WorkerSignIn.jsx';
+import { storage } from '../firebase';
 class WorkerSignUp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -21,48 +16,55 @@ class WorkerSignUp extends React.Component {
 			toggleSignUp: true,
 			toggleSignIn: false,
 			status: '',
-			image : null,
-			url : '',
-			alert_success:'',
-			alert_ServerError:'',
-			alert_AlreadyTaken:''
+			image: null,
+			url: ''
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
-
-
-	handleChange(e){
-		if(e.target.files[0]){
-			const image =  e.target.files[0]
-			this.setState(()=>({image})
-				)
+	handleChange(e) {
+		if (e.target.files[0]) {
+			const image = e.target.files[0];
+			this.setState(() => ({ image }));
+			console.log(image);
 		}
 	}
-
-	handleUpload(){
-	const {image} = this.state;
-	const uploadTask =	storage.ref(`images/${image.name}`).put(image);
-	uploadTask.on(`state_changed` , ()=>{
-
-	} , (error)=>{
-
-	} , ()=>{
-		storage.ref(`images`).child(image.name).getDownloadURL().then(url=>{
-			
-		});
-	})
+	handleUpload() {
+		const { image } = this.state;
+		const uploadTask = storage.ref(`images/${image.name}`).put(image);
+		uploadTask.on(
+			`state_changed`,
+			(snapshot) => {
+				const progress = Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100);
+			},
+			(error) => {},
+			() => {
+				storage.ref(`images`).child(image.name).getDownloadURL().then((url) => {
+					console.log(url);
+					this.setState({ url });
+				});
+			}
+		);
 	}
-
 	onChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
 	}
-
 	clicked() {
 		var that = this;
-		var { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status } = this.state;
-		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status };
+		var {
+			fullname,
+			username,
+			password,
+			phonenumber,
+			experiencelevel,
+			expectedsalary,
+			role,
+			status,
+			url
+		} = this.state;
+		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status, url };
+		console.log(info);
 		fetch('/signupWorker', {
 			method: 'POST',
 			body: JSON.stringify({ info }),
@@ -110,42 +112,45 @@ class WorkerSignUp extends React.Component {
 	}
 
 	render() {
-		let role = [ 'Choose The Role', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
+		let role = [ 'role', 'Painter', 'Carpenter', 'Stone Builder', 'Smith' ];
 		const chooseRoles = role.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let experienceLevel = [ 'Choose Experience Level', 'Professional', 'Intermediate', 'Beginner' ];
+		let experienceLevel = [ 'experiencelevel', 'Professional', 'Intermediate', 'Beginner' ];
 		const chooseExperienceLevel = experienceLevel.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
-		let status = [ 'Choose Status', 'Available', 'not Available' ];
+		let status = [ 'status', 'Available', 'not Available' ];
 		const chooseStatus = status.map((option) => {
 			return <option key={option}>{option}</option>;
 		});
 
 		return (
 			<div>
+				<NavLink to="/" activeStyle={{ color: 'white' }}>
+					<h2 id="homeButton">Home</h2>
+				</NavLink>
 				{this.state.toggleSignUp ? (
 					<div>
-						<Link to="/">
-							<button value="Go Back home">Go Back home</button>
-						</Link>{' '}
+						<h1 style={{ margin: '10px', display: 'block', color: 'darkorange' }}>
+							Sign Up for construction Workers
+						</h1>
+						<h4 style={{ color: 'white' }}> Upload profile photo </h4>
+						<input type="file" onChange={this.handleChange} />
+						<button onClick={this.handleUpload.bind(this)}>Upload</button>
 						<br />
-						<br />
-						<h1 style={{color :'orange'}}>Sign Up for construction Workers</h1>
-						<br />
-						<br />
-						<input type="file" name = "image" onChange = {this.handleChange}/>
-						<button onClick={this.handleUpload.bind(this)}></button>
-						<br />
+						<img
+							src={this.state.url || 'https://via.placeholder.com/150'}
+							alt="uploaded image"
+							height="150"
+							width="200"
+						/>
 						<br />
 						<input type="text" name="fullname" placeholder="fullName" onChange={this.onChange.bind(this)} />
 						<br />
-						<br />
 						<input type="text" name="username" placeholder="userName" onChange={this.onChange.bind(this)} />
-						<br />
 						<br />
 						<input
 							type="password"
@@ -154,48 +159,40 @@ class WorkerSignUp extends React.Component {
 							onChange={this.onChange.bind(this)}
 						/>
 						<br />
-						<br />
 						<input
-							type="tel"
+							type="number"
 							name="phonenumber"
 							placeholder="079-123-4567"
 							onChange={this.onChange.bind(this)}
 						/>
 						<br />
+						<input
+							type="number"
+							name="expectedsalary"
+							placeholder="expected salary / hour"
+							onChange={this.onChange.bind(this)}
+						/>{' '}
 						<br />
 						<select name="experiencelevel" onChange={this.onChange.bind(this)}>
 							{chooseExperienceLevel}
 						</select>
 						<br />
-						<br />
-						<input
-							type="number"
-							name="expectedsalary"
-							placeholder="expected salary"
-							onChange={this.onChange.bind(this)}
-						/>
-						<p style={{color :'orange', display:'inline', marginLeft:'10px'}}>JD</p>
-						<br />
-						<br />
 						<select name="role" onChange={this.onChange.bind(this)}>
 							{chooseRoles}
 						</select>
-						<br />
 						<br />
 						<select name="status" onChange={this.onChange.bind(this)}>
 							{chooseStatus}
 						</select>
 						<br />
-						<br />
-						{/* this.clicked.bind(this) */}
-						<button id="signUpWorker" onClick={(e)=> {this.clicked(e) , this.show(e)}}
-						
-						>
+						<button id="signUpWorker" className="Button" onClick={this.clicked.bind(this)}>
 							Sign Up
 						</button>
-						<Link to="/signinWorker">
-							<button value="sign In as a construction Worker">Sign In</button>
-						</Link>
+						<NavLink to="/signinWorker">
+							<button value="sign In as a construction Worker" className="Button">
+								Aready Signed up? Sign In Here
+							</button>
+						</NavLink>
 					</div>
 				) : (
 					<WorkerSignIn />

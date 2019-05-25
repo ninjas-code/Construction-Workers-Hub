@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, NavLink, Redirect } from 'react-router-dom';
-
 class Profiles extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,13 +11,12 @@ class Profiles extends React.Component {
 	}
 	componentWillMount() {
 		let that = this;
-
 		const { match } = this.props;
 		//console.log()
 		fetch(`/engineerworker/${match.params.id}`)
 			.then((response) => response.json())
 			.then((data) => that.setState({ userProfile: data }))
-			//.then(console.log(that.state.userProfile))
+			.then(console.log(that.state.userProfile))
 			.catch((err) => {
 				console.log(err);
 			});
@@ -48,6 +46,16 @@ class Profiles extends React.Component {
 							<strong>{'WELCOME to  ' + user.fullName + "'s   PROFILE"}</strong>
 							<br />
 						</h2>
+						<br />
+						<br />
+						<img
+							src={this.state.url || 'https://via.placeholder.com/150'}
+							alt="uploaded image"
+							height="150"
+							width="200"
+						/>
+						<br />
+						<br />
 						<h2 style={{ color: 'white', fontSize: '18px' }}>
 							{' '}
 							{'Name:  '} {user.fullName}
@@ -80,19 +88,13 @@ class Profiles extends React.Component {
 										alert(user.fullName + ' is not availbale at the moment');
 										return;
 									} else {
-										const workerNAME = user.userName;
-										fetch('/orders', {
-											method: 'POST',
-											body: JSON.stringify({
-												workers: workerNAME,
-												endDate: '2019-05-25 21:13:03'
-											}),
-											headers: { 'Content-Type': 'application/json' }
-										})
-											.then((response) => {
-												return response.json();
-											})
-											.then((data) => console.log(data));
+										alert(
+											'Booked ' +
+												user.fullName +
+												' successfully send ' +
+												user.fullName +
+												' a message bellow '
+										);
 									}
 								}}
 							>
@@ -127,5 +129,4 @@ class Profiles extends React.Component {
 		);
 	}
 }
-
 export default Profiles;

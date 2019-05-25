@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
 
 import EngineerSignUp from './components/EngineerSignUp.jsx';
 import EngineerSignIn from './components/EngineerSignIn.jsx';
-import workerSignUp from './components/WorkerSignUp.jsx';
+import WorkerSignUp from './components/WorkerSignUp.jsx';
 import WorkerSignIn from './components/WorkerSignIn.jsx';
 import EngineerMainPage from './components/EngineerMainPage.jsx';
 import Smiths from './components/Smiths.jsx';
@@ -14,39 +14,45 @@ import Painters from './components/Painters.jsx';
 import Profiles from './components/Profiles.jsx';
 import WorkerMainPage from './components/WorkerMainPage.jsx';
 
-
-
-	
 class App extends React.Component {
 	render() {
 		return (
 			<BrowserRouter>
 				<div>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
+					<Route
+						exact
+						path="/"
+						render={() => (
+							<div>
+								<NavLink to="/" activeStyle={{ color: 'white' }}>
+									<h2 id="homeButton">Home</h2>
+								</NavLink>
+							</div>
+						)}
+					/>
+
 					<Route
 						exact
 						path="/"
 						render={() => (
 							<div>
 								<NavLink to="/signupEngineer" activeStyle={{ color: 'red' }}>
-									<button className="engineerSignUpButton" value="sign up as an engineer" />
+									<button className="engineerSignUpButton" value="sign up as an engineer">
+										<h2 className="signUp">Engineer Sign Up</h2>
+									</button>
 								</NavLink>
-
-								<NavLink to="/workerSignUp" activeStyle={{ color: 'blue' }}>
-									<button className="workerSignUpButton" value="sign up as a construction Worker" />
+								<NavLink to="/signupWorker" activeStyle={{ color: 'blue' }}>
+									<button className="workerSignUpButton" value="sign up as a construction Worker">
+										<h2 className="signUp">Construction Worker Sign Up</h2>
+									</button>
 								</NavLink>
 							</div>
 						)}
 					/>
-					<Route path="/signupEngineer" component={EngineerSignUp } />
+					<Route path="/signupEngineer" component={EngineerSignUp} />
 					<Route path="/signinEngineer" component={EngineerSignIn} />
+					<Route path="/signupWorker" component={WorkerSignUp} />
 					<Route path="/signinWorker" component={WorkerSignIn} />
-					<Route path="/engineerSignUp" component={EngineerSignUp} />
-					<Route path="/workerSignUp" component={workerSignUp} />
 					<Route path="/engineerPage" component={EngineerMainPage} />
 					<Route path="/WorkerMainPage" component={WorkerMainPage} />
 					<Route path="/smith" component={Smiths} />
