@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-//Create new engineer in the database
+//sign up for engineer in the database
 app.post('/signupEngineer', function(req, res) {
 	let fullname = req.body.fullname;
 	let username = req.body.username;
