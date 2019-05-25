@@ -4,8 +4,7 @@
 	"description": "Green Field Project",
 	"main": "backEnd/server.js",
 	"scripts": {
-		"start": "nodemon server.js",
-		"build": "webpack -d --watch"
+		"start": "nodemon server.js"
 	},
 	"repository": {
 		"type": "git",
