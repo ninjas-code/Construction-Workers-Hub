@@ -18,6 +18,7 @@
 	},
 	"homepage": "https://github.com/AmmarAlkhooly98/Construction-Workers-Hub#readme",
 	"dependencies": {
+		"@angular/cli": "^1.7.4",
 		"@babel/cli": "^7.4.4",
 		"@babel/core": "^7.4.4",
 		"@babel/preset-react": "^7.0.0",
