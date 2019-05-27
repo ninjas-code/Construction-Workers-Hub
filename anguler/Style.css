@@ -1,0 +1,16 @@
+#Carpenters {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+img.CarpentersInfoImg {
+    max-width: 250px;
+    max-height: 250px;
+}
+.OneCarpenter {
+    float: left;
+}
+.OneCarpenter {
+    float: left;
+    margin: 25px;
+}
