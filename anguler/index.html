@@ -11,21 +11,26 @@ AngularJs Adding Directives to Modules Example
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script type="text/css" src=""></script>
 <link rel="stylesheet" type="text/css" href="./Style.css">
-<script type="text/javascript">
 
-var app = angular.module('carpenters', []);
+</head>
 
-app.directive('welcomepage', function () {
-    $http({
-  method: 'GET',
-  url: '/carpenter'
-}).then(function successCallback(response) {
-    // this callback will be called asynchronously
-    // when the response is available
-  }, function errorCallback(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
-  });
+<body ng-app="carpenters">
+            <!-- This is the modules-->  
+<script src="/anguler/modules/carpenters.js"></script>
+            <!-- This is the Controllers --->
+<script src="Controllers/carpenters.js"></script>
+<div ng-controller="carpenters">
+
+        {names}
+
+
+</div>
+
+</body>
+
+<!----
+
+   
 return {
 
 template: `
@@ -47,14 +52,24 @@ template: `
 
 });
 
-</script>
 
-</head>
 
-<body>
 
-<div ng-app="carpenters" welcomepage></div>
 
-</body>
+
+
+
+
+-->
+
+
+
+
+
+
+
+
 
 </html>
+
+
