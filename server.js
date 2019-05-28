@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 // npm install --save bluebird
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('ANGULAR'));
 app.use(bodyParser.json());
 
 //sign up for engineer in the database

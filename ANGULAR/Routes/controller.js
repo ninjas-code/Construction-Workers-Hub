@@ -3,7 +3,12 @@ app.controller("ctrl2", function($scope) {
     $scope.lastname = "Shihab"
   });
 app.controller("ctrl1", function($scope,  $http) {
-    $scope.firstname = "Raed"
+    $scope.uploader = function() {
+      $http.post('upload.ashx', $scope.files,
+    {
+      headers:{'Content-type': 'multipart/form-data'}
+    });
+    }
     $scope.sendDataToServer = function(fullname, username, password, sitelocation, phonenumber) {
         console.log(fullname, username, password, sitelocation, phonenumber);
         var body = {
