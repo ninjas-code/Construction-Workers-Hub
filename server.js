@@ -9,7 +9,7 @@ const SECRET_KEY = 'somesting';
 const { engineer, worker, order } = require('./database/models');
 
 const app = express();
-const port = process.env.PORT || 5002;
+const port = process.env.PORT || 5000;
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -121,9 +121,9 @@ app.post('/signupWorker', function(req, res) {
 
 //worker sign in
 app.post('/signinWorker', function(req, res) {
-	const username = req.body.username;
+	const usernamee = req.body.username;
 	const password = req.body.password;
-
+     console.log( usernamee)
 	worker.findOne({ where: { userName: username } }).then(function(user) {
 		if (!user) {
 			return res.status(401).send({ error: 'Wrong username' });
