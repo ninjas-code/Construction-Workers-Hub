@@ -15,16 +15,14 @@ AngularJs Adding Directives to Modules Example
 </head>
 
 <body ng-app="carpenters">
+<div ng-controller="carpenters">
+ <div ng-repeat="Name in names">
+        {{Name}}
+ </div>
             <!-- This is the modules-->  
 <script src="/anguler/modules/carpenters.js"></script>
             <!-- This is the Controllers --->
 <script src="Controllers/carpenters.js"></script>
-<div ng-controller="carpenters">
-
-        {names}
-
-
-</div>
 
 </body>
 
