@@ -11,7 +11,7 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e"
 	},
-	"repository": {
+	"repository"   : {
 		"type": "git",
 		"url": "git+https://github.com/AmmarAlkhooly98/Construction-Workers-Hub.git"
 	},
