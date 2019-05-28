@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-resource.min.js"></script>
+    <script src="./Routes/app.js"></script>
+    <script src="./Routes/controller.js"></script>
+</head>
+<body ng-app="app">
+    <input type="text" placeholder="test" ng-model="namem">
+    <h1>{{namem}}</h1>
+    <!-- <a href="#!item1">item1</a>
+    <a href="#!item2">item2</a> -->
+    <ng-view>
+  </body>
+</html> 
+        
