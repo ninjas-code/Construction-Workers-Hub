@@ -28,6 +28,7 @@ app.post('/signupEngineer', function(req, res) {
 	let password = req.body.password;
 	let location = req.body.sitelocation;
 	let phonenumber = req.body.phonenumber;
+	console.log(fullname)
 	let hashedPassword = bcrypt.hashSync(password, 10);
 	const url = req.body.url;
 	engineer
