@@ -10,5 +10,8 @@
           templateUrl: "./veiw/item2.html",
           controller: "ctrl2"
         })
-
+        .when("/SinginWorker", {
+          templateUrl: "./veiw/SinginWorker.html",
+          controller: "myCtrl3"
+        })
     });

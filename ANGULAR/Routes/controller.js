@@ -8,3 +8,10 @@ app.controller("ctrl1", function($scope) {
         console.log(para)
     }
   });
+
+
+  app.controller("myCtrl3", function($scope) {
+    $scope.SendSingInWorker = function(para) {
+        
+    }
+  });
