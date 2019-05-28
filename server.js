@@ -36,7 +36,7 @@ app.post('/signupEngineer', function(req, res) {
 	let location = req.body.sitelocation;
 	let phonenumber = req.body.phonenumber;
 	console.log(fullname)
-	let hashedPassword = bcrypt.hashSync(password, 10);
+	// let hashedPassword = bcrypt.hashSync(password, 10);
 	// const url = req.body.url;
 	engineer
 		.create({
@@ -44,7 +44,7 @@ app.post('/signupEngineer', function(req, res) {
 			userName: username,
 			siteLocation: location,
 			phoneNumber: phonenumber,
-			password: hashedPassword,
+			password: password,
 			// url: url
 		})
 		.then(function() {
