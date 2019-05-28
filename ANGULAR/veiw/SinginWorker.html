@@ -3,17 +3,19 @@
    <script src="Scripts/angular.min.js"></script>
    <script src="Scripts/app.js"></script>
 </head> -->
-<body ng-app="SinginWorker">    
-  <div ng-controller="myCtrl3">
+<body >    
+  <div >
     <form>
       Username:
-      <input type="text" ng-model="author">
+      <input type="text" ng-model="Username">
       <br> 
       <br> PassWord:
-      <input type="author" ng-model="PassWord">
+      <input type="password" ng-model="Password">
       <br>
       <br>
-      <input type="submit" value="Submit" ng-click="SendSingInWorker()">
+      <button type="submit" value="Submit" ng-click="SendSingInWorker(Username,PassWord)">
+        SingIn
+      </button>
     </form>
   </div>
 </body>

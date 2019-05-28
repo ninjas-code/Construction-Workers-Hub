@@ -11,7 +11,10 @@
           controller: "ctrl2"
         })
         .when("/SinginWorker", {
-          templateUrl: "./veiw/SinginWorker.html",
+          templateUrl: ".veiw/SinginWorker.html",
           controller: "myCtrl3"
         })
+        // .otherwise({
+        //   redirectTo: '/view1'
+        // });
     });
