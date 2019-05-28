@@ -11,6 +11,14 @@ const { engineer, worker, order } = require('./database/models');
 const app = express();
 const port = process.env.PORT || 5002;
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+  
+
+
 //things to install
 //npm i bcrypt
 //npm i cors --save
@@ -253,7 +261,6 @@ app.get('/carpenter', function(req, res) {
 			}
 
 			return res.send(users);
-			console.log(users)
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);

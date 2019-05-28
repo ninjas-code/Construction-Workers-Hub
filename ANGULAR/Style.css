@@ -14,3 +14,38 @@ img.CarpentersInfoImg {
     float: left;
     margin: 25px;
 }
+div#carInfo {
+    /* background: red; */
+    width: 50%;
+    margin: 0 auto;
+    padding: 51px;
+    border-radius: 17px;
+}
+div#OneUser {
+    padding: 25px;
+    background: green;
+    width: 15%;
+    float: left;
+    margin:25px;
+    /* display: inline; */
+}
+div#OneUser {
+    padding: 25px;
+    background: #FFEB3B;
+    width: 31%;
+    float: left;
+    margin: 25px;
+    /* display: inline; */
+    border-radius: 17px;
+}
+button.ProButton {
+    padding: 25px;
+    font-size: 25px;
+    border-radius: 17px;
+    border: 0.2px;
+    /* margin: 0 auto; */
+    background: #fff;
+}
+h3.UserInfo.ng-binding {
+    font-size: 16px;
+}
