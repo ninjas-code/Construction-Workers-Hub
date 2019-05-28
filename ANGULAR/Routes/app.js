@@ -11,6 +11,19 @@
           controller: "ctrl2"
         })
 
+        .when("/SinginWorker", {
+          templateUrl: ".veiw/SinginWorker.html",
+          controller: "myCtrl3"
+        })
+        // .otherwise({
+        //   redirectTo: '/view1'
+        // });
+
+        .when("/car", {
+          templateUrl: "./veiw/carpenters.html",
+          controller: "carpenters"
+        })
+
     });
 
     app.config(['$qProvider', function ($qProvider) {
