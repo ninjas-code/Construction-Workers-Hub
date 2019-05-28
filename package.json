@@ -11,6 +11,7 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e"
 	},
+	"proxy": "http://localhost:5000",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/AmmarAlkhooly98/Construction-Workers-Hub.git"
@@ -47,6 +48,7 @@
 		"express": "^4.16.4",
 		"firebase": "^6.0.2",
 		"firebase-tools": "^6.10.0",
+		"http-proxy": "^1.17.0",
 		"install-peers": "^1.0.3",
 		"jsonwebtoken": "^8.5.1",
 		"localStorage": "^1.0.4",

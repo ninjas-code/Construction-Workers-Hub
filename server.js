@@ -18,7 +18,7 @@ const port = process.env.PORT || 5002;
 // npm install --save bluebird
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('ANGULAR'));
 app.use(bodyParser.json());
 
 //sign up for engineer in the database
@@ -253,6 +253,7 @@ app.get('/carpenter', function(req, res) {
 			}
 
 			return res.send(users);
+			console.log(users)
 		})
 		.catch(function(err) {
 			return res.status(500).send(err);
