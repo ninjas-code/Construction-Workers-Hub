@@ -11,6 +11,14 @@ const { engineer, worker, order } = require('./database/models');
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+  
+
+
 //things to install
 //npm i bcrypt
 //npm i cors --save
@@ -18,7 +26,7 @@ const port = process.env.PORT || 5000;
 // npm install --save bluebird
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('ANGULAR'));
 app.use(bodyParser.json());
 
 //sign up for engineer in the database
