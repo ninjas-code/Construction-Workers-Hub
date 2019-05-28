@@ -9,15 +9,14 @@ const SECRET_KEY = 'somesting';
 const { engineer, worker, order } = require('./database/models');
 
 const app = express();
-const port = process.env.PORT || 5000;
+
+const port = process.env.PORT || 5002;
 
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
   });
-  
-
 
 //things to install
 //npm i bcrypt
@@ -38,7 +37,7 @@ app.post('/signupEngineer', function(req, res) {
 	let phonenumber = req.body.phonenumber;
 	console.log(fullname)
 	let hashedPassword = bcrypt.hashSync(password, 10);
-	const url = req.body.url;
+	// const url = req.body.url;
 	engineer
 		.create({
 			fullName: fullname,
@@ -46,7 +45,7 @@ app.post('/signupEngineer', function(req, res) {
 			siteLocation: location,
 			phoneNumber: phonenumber,
 			password: hashedPassword,
-			url: url
+			// url: url
 		})
 		.then(function() {
 			return res.status(201).send({ success: 'Sign up as engineer successful' });
