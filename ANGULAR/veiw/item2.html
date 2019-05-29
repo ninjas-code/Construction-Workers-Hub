@@ -1,3 +1,31 @@
-<section>
-    {{lastname}}
-</section>
+
+<html>
+    <head>
+        <title>
+            Workers Sign Up
+        </title>
+        <h1>sign up page</h1>
+    </head>
+
+    <body>
+        <form>
+        <button ng-click='uploader(files)'>Upload</button>
+        <img style="height: 250px"  alt="example"><br></br>
+        <input type="file" name="files" ng-model="files"><br></br>
+        <input type="text" ng-model="fullname" placeholder="Full Name"><br></br>
+        <input type="text" ng-model="username" placeholder="User Name"><br></br>
+        <input type="text" ng-model="password" placeholder="Password"><br></br>
+        <input type="text" ng-model="experiencelevel" placeholder="Experience level"><br></br>
+        <input type="text" ng-model="expectedsalary" placeholder="Expected Salary"><br></br>
+        <input type="text" ng-model="phonenumber" placeholder="Phone Number"><br></br>
+        <input type="text" ng-model="role" placeholder="Role"><br></br>
+        <input type="text" ng-model="status" placeholder="Status"><br></br>
+
+  
+
+        <button type="submit" ng-click="sendWorkerDataToServer(fullname, username ,password , experiencelevel, expectedsalary, phonenumber, role, status  )" >
+            click
+        </button>
+        <h1>{{firstname}}</h1>
+    </body>
+</html>

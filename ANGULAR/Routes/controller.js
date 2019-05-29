@@ -1,6 +1,27 @@
-app.controller("ctrl2", function($scope) {
+app.controller("ctrl2", function($scope,  $http) {
     console.log("hhhhhhh")
-    $scope.lastname = "Shihab"
+    $scope.sendWorkerDataToServer= function(fullname, username, password, experiencelevel, expectedsalary, phonenumber, role, status) {
+      // console.log(fullname);
+        var info = {
+          fullname: fullname,
+          username: username,
+          password: password,
+          experiencelevel: experiencelevel,
+          expectedsalary: expectedsalary,
+          phonenumber: phonenumber,
+          role: role,
+          status: status
+        }
+        
+        $http({
+          method: 'POST',
+          headers:{"Content-Type" : "application/json"},
+          data :JSON.stringify(info),
+          url: 'http://localhost:5002/signupWorker'
+        }).then(function(data) {
+            // console.log( data);
+          });
+    }
   });
 app.controller("ctrl1", function($scope,  $http) {
     $scope.uploader = function(files) {
@@ -35,33 +56,35 @@ app.controller("ctrl1", function($scope,  $http) {
             console.log( data);
           });
     }
+
+    
   });
 
 
 
-  app.controller('myCtrl3', function($scope ,$http) {
-    $scope.SendSingInWorker= function(Username ,Password){
-      console.log(Username , Password)
-       var body = {
-         username: Username,
-         password:Password
-       }
+//   app.controller('myCtrl3', function($scope ,$http) {
+//     $scope.SendSingInWorker= function(Username ,Password){
+//       console.log(Username , Password)
+//        var body = {
+//          username: Username,
+//          password:Password
+//        }
      
-       $http({
-        method: 'POST',
-        headers:{"Content-Type" : "application/json"},
-        body :JSON.stringify(body),
-        url: 'http://localhost:5000/signinWorker'
-      }).then(function successCallback(response) {
-        console.log(response)
-        return response.json();
-          // this callback will be called asynchronously
-          // when the response is available
-        }).then(function(data) {
-          console.log( data);
-        });
-    }
- });
+//        $http({
+//         method: 'POST',
+//         headers:{"Content-Type" : "application/json"},
+//         body :JSON.stringify(body),
+//         url: 'http://localhost:5000/signinWorker'
+//       }).then(function successCallback(response) {
+//         console.log(response)
+//         return response.json();
+//           // this callback will be called asynchronously
+//           // when the response is available
+//         }).then(function(data) {
+//           console.log( data);
+//         });
+//     }
+//  });
 
   // app.post('/signinWorker', function(req, res) {
   //   const username = req.body.username;
