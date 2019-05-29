@@ -2,24 +2,53 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Home Page</title>
+    <title>Construction Workers Hub</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-resource.min.js"></script>
     <script src="./Routes/app.js"></script>
     <script src="./Routes/controller.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Francois+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Francois+One|Hammersmith+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gurajada&display=swap" rel="stylesheet">
+
+
+
     <link rel="stylesheet" type="text/css" href="./Style.css">.
 
 </head>
 <body ng-app="app">
-    <!-- <input type="text" placeholder="test" ng-model="namem">
-    <h1>{{namem}}</h1> -->
-    <ul>
-      <li>Home</li>
-      <li>Login</li>
-    </ul>
-    <ng-view>
+  <div id="header">
+          <ul class="listMain">
+            <img  id="logo" src="https://www.getmonero.org/press-kit/symbols/monero-symbol-800.png" /> <h3 id="logoCon">Construction Workers Hub</h3>
+            <li  class="list">about</li>
+            <li class="list"><a href="http://127.0.0.1:5500/ANGULAR/index.html#!/signup">Reg</a></li>
+            <li  class="list">login</li>
+            <li class="list">Home</li>
+
+          </ul>
+      </h3>
+  </div>
+    <div id="TheMainPage">
+      <img class="Imgs" src="https://www.bridgevalley.edu/sites/default/files/BridgeValley_Site_Files/Academics/Technology/iStock_000051192410XLarge.jpg" />
+
+      <div class="ThePara">
+      <h1 class="TheWelcome">Welcome</h1>
+        <p id="TheInfo">
+        about The App
+        Construction Workers Hub Documentation</h1>
+        In some countries, there are many construction workers who are waiting under the hot <br /> blazing
+        sun in a known place where a civil engineer comes by to choose some construction <br /> workers to
+        work under him.</p>
+      </div>
+    </div>
+    <!-- <ng-view> -->
+        <ng-view id="TheView">
+
+        <h1 id="TheTest">Hi </h1>
+
   </body>
+
 </html> 
         

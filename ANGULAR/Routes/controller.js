@@ -96,5 +96,8 @@ $http({
     // $scope.Role = "Carpenter";
     
   });
+  app.controller("LearnMore",function($scope,$http){
+    $scope.Hello="Hi"
+  })
 
 

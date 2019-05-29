@@ -23,6 +23,11 @@
           templateUrl: "./veiw/carpenters.html",
           controller: "carpenters"
         })
+        .when("/learnMore", {
+          templateUrl: "./veiw/LearnMore.html",
+          controller: "LearnMore"
+        })
+
 
     });
 

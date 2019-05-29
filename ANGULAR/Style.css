@@ -31,7 +31,7 @@ div#OneUser {
 }
 div#OneUser {
     padding: 25px;
-    background: #FFEB3B;
+    background: #212020;
     width: 31%;
     float: left;
     margin: 25px;
@@ -39,13 +39,127 @@ div#OneUser {
     border-radius: 17px;
 }
 button.ProButton {
-    padding: 25px;
-    font-size: 25px;
-    border-radius: 17px;
+    padding: 2px;
+    font-size: 35px;
+    border-radius: 20px;
     border: 0.2px;
     /* margin: 0 auto; */
     background: #fff;
+    font-family: 'Gurajada', serif;
+    width: 100%;
 }
 h3.UserInfo.ng-binding {
-    font-size: 16px;
+    font-size: 25px;
+    font-family: 'Gurajada', serif;
+    color: #fff;
+}
+div#LearnMore {
+    width: 600px;
+    margin: 0 auto;
+    background: red;
+    padding: 25px;
+    border-radius: 17px;
+    color: #fff;
+}
+/* div#TheMainPage {
+    width: 79%;
+    background: red;
+    margin: 0 auto;
+    padding: 25px;
+    overflow: hidden;
+}
+img#TheImge {
+    width: 100%;
+}
+div#header {
+    margin: 0 auto;
+    height: 87px;
+}
+h3.title {
+    background: #000;
+    width: 276px;
+    margin: 0 auto;
+    padding: 45px;
+    font-size: 25px;
+    font-family: 'Francois One', sans-serif;
+    color: #fff;
+}
+li.list {
+    float: left;
+    padding-right: 58px;
+    style: none;
+    list-style: none;
+}
+.slider {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    overflow-x: auto;
+  }
+  .slide {
+    width: 300px;
+    flex-shrink: 0;
+    height: 100%;
+  }
+  h1.TheWelcome {
+    width: 300px;
+    margin: 0 auto;
+    margin-right: 299px;
+}
+div#TheMainPage {
+    width: 80%;
+    background: #e2e2e2;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 17px;
+    overflow: hidden;
+    margin-top: 87px;
+} */
+ul.listMain {
+    list-style: none;
+    float: right;
+    /* display: inline; */
+    width: 100%;
+    background: #212020;
+}
+li.list {
+    float: right;
+    padding: 7px;
+    font-size: 37px;
+    margin-right: 43px;
+    font-family: 'Gurajada', serif;
+    color: #fff;
+}
+img#logo {
+    float: left;
+    max-height: 83px;
+    margin-left: 32px;
+    /* padding: 0px; */
+    margin-right: 18px;
+}
+h3#logoCon {
+    margin-bottom: -73px;
+    margin-top: 14px;
+    color: #fff;
+    font-family: 'Gurajada', serif;
+    font-size: 31px;
+}
+img.Imgs {
+    max-width: 500px;
+    float: left;
+    margin: 7px;
+    margin-right: 28px;
+    /* margin-top: 25px; */
+}
+.ThePara {
+    padding-top: 2px;
+    width: 503px;
+    float: left;
+    padding-bottom: 40px;
+    font-family: 'Gurajada', serif;
+    font-size: 19px;
+    /* height: 261px; */
+}
+p#TheInfo {
+    font-size: 23px;
 }
