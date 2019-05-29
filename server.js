@@ -83,22 +83,23 @@ app.post('/signinEngineer', function(req, res) {
 
 //worker sign up
 app.post('/signupWorker', function(req, res) {
-	const fullName = req.body.info.fullname;
-	const username = req.body.info.username;
-	const password = req.body.info.password;
-	const experienceLevel = req.body.info.experiencelevel;
-	const expectedSalary = req.body.info.expectedsalary;
-	const phoneNumber = req.body.info.phonenumber;
-	const role = req.body.info.role;
-	const status = req.body.info.status;
-	const url = req.body.info.url;
-	const hashedPassword = bcrypt.hashSync(password, 10);
+	// console.log(req.body)
+	const fullName = req.body.fullname;
+	const username = req.body.username;
+	const password = req.body.password;
+	const experienceLevel = req.body.experiencelevel;
+	const expectedSalary = req.body.expectedsalary;
+	const phoneNumber = req.body.phonenumber;
+	const role = req.body.role;
+	const status = req.body.status;
+    const url = req.body.url;
+	// const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
 		.create({
-			fullName: fullName,
+			fullName: fullName,	
 			userName: username,
-			password: hashedPassword,
+			password: password,
 			experienceLevel: experienceLevel,
 			expectedSalary: expectedSalary,
 			phoneNumber: phoneNumber,
@@ -120,9 +121,9 @@ app.post('/signupWorker', function(req, res) {
 
 //worker sign in
 app.post('/signinWorker', function(req, res) {
-	const usernamee = req.body.username;
+	const username = req.body.username;
 	const password = req.body.password;
-     console.log( usernamee)
+     console.log( username)
 	worker.findOne({ where: { userName: username } }).then(function(user) {
 		if (!user) {
 			return res.status(401).send({ error: 'Wrong username' });

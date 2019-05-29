@@ -64,7 +64,7 @@ class WorkerSignUp extends React.Component {
 			url
 		} = this.state;
 		var info = { fullname, username, password, phonenumber, experiencelevel, expectedsalary, role, status, url };
-		console.log(info);
+		// console.log(info);
 		fetch('/signupWorker', {
 			method: 'POST',
 			body: JSON.stringify({ info }),
