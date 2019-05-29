@@ -121,9 +121,9 @@ app.post('/signupWorker', function(req, res) {
 
 //worker sign in
 app.post('/signinWorker', function(req, res) {
-	const usernamee = req.body.username;
+	const username = req.body.username;
 	const password = req.body.password;
-     console.log( usernamee)
+     console.log( username)
 	worker.findOne({ where: { userName: username } }).then(function(user) {
 		if (!user) {
 			return res.status(401).send({ error: 'Wrong username' });

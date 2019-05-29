@@ -119,7 +119,26 @@ $http({
     // $scope.Professionl = "Professional	";
     // $scope.Status = "Active";
     // $scope.Role = "Carpenter";
-    $scope.var3="Hello"
+    $scope.tableClick = function (userName, password) {
+      console.log(userName, password);
+      var body = {
+        username: userName,
+        password: password
+      }
+      $http({
+        method: 'POST',
+        headers:{"Content-Type" : "application/json"},
+        body :JSON.stringify(body),
+        url: 'http://localhost:5002/signinWorker'
+      }).then(function successCallback(response) {
+        console.log(response)
+        return response.json();
+          // this callback will be called asynchronously
+          // when the response is available
+        }).then(function(data) {
+          console.log( data);
+        });
+  };
   });
 
 
