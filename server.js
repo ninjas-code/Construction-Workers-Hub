@@ -93,13 +93,13 @@ app.post('/signupWorker', function(req, res) {
 	const role = req.body.role;
 	const status = req.body.status;
     const url = req.body.url;
-	const hashedPassword = bcrypt.hashSync(password, 10);
+	// const hashedPassword = bcrypt.hashSync(password, 10);
 
 	worker
 		.create({
-			fullName: fullName,
+			fullName: fullName,	
 			userName: username,
-			password: hashedPassword,
+			password: password,
 			experienceLevel: experienceLevel,
 			expectedSalary: expectedSalary,
 			phoneNumber: phoneNumber,

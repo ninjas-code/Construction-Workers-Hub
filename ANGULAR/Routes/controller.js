@@ -19,7 +19,7 @@ app.controller("ctrl2", function($scope,  $http) {
           data :JSON.stringify(info),
           url: 'http://localhost:5002/signupWorker'
         }).then(function(data) {
-            // console.log( data);
+              console.log( data);
           });
     }
   });
