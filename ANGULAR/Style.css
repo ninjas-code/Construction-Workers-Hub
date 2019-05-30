@@ -163,3 +163,30 @@ img.Imgs {
 p#TheInfo {
     font-size: 23px;
 }
+form#Signup {
+    background: #212020;
+    width: 238px;
+    float: right;
+    padding: 25px;
+    border-radius: 17px;
+    color: #fff;
+}
+h1#CreateAccount {
+    font-family: 'Gurajada', serif;
+    margin-bottom: -10px;
+}
+input.TextSign.ng-pristine.ng-untouched.ng-valid.ng-empty {
+    border-radius: 3px;
+    border: 0.2px;
+    padding: 10px;
+    margin: 5px;
+
+}
+div#signIn {
+    background: #212020;
+    width: 244px;
+    float: right;
+    margin-top: 41px;
+    padding: 25px;
+    border-radius: 17px;
+}

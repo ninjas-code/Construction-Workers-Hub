@@ -5,8 +5,12 @@
         </title>
     </head>
     <body>
-        <input type="text" placeholder="User Name" ng-model="username" >
-        <input type="text" placeholder="Password" ng-model="Password">
+        Sign In as an engineer
+
+        <div id="signIn">
+        <input class="TextSign" type="text" placeholder="User Name" ng-model="username" >
+        <input class="TextSign" type="text" placeholder="Password" ng-model="Password">
         <button ng-click="signinAsAnEngineer(username, Password)" >Login</button>
+        </div>
     </body>
 </html>
