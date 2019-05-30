@@ -5,12 +5,13 @@
         </title>
     </head>
     <body>
-        Sign In as an engineer
+        <h1 id="CreateAccount" >Sign In as an engineer</h1>
 
         <div id="signIn">
-        <input class="TextSign" type="text" placeholder="User Name" ng-model="username" >
-        <input class="TextSign" type="text" placeholder="Password" ng-model="Password">
-        <button ng-click="signinAsAnEngineer(username, Password)" >Login</button>
+        <i class="fas fa-user"></i><input class="TextSign" type="text" placeholder="User Name" ng-model="username" ></br>
+        <i class="fas fa-lock"></i><input class="TextSign" type="text" placeholder="Password" ng-model="Password">
+        <button class="TheButton" ng-click="signinAsAnEngineer(username, Password)" >Login</button>
+        <p id="Dont">Don't have an Account ? <a href="#!/signup">You can Register Now</a></p>
         </div>
     </body>
 </html>

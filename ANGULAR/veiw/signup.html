@@ -10,16 +10,16 @@
 
     <body>
         <form id="Signup">
-        <button ng-click='uploader(files)'>Upload</button>
-        <img style="height: 250px"  alt="example"><br></br>
-        <input class="TextSign" type="file" name="files" ng-model="files"><br></br>
+        <!-- <button ng-click='uploader(files)'>Upload</button> -->
+        <!-- <img style="height: 250px"  alt="example"><br></br> -->
+        <input class="upload" type="file" name="files" ng-model="files"><br></br>
         <input  class="TextSign" type="text" ng-model="fullname" placeholder="Full Name"><br></br>
         <input class="TextSign" type="text" ng-model="username" placeholder="User Name"><br></br>
         <input class="TextSign" type="password" ng-model="password" placeholder="Password"><br></br>
         <input  class="TextSign" type="text" ng-model="sitelocation" placeholder="sitelocation"><br></br>
         <input  class="TextSign" type="text" ng-model="phonenumber" placeholder="phonenumber">
 
-        <button type="submit" ng-click="sendDataToServer(fullname, username, password, sitelocation, phonenumber)" >
+        <button class="TheButton" type="submit" ng-click="sendDataToServer(fullname, username, password, sitelocation, phonenumber)" >
             click
         </button>
         <h1>{{firstname}}</h1>

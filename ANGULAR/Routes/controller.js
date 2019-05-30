@@ -35,7 +35,7 @@ app.controller("ctrl1", function($scope,  $http) {
     }
     $scope.sendDataToServer = function(fullname, username, password, sitelocation, phonenumber) {
         console.log(fullname, username, password, sitelocation, phonenumber);
-        var body = {
+        var data = {
           fullname: fullname,
           username: username,
           password: password,
@@ -47,7 +47,7 @@ app.controller("ctrl1", function($scope,  $http) {
         $http({
           method: 'POST',
           headers:{"Content-Type" : "application/json"},
-          body :JSON.stringify(body),
+          data :JSON.stringify(data),
           url: 'http://localhost:5002/signupEngineer'
         }).then(function successCallback(response) {
           console.log(response)
@@ -65,14 +65,14 @@ app.controller("ctrl1", function($scope,  $http) {
   app.controller("signin", function($scope,  $http) {
     $scope.signinAsAnEngineer= function(userName, Password) {
       console.log(userName, Password)
-      var body = {
+      var data = {
         username: userName,
         password: Password
       }
       $http({
         method: 'POST',
         headers:{"Content-Type" : "application/json"},
-        body :JSON.stringify(body),
+        data :JSON.stringify(data),
         url: 'http://localhost:5002/signinEngineer'
       }).then(function successCallback(response) {
         console.log(response)

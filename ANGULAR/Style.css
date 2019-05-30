@@ -190,3 +190,33 @@ div#signIn {
     padding: 25px;
     border-radius: 17px;
 }
+.TheButton {
+    padding: 0px;
+    border-radius: 10px;
+    border: 0.2px;
+    font-size: 20px;
+    width: 82%;
+    font-family: 'Gurajada', serif;
+    /* margin-left: 26px; */
+    margin-left: 15px;
+
+}
+p#Dont {
+    color: #fff;
+    font-family: 'Gurajada', serif;
+    font-size: 19px;
+}
+.fa-user:before {
+    content: "\f007";
+    font-size: 18px;
+    color: #fff;
+}
+.fa-lock:before {
+    content: "\f023";
+    font-size: 18px;
+    color: #fff;
+}
+a {
+    text-decoration: none;
+    color: #fff;
+}
